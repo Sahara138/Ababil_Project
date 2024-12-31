@@ -48,15 +48,12 @@ input {
     margin-top: 5px;
   }
   /* Required asterisk */
-.required::after {
+  .required::after {
     content: '*';
     color: red;
     margin-left: 4px;
     width: 50%;
   }
-
-
-
   .inputField{
     margin:15px 0;
     gap: 20px;
@@ -64,9 +61,9 @@ input {
   }
   @keyframes slideDown {
     from {
-      transform: translate(-50%, -100%); /* Start above the viewport */
+      transform: translate(-50%, -100%);
     }
     to {
-      transform: translate(-50%, -50%); /* End slightly below the top */
+      transform: translate(-50%, -50%);
     }
   }

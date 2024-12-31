@@ -111,7 +111,7 @@ const Payment = () => {
               color: isDarkMode ? 'grey.300' : 'inherit', // Adjust heading color for dark mode
             }}
           >
-            Payment List
+            Payment Management
           </Typography>
           <Divider
             sx={{
@@ -123,7 +123,7 @@ const Payment = () => {
                 <div style={{ height: "auto", width: "100%" }}>
                   <div className="info">
                     <Typography component="h2" variant="h6" sx={{ mb: 3, mt: 3 }}>
-                      Payment Management
+                      Payment List
                     </Typography>
                     <Button variant="contained" onClick={CreatePayment}>
                       Add New Payment

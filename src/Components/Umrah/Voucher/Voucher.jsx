@@ -110,7 +110,7 @@ const Voucher = () => {
               color: isDarkMode ? 'grey.300' : 'inherit', // Adjust heading color for dark mode
             }}
           >
-            Voucher List
+            Voucher Management
           </Typography>
           <Divider
             sx={{
@@ -123,7 +123,7 @@ const Voucher = () => {
                 <div style={{ height: "auto", width: "100%" }}>
                   <div className="info">
                     <Typography component="h2" variant="h6" sx={{ mb: 3, mt: 3 }}>
-                      Voucher Management
+                      Voucher List
                     </Typography>
                     <Button variant="contained" onClick={CreateVoucher}>
                       Add New Voucher

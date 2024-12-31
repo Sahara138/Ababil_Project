@@ -29,3 +29,9 @@ input{
   bottom: 50px;
   overflow: hidden;
 }
+.title-icon{
+  color:#99a1b7;
+}
+.inputField input textarea{
+  color: black;
+}

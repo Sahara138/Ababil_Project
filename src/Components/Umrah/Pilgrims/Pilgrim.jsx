@@ -1,41 +1,3 @@
-// import { Box, Divider, Typography } from '@mui/material'
-// import UmrahTabs from '../../../Tabs/UmrahTabs'
-// import Users from '../../Users/Users'
-
-// const Pilgrim = () => {
-//   return (
-//     <div style={{width:"100%"}}>
-//       <UmrahTabs />
-//       <Box
-//             sx={{
-//                 marginTop:5,
-//                 border: 1,
-//                 borderRadius: 1,
-//                 padding: '30px',
-//                 borderColor: 'transparent',
-//                 backgroundColor: 'white',
-//                 boxShadow: 3,
-//                 marginBottom:"50px"
- 
-
-//             }}
-//           >
-//             <Typography
-//                 component="h2"
-//                 variant="h6"
-//                 sx={{mt: 2,mb:3,fontSize:25 }}
-//             >
-//                 Pilgrim List
-//             </Typography>
-//             <Divider />
-//             <Users />
-            
-//           </Box>
-//     </div>
-//   )
-// }
-
-// export default Pilgrim
 import "../Pilgrims/Pilgrim.css";
 import DataTable from "../../DataTable/DataTable";
 import {
@@ -70,15 +32,15 @@ const Pilgrim = () => {
   }, []);
 
   const CreatePilgrim = () => {
-    navigate("/pilgrims/create");
+    navigate("/umrah/pilgrim/create");
   };
 
   const ViewDetails = (id) => {
-    navigate(`/pilgrims/view/${id}`);
+    navigate(`/pilgrim/view/${id}`);
   };
 
   const EditDetails = (id) => {
-    navigate(`/pilgrims/update/${id}`);
+    navigate(`/pilgrim/update/${id}`);
   };
 
   const RemoveDetails = (id) => {
@@ -164,7 +126,7 @@ const Pilgrim = () => {
             color: isDarkMode ? 'grey.300' : 'inherit', // Adjust heading color for dark mode
           }}
         >
-          Pilgrim List
+          Pilgrim Management
         </Typography>
         <Divider
           sx={{
@@ -181,7 +143,7 @@ const Pilgrim = () => {
       <div className="pilgrim" style={{ height: "auto", width: "100%" }}>
         <div className="info">
           <Typography component="h2" variant="h6" sx={{ mb: 3, mt: 3 }}>
-            Pilgrim Management
+            Pilgrim List
           </Typography>
           <Button variant="contained" onClick={CreatePilgrim}>
             Add New Pilgrim

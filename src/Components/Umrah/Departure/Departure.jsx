@@ -32,15 +32,15 @@ const Departure = () => {
   }, []);
 
   const CreateDeparture = () => {
-    navigate("/departures/create");
+    navigate("/umrah/departure/create");
   };
 
   const ViewDetails = (id) => {
-    navigate(`/departures/view/${id}`);
+    navigate(`/umrah/departure/view/${id}`);
   };
 
   const EditDetails = (id) => {
-    navigate(`/departures/update/${id}`);
+    navigate(`/umrah/departure/update/${id}`);
   };
 
   const RemoveDetails = (id) => {
@@ -112,7 +112,7 @@ const Departure = () => {
               color: isDarkMode ? 'grey.300' : 'inherit', // Adjust heading color for dark mode
             }}
           >
-            Departure List
+            Departure Management
           </Typography>
           <Divider
             sx={{
@@ -124,7 +124,7 @@ const Departure = () => {
                 <div style={{ height: "auto", width: "100%" }}>
                   <div className="info">
                     <Typography component="h2" variant="h6" sx={{ mb: 3, mt: 3 }}>
-                      Departure Management
+                      Departure list
                     </Typography>
                     <Button variant="contained" onClick={CreateDeparture}>
                       Add New Departure

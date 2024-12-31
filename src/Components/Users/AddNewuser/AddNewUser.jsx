@@ -53,30 +53,6 @@ const AddNewUser = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // const handleChange = (e) => {
-  //   e.preventDefault();
-  //   if(id){
-  //     setId(e.target.value);
-  //   }
-  //   if(userName){
-  //     setUserName(e.target.value)
-  //   }
-  //   if(email){
-  //     setEmail(e.target.value)
-  //   }
-  //   if(phone){
-  //     setPhone(e.target.value)
-  //   }
-  //   if(status){
-  //     setStatus(e.target.value)
-  //   }
-  //   // Clear errors dynamically as user types
-  //   setErrors((prev) => ({
-  //     ...prev,
-  //     [id]: "",
-  //   }));
-  // };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = { id, userName, email, phone, status };

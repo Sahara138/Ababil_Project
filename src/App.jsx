@@ -17,7 +17,7 @@ import {
 } from "./Components/theme/customizations";
 import Header from "./Components/Header";
 import UpdateUser from "./Components/Users/UpdateUser/UpdateUser";
-import UmrahTabs from "./Tabs/UmrahTabs";
+// import UmrahTabs from "./Tabs/UmrahTabs";
 import Pilgrim from "./Components/Umrah/Pilgrims/Pilgrim";
 import Ticket_Requisition from "./Components/Umrah/Ticket_Requisition/Ticket_Requisition";
 import Payment from "./Components/Umrah/Payment/Payment";
@@ -25,6 +25,14 @@ import Departure from "./Components/Umrah/Departure/Departure";
 import Voucher from "./Components/Umrah/Voucher/Voucher";
 import Hotel from "./Components/Umrah/Hotel_Booking/Hotel";
 import Trip from "./Components/Umrah/Trip/Trip";
+import CreatePilgrim from "./Components/Umrah/Pilgrims/CreatePilgrim";
+import UpdatePilgrim from "./Components/Umrah/Pilgrims/UpdatePilgrim";
+import CreateDeparture from "./Components/Umrah/Departure/CreateDeparture";
+import UpdateDeparture from "./Components/Umrah/Departure/UpdateDeparture";
+import CreateTicketRequisition from "./Components/Umrah/Ticket_Requisition/CreateTicket_Reuisition";
+import UpdateTicketRequisition from "./Components/Umrah/Ticket_Requisition/UpdateTicket_Reuisition";
+// import Trip from "./Components/Umrah/Trip/Trip";
+// import UmrahLayout from "./Layout/UmrahLayout";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -91,31 +99,52 @@ function App() {
         },
         {
           path: "/umrah",
-          element: <Users />,
-        },
-        {
-          path: "/users/create",
-          element: <AddNewUser />,
-        },
-        {
-          path: "/users/view/:user_id",
-          element: <User />,
-        },
-        {
-          path: "/users/update/:user_id",
-          element: <UpdateUser />,
+          element: <Trip />
         },
         {
           path: "/umrah/trip",
           element: <Trip />,
         },
+
+        // For Pilgrim start
         {
           path: "/umrah/pilgrim",
           element: <Pilgrim />,
+
         },
+        {
+          path: "/umrah/pilgrim/create",
+          element: <CreatePilgrim/>,
+
+        },
+        {
+          path: "/umrah/pilgrim/view/:id",
+          element: <Pilgrim />,
+
+        },{
+          // path: "/umrah/pilgrim/update/:id",
+          path: "/umrah/pilgrim/update",
+          element: <UpdatePilgrim />,
+
+        },
+        // For Pilgrim end
+
+
         {
           path: "/umrah/ticket-requisition",
           element: <Ticket_Requisition />,
+        },
+        {
+          path: "/umrah/ticket-requisition/create",
+          element: <CreateTicketRequisition />,
+        },
+        {
+          path: "/umrah/ticket-requisition/view",
+          element: <Ticket_Requisition />,
+        },
+        {
+          path: "/umrah/ticket-requisition/update",
+          element: <UpdateTicketRequisition />,
         },
         {
           path: "/umrah/payment",
@@ -129,10 +158,46 @@ function App() {
           path: "/umrah/voucher",
           element: <Voucher />,
         },
+        
+        
+        // For Departure start
         {
           path: "/umrah/departure",
           element: <Departure />,
         },
+        {
+          path: "/umrah/departure/create",
+          element: <CreateDeparture/>,
+
+        },
+        {
+          path: "/umrah/pilgrim/view/:id",
+          element: <Pilgrim />,
+
+        },{
+          // path: "/umrah/pilgrim/update/:id",
+          path: "/umrah/departure/update",
+          element: <UpdateDeparture />,
+
+        },
+        // For Departure end
+
+
+        {
+          path: "/users/create",
+          element: <AddNewUser />,
+        },
+        {
+          path: "/users/view/:user_id",
+          element: <User />,
+        },
+        {
+          path: "/users/update/:user_id",
+          element: <UpdateUser />,
+        },
+        
+       
+        
       ],
     },
     {

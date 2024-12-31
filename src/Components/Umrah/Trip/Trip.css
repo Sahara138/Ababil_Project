@@ -1,4 +1,4 @@
-.trip-management-container .info{
+.trip .info{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,3 +23,5 @@
   color: brown;
   margin-top: -3px;
 }
+
+

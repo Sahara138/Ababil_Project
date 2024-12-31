@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation} from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -22,7 +22,9 @@ const UmrahTabs = () => {
 
   // Get current route to set the active tab
   const currentPath = location.pathname;
-  const value = tabs.find((tab) => tab.value === currentPath)?.value || '/umrah/trip';
+  const value = tabs.find((tab) => currentPath.startsWith(tab.value))?.value || '/umrah/trip';
+
+  // const value = tabs.find((tab) => tab.value === currentPath)?.value || `${tabs.value} `;
 
   // Get the label for the current tab
   const currentTab = tabs.find((tab) => tab.value === value);
@@ -35,6 +37,7 @@ const UmrahTabs = () => {
   const isDarkMode = theme.palette.mode === 'dark';
 
   return (
+    
     <div style={{ width: '100%' }}>
       <Typography
         component="h2"
@@ -91,6 +94,7 @@ const UmrahTabs = () => {
           </Box>
         </TabContext>
       </Box>
+      
     </div>
   );
 };

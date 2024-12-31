@@ -56,9 +56,9 @@ const Trip = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "id", headerName: "ID", width: 100 },
     { field: "tripName", headerName: "Trip Name", width: 200 },
-    { field: "tripType", headerName: "Trip Type", width: 150 },
+    { field: "tripType", headerName: "Trip Type", width: 200 },
     { field: "startDate", headerName: "Start Date", width: 180 },
     { field: "endDate", headerName: "End Date", width: 180 },
     { field: "destination", headerName: "Destination", width: 200 },
@@ -108,25 +108,34 @@ const Trip = () => {
             color: isDarkMode ? 'grey.300' : 'inherit', // Adjust heading color for dark mode
           }}
         >
-          Ticket Requisition  List
+          Trip Management
         </Typography>
         <Divider
           sx={{
             backgroundColor: isDarkMode ? 'grey.700' : 'grey.300', // Adjust divider color
           }}
         />
-          <div className="trip-management-container">
-            <Typography variant="h4" sx={{ mb: 3, mt: 3 }}>
-              Trip Management
-            </Typography>
-            <div className="info">
-              <Button variant="contained" onClick={CreateTrip}>
-                Add New Trip
-              </Button>
-            </div>
+         <div
+            className="trip"
+            style={{
+              width: "100%",
+              maxWidth: { sm: "100%", md: "1700px" },
+            }}
+          >
+            <div style={{ height: "auto", width: "100%" }}>
+              <div className="info">
+                <Typography component="h2" variant="h6" sx={{ mb: 3, mt: 3 }}>
+                  Trip List
+                </Typography>
+                <Button variant="contained" onClick={CreateTrip}>
+                  Add New Trip
+                </Button>
+              </div>
 
-            <div className="trip-table">
-              <DataTable rows={trips} columns={columns} />
+              <DataTable
+                rows={trips && trips.map((item) => item)}
+                columns={columns}
+              />
             </div>
           </div>
         </Box>

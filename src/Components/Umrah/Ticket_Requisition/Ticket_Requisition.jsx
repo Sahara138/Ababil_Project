@@ -33,15 +33,15 @@ const Ticket_Requisition = () => {
   }, []);
 
   const CreateTicket = () => {
-    navigate("/tickets/create");
+    navigate("/umrah/ticket-requisition/create");
   };
 
   const ViewDetails = (id) => {
-    navigate(`/tickets/view/${id}`);
+    navigate(`/umrah/ticket-requisition/view/${id}`);
   };
 
   const EditDetails = (id) => {
-    navigate(`/tickets/update/${id}`);
+    navigate(`/umrah/ticket-requisition/update/${id}`);
   };
 
   const RemoveDetails = (id) => {
@@ -117,7 +117,7 @@ const Ticket_Requisition = () => {
             color: isDarkMode ? 'grey.300' : 'inherit', // Adjust heading color for dark mode
           }}
         >
-          Ticket Requisition  List
+          Ticket Requisition Management
         </Typography>
         <Divider
           sx={{
@@ -134,7 +134,7 @@ const Ticket_Requisition = () => {
             <div style={{ height: "auto", width: "100%" }}>
               <div className="info">
                 <Typography component="h2" variant="h6" sx={{ mb: 3, mt: 3 }}>
-                  Ticket Management
+                  Ticket List
                 </Typography>
                 <Button variant="contained" onClick={CreateTicket}>
                   Add New Ticket

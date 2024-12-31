@@ -40,7 +40,7 @@ const mainListItems = [
     children: [
       { path: '/umrah/trip', text: 'Trip' },
       { path: '/umrah/pilgrim', text: 'Pilgrims' },
-      { path: '/umrah/ticketRequsation', text: 'Ticket Requsation' },
+      { path: '/umrah/ticket-requisition', text: 'Ticket Requsation' },
       { path: '/umrah/payment', text: 'Payment' },
       { path: '/umrah/hotelBooking', text: 'Hotel Booking' },
       { path: '/umrah/voucher', text: 'Voucher' },
