@@ -1,0 +1,72 @@
+.addUser {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0; 
+  background-color: rgba(0, 0, 0, 0.724);
+}
+form {
+  max-width: 100%;;
+  
+}
+form .inputField{
+    width: 100%;
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+form .inputField label{
+    font-weight: 600;
+    margin-bottom: 8px;
+    gap: 5px;
+    font-size: 16px;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #fff;
+  transition: border-color 0.3s;
+  }
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  .statusInput{
+    /* width: 0; */
+    display: flex;
+    /* align-items: center; */
+    gap: 5px;
+  }
+  .error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  /* Required asterisk */
+.required::after {
+    content: '*';
+    color: red;
+    margin-left: 4px;
+    width: 50%;
+  }
+
+
+
+  .inputField{
+    margin:15px 0;
+    gap: 20px;
+
+  }
+  @keyframes slideDown {
+    from {
+      transform: translate(-50%, -100%); /* Start above the viewport */
+    }
+    to {
+      transform: translate(-50%, -50%); /* End slightly below the top */
+    }
+  }

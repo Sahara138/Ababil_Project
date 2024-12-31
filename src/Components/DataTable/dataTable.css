@@ -1,0 +1,20 @@
+.dataTable .dataGrid{
+    padding: 20px;
+}
+.MuiDataGrid-toolbarContainer{
+    flex-direction: row-reverse;
+} 
+.MuiDataGrid-toolbarContainer .MuiButtonBase-root-MuiButton-root{
+    padding: 5px 10px;
+    background-color: cadetblue;
+}
+img{
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    object-fit: cover;
+    align-items: center;
+}
+.MuiGrid-root{
+    margin: 20px;
+}

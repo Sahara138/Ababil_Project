@@ -1,0 +1,31 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a,Link{
+  text-decoration: none;
+  color: black;
+}
+body{
+  margin: 30px;
+  font-size: 13px !important;
+  font-weight: 400;
+  font-family: "Inter", serif;
+}
+input{
+  color: black;
+}
+/* .MuiBox-root{
+  position: relative;
+  top: 50px;
+  left: 50px;
+  bottom: 50px;
+}*/
+.main{ 
+  position: relative;
+  top: 50px;
+  left: 50px;
+  bottom: 50px;
+  overflow: hidden;
+}

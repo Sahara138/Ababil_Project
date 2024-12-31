@@ -1,0 +1,33 @@
+.MuiDrawer-paper{
+    /* margin: 50px; */
+    border-radius: 30px;
+    background-color: aqua;
+}
+.logo-icon h3{
+    font-size: 18px;
+    font-weight: 700;
+}
+.logo-icon svg{
+    font-size: 32px;
+}.logo-icon{
+    position: fixed;
+   display: flex;
+   justify-content: flex-start;
+   gap: 15px;
+   align-items: center;
+
+
+}
+::-webkit-scrollbar {
+    width:8px;
+    height: px;
+    border-radius: 10px;
+    background-color: #d9f3f9;
+}
+::-webkit-scrollbar-thumb {
+    background: rgb(219, 224, 229);; 
+    border-radius: 10px;
+  }
+::-webkit-scrollbar-thumb:hover {
+    background: #b1cbd6; 
+  }
