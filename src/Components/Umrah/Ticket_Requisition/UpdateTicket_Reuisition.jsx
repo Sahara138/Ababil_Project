@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router";
+import ContactsRoundedIcon from '@mui/icons-material/ContactsRounded';
 import UmrahTabs from "../../../Tabs/UmrahTabs";
 import { useTheme } from "@emotion/react";
 
@@ -135,6 +136,7 @@ const UpdateTicketRequisition = () => {
         <div className="pilgrim-create" style={{ width: "100%" }}>
           <div style={{ height: "auto", width: "100%" }}>
             <div className="info">
+            <ContactsRoundedIcon className="title-icon"/>
               <Typography component="h2" variant="h5" sx={{ mb: 3, mt: 3 }}>
                 Update Ticket Requisition
               </Typography>

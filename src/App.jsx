@@ -31,6 +31,10 @@ import CreateDeparture from "./Components/Umrah/Departure/CreateDeparture";
 import UpdateDeparture from "./Components/Umrah/Departure/UpdateDeparture";
 import CreateTicketRequisition from "./Components/Umrah/Ticket_Requisition/CreateTicket_Reuisition";
 import UpdateTicketRequisition from "./Components/Umrah/Ticket_Requisition/UpdateTicket_Reuisition";
+import CreatePayment from "./Components/Umrah/Payment/CreatePayment";
+import UpdatePayment from "./Components/Umrah/Payment/UpdatePayment";
+import Register from "./Components/Auth/Register/Register";
+
 // import Trip from "./Components/Umrah/Trip/Trip";
 // import UmrahLayout from "./Layout/UmrahLayout";
 
@@ -150,6 +154,19 @@ function App() {
           path: "/umrah/payment",
           element: <Payment />,
         },
+
+        {
+          path: "/umrah/payment/create",
+          element: <CreatePayment />,
+        },
+        {
+          path: "/umrah/payment/view",
+          element: <Ticket_Requisition />,
+        },
+        {
+          path: "/umrah/payment/update",
+          element: <UpdatePayment/>,
+        },
         {
           path: "/umrah/hotelBooking",
           element: <Hotel />,
@@ -203,6 +220,10 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
     },
   ]);
 

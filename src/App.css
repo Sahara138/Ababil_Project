@@ -32,6 +32,12 @@ input{
 .title-icon{
   color:#99a1b7;
 }
+.info{
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  align-items: center;
+}
 .inputField input textarea{
   color: black;
 }

@@ -32,15 +32,15 @@ const Payment = () => {
   }, []);
 
   const CreatePayment = () => {
-    navigate("/payments/create");
+    navigate("/umrah/payment/create");
   };
 
   const ViewDetails = (id) => {
-    navigate(`/payments/view/${id}`);
+    navigate(`/umrah/payments/view/${id}`);
   };
 
   const EditDetails = (id) => {
-    navigate(`/payments/update/${id}`);
+    navigate(`/umrah/payments/update/${id}`);
   };
 
   const RemoveDetails = (id) => {

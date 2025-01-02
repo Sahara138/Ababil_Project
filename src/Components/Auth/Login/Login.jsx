@@ -1,235 +1,289 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Divider from '@mui/material/Divider';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import MuiCard from '@mui/material/Card';
-import { styled } from '@mui/material/styles';
-// import ForgotPassword from './ForgotPassword';
-// import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
-// import AppTheme from '../shared-theme/AppTheme';
-// import ColorModeSelect from '../shared-theme/ColorModeSelect';
 
-const Card = styled(MuiCard)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignSelf: 'center',
-  width: '100%',
+// import React, { useState } from "react";
+// import {
+//   Box,
+//   Button,
+//   Checkbox,
+//   CssBaseline,
+//   Divider,
+//   FormControl,
+//   FormControlLabel,
+//   Grid,
+//   Link,
+//   TextField,
+//   Typography,
+//   CircularProgress,
+// } from "@mui/material";
+// import { styled } from "@mui/material/styles";
+
+// const Card = styled(Box)(({ theme }) => ({
+//   display: "flex",
+//   flexDirection: "column",
+//   width: "100%",
+//   maxWidth: "400px",
+//   padding: theme.spacing(4),
+//   margin: "auto",
+//   boxShadow: theme.shadows[3],
+//   borderRadius: theme.shape.borderRadius,
+//   background: theme.palette.background.paper,
+// }));
+
+// const Login = () => {
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [errors, setErrors] = useState({});
+//   const [isLoading, setIsLoading] = useState(false);
+
+//   const validate = () => {
+//     const newErrors = {};
+//     if (!email || !/\S+@\S+\.\S+/.test(email)) {
+//       newErrors.email = "Please enter a valid email address.";
+//     }
+//     if (!password || password.length < 6) {
+//       newErrors.password = "Password must be at least 6 characters long.";
+//     }
+//     setErrors(newErrors);
+//     return Object.keys(newErrors).length === 0;
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!validate()) return;
+
+//     setIsLoading(true);
+
+//     try {
+//       const response = await fetch("http://192.168.0.100:5000/api/auth/login", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ email, password }),
+//       });
+
+//       const result = await response.json();
+
+//       if (response.ok) {
+//         console.log("Login successful:", result);
+//         alert("Login successful!");
+//       } else {
+//         console.error("Login failed:", result.message);
+//         setErrors({ server: result.message || "Login failed." });
+//       }
+//     } catch (error) {
+//       console.error("Error:", error);
+//       setErrors({ server: "An unexpected error occurred. Please try again." });
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   return (
+//     <Grid container component="main" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
+//       <CssBaseline />
+//       <Card>
+//         <Typography component="h1" variant="h4" align="center" gutterBottom>
+//           Sign In
+//         </Typography>
+//         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
+//           {errors.server && (
+//             <Typography color="error" variant="body2" align="center">
+//               {errors.server}
+//             </Typography>
+//           )}
+//           <FormControl fullWidth margin="normal">
+//             <TextField
+//               id="email"
+//               label="Email Address"
+//               type="email"
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               error={!!errors.email}
+//               helperText={errors.email}
+//               fullWidth
+//               required
+//             />
+//           </FormControl>
+//           <FormControl fullWidth margin="normal">
+//             <TextField
+//               id="password"
+//               label="Password"
+//               type="password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               error={!!errors.password}
+//               helperText={errors.password}
+//               fullWidth
+//               required
+//             />
+//           </FormControl>
+//           <FormControlLabel
+//             control={<Checkbox value="remember" color="primary" />}
+//             label="Remember me"
+//           />
+//           <Button
+//             type="submit"
+//             fullWidth
+//             variant="contained"
+//             color="primary"
+//             sx={{ mt: 2, mb: 2 }}
+//             disabled={isLoading}
+//           >
+//             {isLoading ? <CircularProgress size={24} /> : "Sign In"}
+//           </Button>
+//           <Link href="#" variant="body2" align="center" display="block">
+//             Forgot your password?
+//           </Link>
+//           <Divider sx={{ my: 2 }}>or</Divider>
+//           <Button
+//             fullWidth
+//             variant="outlined"
+//             onClick={() => alert("Sign in with Google")}
+//             sx={{ mb: 1 }}
+//           >
+//             Sign in with Google
+//           </Button>
+//           <Button
+//             fullWidth
+//             variant="outlined"
+//             onClick={() => alert("Sign in with Facebook")}
+//           >
+//             Sign in with Facebook
+//           </Button>
+//           <Typography align="center" sx={{ mt: 2 }}>
+//             Don't have an account?{" "}
+//             <Link href="/signup" variant="body2">
+//               Sign up
+//             </Link>
+//           </Typography>
+//         </Box>
+//       </Card>
+//     </Grid>
+//   );
+// };
+
+// export default Login;
+
+
+
+import { useState } from "react";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  CircularProgress,
+  Grid,
+  CssBaseline,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import axiosInstance from "../axiosInstance";
+import { Navigate } from "react-router";
+
+const Card = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  maxWidth: "400px",
   padding: theme.spacing(4),
-  gap: theme.spacing(2),
-  margin: 'auto',
-  [theme.breakpoints.up('sm')]: {
-    maxWidth: '450px',
-  },
-  boxShadow:
-    'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
-  ...theme.applyStyles('dark', {
-    boxShadow:
-      'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
-  }),
+  margin: "auto",
+  boxShadow: theme.shadows[3],
+  borderRadius: theme.shape.borderRadius,
+  background: theme.palette.background.paper,
 }));
 
-const SignInContainer = styled(Stack)(({ theme }) => ({
-  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
-  minHeight: '100%',
-  padding: theme.spacing(2),
-  [theme.breakpoints.up('sm')]: {
-    padding: theme.spacing(4),
-  },
-  '&::before': {
-    content: '""',
-    display: 'block',
-    position: 'absolute',
-    zIndex: -1,
-    inset: 0,
-    backgroundImage:
-      'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-    backgroundRepeat: 'no-repeat',
-    ...theme.applyStyles('dark', {
-      backgroundImage:
-        'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
-    }),
-  },
-}));
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-// export default function Login(props) {
-export default function Login() {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-//   const [open, setOpen] = React.useState(false);
-
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-
-  const handleSubmit = (event) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
+  const validate = () => {
+    const newErrors = {};
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Please enter a valid email address.";
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    if (!password || password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters long.";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const validateInputs = () => {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
 
-    let isValid = true;
+    setIsLoading(true);
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
+    try {
+      const response = await axiosInstance.post("http://192.168.0.100:5000/api/auth/login", { email, password });
+      const { accessToken, refreshToken, role } = response.data;
+
+      // Store tokens and role in localStorage
+      localStorage.setItem("access_token", accessToken);
+      localStorage.setItem("refresh_token", refreshToken);
+      localStorage.setItem("role", role);
+
+      alert("Login successful!");
+      window.location.href = "/dashboard"; // Redirect user
+    } catch (error) {
+      console.error("Login failed:", error.response?.data?.message || error.message);
+      setErrors({ server: error.response?.data?.message || "An error occurred. Please try again." });
+    } finally {
+      setIsLoading(false);
     }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
-
-    return isValid;
+    
   };
 
   return (
-    <>
-    {/* // <AppTheme {...props}> */}
-      <CssBaseline enableColorScheme />
-      <SignInContainer direction="column" justifyContent="space-between">
-        {/* <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} /> */}
-        <Card variant="outlined">
-          {/* <SitemarkIcon /> */}
-          <Typography
-            component="h1"
-            variant="h4"
-            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
-          >
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              gap: 2,
-            }}
-          >
-            <FormControl>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <TextField
-                error={emailError}
-                helperText={emailErrorMessage}
-                id="email"
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                autoComplete="email"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                color={emailError ? 'error' : 'primary'}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <TextField
-                error={passwordError}
-                helperText={passwordErrorMessage}
-                name="password"
-                placeholder="••••••"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                color={passwordError ? 'error' : 'primary'}
-              />
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              onClick={validateInputs}
-            >
-              Sign in
-            </Button>
-            <Link
-              component="button"
-              type="button"
-            //   onClick={handleClickOpen}
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
-            >
-              Forgot your password?
-            </Link>
-          </Box>
-          <Divider>or</Divider>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => alert('Sign in with Google')}
-            //   startIcon={<GoogleIcon />}
-            >
-              Sign in with Google
-            </Button>
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => alert('Sign in with Facebook')}
-            //   startIcon={<FacebookIcon />}
-            >
-              Sign in with Facebook
-            </Button>
-            <Typography sx={{ textAlign: 'center' }}>
-              Don&apos;t have an account?{' '}
-              <Link
-                href="/material-ui/getting-started/templates/sign-in/"
-                variant="body2"
-                sx={{ alignSelf: 'center' }}
-              >
-                Sign up
-              </Link>
+    <Grid container component="main" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
+      <CssBaseline />
+      <Card>
+        <Typography component="h1" variant="h4" align="center" gutterBottom>
+          Sign In
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
+          {errors.server && (
+            <Typography color="error" variant="body2" align="center">
+              {errors.server}
             </Typography>
-          </Box>
-        </Card>
-      </SignInContainer>
-    {/* // </AppTheme> */}
-    </>
+          )}
+          <TextField
+            id="email"
+            label="Email Address"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={!!errors.email}
+            helperText={errors.email}
+            fullWidth
+            required
+          />
+          <TextField
+            id="password"
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={!!errors.password}
+            helperText={errors.password}
+            fullWidth
+            required
+            sx={{ mt: 2 }}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2, mb: 2 }}
+            disabled={isLoading}
+          >
+            {isLoading ? <CircularProgress size={24} /> : "Sign In"}
+          </Button>
+        </Box>
+      </Card>
+    </Grid>
   );
-}
+};
+
+export default Login;
