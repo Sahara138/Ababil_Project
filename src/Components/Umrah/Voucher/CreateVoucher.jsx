@@ -1,56 +1,55 @@
 import { useState } from "react";
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography} from "@mui/material";
 import { useNavigate } from "react-router";
 import UmrahTabs from "../../../Tabs/UmrahTabs";
 import { useTheme } from "@emotion/react";
 import ContactsRoundedIcon from '@mui/icons-material/ContactsRounded';
+import Select from 'react-select';
 
-
-const CreatePayment = () => {
+const CreateVoucher = () => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === 'dark';
   const navigate = useNavigate();
 
   // State to store form values
-  const [paymentId, setPaymentId] = useState("");
-  const [pilgrimName, setPilgrimName] = useState("");
-  const [amountPaid, setAmountPaid] = useState("");
-  const [paymentDate, setPaymentDate] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [transactionId, setTransactionId] = useState("");
+  const [agent, setAgent] = useState("");
+  const [category, setCategory] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [totalAmount, setTotalAmount] = useState("");
   const [remarks, setRemarks] = useState("");
+  
+  
 
   // State to handle errors
   const [errors, setErrors] = useState({
-    paymentId: "",
-    pilgrimName: "",
-    amountPaid: "",
-    paymentDate: "",
-    paymentMethod: "",
-    transactionId: "",
+    agent: "",
+    category: "",
+    quantity: "",
+    totalAmount: "",
   });
+
+  const options = [
+    { value: "option1", label: "Option 1" },
+    { value: "option2", label: "Option 2" },
+    { value: "option3", label: "Option 3" },
+    { value: "option4", label: "Option 4" },
+  ];
 
   // Validation logic
   const validate = () => {
     const newErrors = {};
 
-    if (!paymentId.trim()) {
-      newErrors.paymentId = "* Payment ID is required.";
+    if (!agent.trim()) {
+      newErrors.agent = "* Agent is required.";
     }
-    if (!pilgrimName.trim()) {
-      newErrors.pilgrimName = "* Pilgrim Name is required.";
+    if (!category.trim()) {
+      newErrors.category = "* Category is required.";
     }
-    if (!amountPaid || isNaN(amountPaid) || Number(amountPaid) <= 0) {
-      newErrors.amountPaid = "* Amount Paid must be a positive number.";
+    if (!quantity || isNaN(quantity) || Number(quantity) <= 0) {
+      newErrors.quantity = "* Quantity must be a positive number.";
     }
-    if (!paymentDate.trim()) {
-      newErrors.paymentDate = "* Payment Date is required.";
-    }
-    if (!paymentMethod.trim()) {
-      newErrors.paymentMethod = "* Payment Method is required.";
-    }
-    if (!transactionId.trim()) {
-      newErrors.transactionId = "* Transaction ID is required.";
+    if (!totalAmount || isNaN(totalAmount) || Number(totalAmount) <= 0) {
+      newErrors.totalAmount = "* Total Amount must be a positive number.";
     }
 
     setErrors(newErrors);
@@ -61,17 +60,15 @@ const CreatePayment = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
-      paymentId,
-      pilgrimName,
-      amountPaid,
-      paymentDate,
-      paymentMethod,
-      transactionId,
+      agent,
+      category,
+      quantity,
+      totalAmount,
       remarks,
     };
     if (validate()) {
       console.log("Form Submitted:", formData);
-      fetch("http://localhost:8000/payments", {
+      fetch("http://localhost:8000/vouchers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,8 +76,8 @@ const CreatePayment = () => {
         body: JSON.stringify(formData),
       })
         .then((res) => {
-          alert("Payment Created Successfully");
-          navigate("/umrah/payments"); // Redirect after successful creation
+          alert("Voucher Created Successfully");
+          navigate("/umrah/vouchers"); // Redirect after successful creation
         })
         .catch((err) => console.log(err.message));
     } else {
@@ -90,12 +87,10 @@ const CreatePayment = () => {
 
   // Handle cancel action (reset form fields)
   const handleCancel = () => {
-    setPaymentId("");
-    setPilgrimName("");
-    setAmountPaid("");
-    setPaymentDate("");
-    setPaymentMethod("");
-    setTransactionId("");
+    setAgent("");
+    setCategory("");
+    setQuantity("");
+    setTotalAmount("");
     setRemarks("");
   };
 
@@ -125,7 +120,7 @@ const CreatePayment = () => {
             color: isDarkMode ? 'grey.300' : 'inherit',
           }}
         >
-          Payment Management
+          Voucher Management
         </Typography>
         <Divider
           sx={{
@@ -133,103 +128,80 @@ const CreatePayment = () => {
           }}
         />
         
-        <div className="payment-create" style={{ width: "100%" }}>
+        <div className="voucher-create" style={{ width: "100%" }}>
           <div style={{ height: "auto", width: "100%" }}>
             <div className="info">
-            <ContactsRoundedIcon className="title-icon"/>
+              <ContactsRoundedIcon className="title-icon"/>
               <Typography component="h2" variant="h5" sx={{ mb: 3, mt: 3 }}>
-                Create Payment
+                Create Voucher
               </Typography>
             </div>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="infoRow">
-              <div className="inputField">
-                <label htmlFor="paymentId">Payment ID</label>
-                <input
-                  id="paymentId"
-                  name="paymentId"
-                  type="text"
-                  value={paymentId}
-                  onChange={(e) => setPaymentId(e.target.value)}
-                />
-                {errors.paymentId && <span className="error">{errors.paymentId}</span>}
+            <div className="inputField">
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="agent">Agent</label>
+                <Select
+                  id="agent"
+                  name="agent"
+                  value={agent}
+                  placeholder="Select Agent Type"
+                  options={options}
+                  onChange={(selectedOption) => setAgent(selectedOption.value)}
+                  className="custom-select"
+                  style={{
+                    color: isDarkMode ? "black" : "inherit",
+                  }}
+                >
+                </Select>
+                {errors.agent && <span className="error">{errors.agent}</span>}
               </div>
-            </div>
-
-            <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="pilgrimName">Pilgrim Name</label>
-                <input
-                  id="pilgrimName"
-                  name="pilgrimName"
-                  type="text"
-                  value={pilgrimName}
-                  onChange={(e) => setPilgrimName(e.target.value)}
-                />
-                {errors.pilgrimName && <span className="error">{errors.pilgrimName}</span>}
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="category">Category</label>
+                <Select
+                  id="category"
+                  name="category"
+                  value={category}
+                  placeholder="Select category Type"
+                  options={options}
+                  onChange={(selectedOption) => setCategory(selectedOption.value)}
+                  className="custom-select"
+                  style={{
+                    color: isDarkMode ? "black" : "inherit",
+                  }}
+                
+                >
+                  
+                </Select>
+                {errors.category && <span className="error">{errors.category}</span>}
               </div>
-            </div>
-
-            <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="amountPaid">Amount Paid</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="quantity">Quantity</label>
                 <input
-                  id="amountPaid"
-                  name="amountPaid"
+                  id="quantity"
+                  name="quantity"
                   type="number"
-                  value={amountPaid}
-                  onChange={(e) => setAmountPaid(e.target.value)}
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
                 />
-                {errors.amountPaid && <span className="error">{errors.amountPaid}</span>}
+                {errors.quantity && <span className="error">{errors.quantity}</span>}
               </div>
-            </div>
-
-            <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="paymentDate">Payment Date</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="totalAmount">Total Amount</label>
                 <input
-                  id="paymentDate"
-                  name="paymentDate"
-                  type="date"
-                  value={paymentDate}
-                  onChange={(e) => setPaymentDate(e.target.value)}
+                  id="totalAmount"
+                  name="totalAmount"
+                  type="number"
+                  value={totalAmount}
+                  onChange={(e) => setTotalAmount(e.target.value)}
                 />
-                {errors.paymentDate && <span className="error">{errors.paymentDate}</span>}
+                {errors.totalAmount && <span className="error">{errors.totalAmount}</span>}
               </div>
             </div>
 
-            <div className="infoRow">
+            {/* <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="paymentMethod">Payment Method</label>
-                <input
-                  id="paymentMethod"
-                  name="paymentMethod"
-                  type="text"
-                  value={paymentMethod}
-                  onChange={(e) => setPaymentMethod(e.target.value)}
-                />
-                {errors.paymentMethod && <span className="error">{errors.paymentMethod}</span>}
-              </div>
-            </div>
-
-            <div className="infoRow">
-              <div className="inputField">
-                <label htmlFor="transactionId">Transaction ID</label>
-                <input
-                  id="transactionId"
-                  name="transactionId"
-                  type="text"
-                  value={transactionId}
-                  onChange={(e) => setTransactionId(e.target.value)}
-                />
-                {errors.transactionId && <span className="error">{errors.transactionId}</span>}
-              </div>
-            </div>
-
-            <div className="infoRow">
-              <div className="inputField">
-                <label htmlFor="remarks">Remarks</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="remarks">Remarks</label>
                 <textarea
                   id="remarks"
                   name="remarks"
@@ -238,14 +210,14 @@ const CreatePayment = () => {
                   onChange={(e) => setRemarks(e.target.value)}
                 />
               </div>
-            </div>
+            </div> */}
 
             <div className="formActions">
               <Button type="button" onClick={handleCancel} variant="outlined">
                 Cancel
               </Button>
               <Button type="submit" variant="contained">
-                Create Payment
+                Create Voucher
               </Button>
             </div>
           </form>
@@ -255,4 +227,7 @@ const CreatePayment = () => {
   );
 };
 
-export default CreatePayment;
+export default CreateVoucher;
+
+
+

@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import ContactsRoundedIcon from '@mui/icons-material/ContactsRounded';
 import UmrahTabs from "../../../Tabs/UmrahTabs";
 import { useTheme } from "@emotion/react";
+import Select from 'react-select';
 
 const UpdateTicketRequisition = () => {
   const theme = useTheme();
@@ -26,6 +27,12 @@ const UpdateTicketRequisition = () => {
     flightDate: "",
     returnDate: "",
   });
+  const options = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+    { value: 'option4', label: 'Option 4' },
+  ];
 
   // Validation logic
   const validate = () => {
@@ -145,7 +152,7 @@ const UpdateTicketRequisition = () => {
           <form onSubmit={handleSubmit}>
             <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="agentName">Agent Name</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="agentName">Agent Name</label>
                 <input
                   id="agentName"
                   name="agentName"
@@ -155,39 +162,46 @@ const UpdateTicketRequisition = () => {
                 />
                 {errors.agentName && <span className="error">{errors.agentName}</span>}
               </div>
-            </div>
-
-            <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="agentType">Agent Type</label>
-                <input
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="agentType">Agent Type</label>
+                <Select
                   id="agentType"
                   name="agentType"
+                  options={options}
                   type="text"
                   value={agentType}
-                  onChange={(e) => setAgentType(e.target.value)}
+                  onChange={(options) => setAgentType(options)}
+                  placeholder="Select Agent Type"
+                  className="custom-select"
+                  style={{
+                    color: isDarkMode ? "black" : "inherit",
+                }}
                 />
                 {errors.agentType && <span className="error">{errors.agentType}</span>}
               </div>
-            </div>
-
-            <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="pilgrimOrGroupName">Pilgrim or Group Name</label>
-                <input
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="pilgrimOrGroupName">Pilgrim or Group Name</label>
+                <Select
                   id="pilgrimOrGroupName"
                   name="pilgrimOrGroupName"
-                  type="text"
+                  options={options}
                   value={pilgrimOrGroupName}
-                  onChange={(e) => setPilgrimOrGroupName(e.target.value)}
+                  onChange={(options) => setPilgrimOrGroupName(options)}
+                  placeholder="Select Pilgrim or Group Name"
+                  className="custom-select"
+                  style={{
+                      color: isDarkMode ? "black" : "inherit",
+                   }}
                 />
                 {errors.pilgrimOrGroupName && <span className="error">{errors.pilgrimOrGroupName}</span>}
+
               </div>
+              
             </div>
 
             <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="flightDate">Flight Date</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="flightDate">Flight Date</label>
                 <input
                   id="flightDate"
                   name="flightDate"
@@ -197,11 +211,8 @@ const UpdateTicketRequisition = () => {
                 />
                 {errors.flightDate && <span className="error">{errors.flightDate}</span>}
               </div>
-            </div>
-
-            <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="returnDate">Return Date</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="returnDate">Return Date</label>
                 <input
                   id="returnDate"
                   name="returnDate"
@@ -218,7 +229,7 @@ const UpdateTicketRequisition = () => {
                 Cancel
               </Button>
               <Button type="submit" variant="contained">
-                Update Requisition
+                Create Requisition
               </Button>
             </div>
           </form>

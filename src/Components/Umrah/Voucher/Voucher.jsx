@@ -32,15 +32,15 @@ const Voucher = () => {
   }, []);
 
   const CreateVoucher = () => {
-    navigate("/vouchers/create");
+    navigate("/umrah/voucher/create");
   };
 
   const ViewDetails = (id) => {
-    navigate(`/vouchers/view/${id}`);
+    navigate(`/umrah/voucher/view/${id}`);
   };
 
-  const EditDetails = (id) => {
-    navigate(`/vouchers/update/${id}`);
+  const EditDetails = () => {
+    navigate(`/umrah/voucher/update`);
   };
 
   const RemoveDetails = (id) => {
@@ -58,12 +58,11 @@ const Voucher = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "Voucher ID", width: 120 },
-    { field: "pilgrimName", headerName: "Pilgrim Name", width: 200 },
-    { field: "voucherType", headerName: "Voucher Type", width: 200 },
+    { field: "id", headerName: "Voucher ID", width: 150 },
+    { field: "agentName", headerName: "Agent Name", width: 250 },
+    { field: "category", headerName: "Category Type", width: 250 },
     { field: "issueDate", headerName: "Issue Date", width: 200 },
-    { field: "amount", headerName: "Amount", width: 150 },
-    { field: "remarks", headerName: "Remarks", width: 300 },
+    { field: "amount", headerName: "Total Amount", width: 200 },
     {
       field: "actions",
       headerName: "Actions",

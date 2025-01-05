@@ -38,7 +38,8 @@ const mainListItems = [
     text: 'Umrah',
     icon: <MosqueIcon />,
     children: [
-      { path: '/umrah/trip', text: 'Trip' },
+      { path: '/umrah/trip', 
+        icon:"",text: 'Trip' },
       { path: '/umrah/pilgrim', text: 'Pilgrims' },
       { path: '/umrah/ticket-requisition', text: 'Ticket Requsation' },
       { path: '/umrah/payment', text: 'Payment' },
@@ -89,7 +90,7 @@ const mainListItems = [
   },
   {
     segment: 'users',
-    path: '/users',
+    path: '/users/list',
     text: 'User Management',
     icon: <PersonIcon />,
     children: [

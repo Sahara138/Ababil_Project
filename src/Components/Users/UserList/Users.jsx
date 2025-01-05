@@ -1,6 +1,6 @@
 import "./Users.css";
 import DataTable from "../../DataTable/DataTable";
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography, useTheme } from "@mui/material";
 // import AddNewUser from "./AddNewuser/AddNewUser";
 // import UpdateUserForm from "./UpdateUser.jsx";
 // import {userRows} from "../Data/data.js";
@@ -9,11 +9,16 @@ import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import { useEffect, useState } from "react";
+import UserTab from "../../../Tabs/UserTab";
 
 const Users = () => {
   // const navigate = useNavigate()
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const theme = useTheme(); // Access the current theme
+  
+  const isDarkMode = theme.palette.mode === 'dark'; // Check if the current theme is dark
+
 
   useEffect(() => {
     fetch("http://localhost:8000/userRows")
@@ -56,61 +61,101 @@ const Users = () => {
       headerName: "Avatar",
       width: 150,
       renderCell: (params) => (
-        <img src={params.row.img || "/noavatar.png"} alt="" />
+        <img
+          src={params.row.avatar || "/noavatar.png"}
+          alt=""
+          style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+        />
       ),
     },
-    { field: "userName", headerName: "User Name", width: 200, editable: true },
-    { field: "email", type: "string", headerName: "Email", width: 200 },
-    { field: "phone", type: "string", headerName: "Phone", width: 200 },
-    {
-      field: "createdAt",
-      headerName: "Created At",
-      width: 150,
-      type: "string",
-    },
-    { field: "status", headerName: "Status", width: 150, type: "boolean" },
+    { field: "name", headerName: "Name", width: 200 },
+    { field: "email", headerName: "Email", width: 200 },
+    { field: "phone", headerName: "Phone", width: 150 },
+    { field: "role", headerName: "Role", width: 150 },
+    { field: "status", headerName: "Status", width: 150 },
     {
       field: "actions",
       headerName: "Actions",
       width: 200,
       renderCell: (params) => (
-        <div className="action">
-          <div className="view" onClick={() => ViewDetails(params.row.id)}>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Button onClick={() => ViewDetails(params.row.id)}>
             <ViewQuiltIcon />
-          </div>
-          <div className="edit" onClick={() => EditDetails(params.row.id)}>
+          </Button>
+          <Button onClick={() => EditDetails(params.row.id)}>
             <RateReviewOutlinedIcon />
-          </div>
-          <div className="delete" onClick={() => RemoveDetails(params.row.id)}>
-            <DeleteForeverOutlinedIcon />
-          </div>
+          </Button>
+          <Button onClick={() => RemoveDetails(params.row.id)}>
+            <DeleteForeverOutlinedIcon color="error" />
+          </Button>
         </div>
       ),
     },
-  ];
-  return (
-    <div
-      className="users"
-      style={{
-        width: "100%",
-        maxWidth: { sm: "100%", md: "1700px" },
-      }}
-    >
-      <div style={{ height: "auto", width: "100%" }}>
-        <div className="info">
-          <Typography component="h2" variant="h6" sx={{ mb: 3, mt: 3 }}>
-            User Management
-          </Typography>
-          <Button variant="contained" onClick={() => CreateUser()}>
-            Add New User
-          </Button>
-        </div>
+  ]
 
-        <DataTable
-          rows={users && users.map((item) => item)}
-          columns={columns}
-        />
-      </div>
+
+
+  return (
+    <div style={{ width: '100%' }}>
+      <UserTab />
+      <Box
+          sx={{
+            marginTop: 5,
+            border: 1,
+            borderRadius: 1,
+            padding: '30px',
+            borderColor: 'transparent',
+            backgroundColor: isDarkMode ? 'grey.900' : 'white', // Adjust for dark mode
+            boxShadow: 3,
+            marginBottom: '50px',
+            color: isDarkMode ? 'grey.300' : 'grey.900', // Adjust text color for dark mode
+          }}
+        >
+          <Typography
+            component="h2"
+            variant="h6"
+            sx={{
+              mt: 2,
+              mb: 3,
+              fontSize: 25,
+              color: isDarkMode ? 'grey.300' : 'inherit', // Adjust heading color for dark mode
+            }}
+          >
+            Voucher Management
+          </Typography>
+          <Divider
+            sx={{
+              backgroundColor: isDarkMode ? 'grey.700' : 'grey.300', // Adjust divider color
+            }}
+          />
+            
+            <div style={{ width: "100%" }}>
+              <div
+                className="users"
+                style={{
+                  width: "100%",
+                  maxWidth: { sm: "100%", md: "1700px" },
+                }}
+              >
+                <div style={{ height: "auto", width: "100%" }}>
+                  <div className="info">
+                    <Typography component="h2" variant="h6" sx={{ mb: 3, mt: 3 }}>
+                      User Management
+                    </Typography>
+                    <Button variant="contained" onClick={() => CreateUser()}>
+                      Add New User
+                    </Button>
+                  </div>
+
+                  <DataTable
+                    rows={users && users.map((item) => item)}
+                    columns={columns}
+                  />
+                </div>
+              </div>
+            
+            </div>
+          </Box>
     </div>
   );
 };

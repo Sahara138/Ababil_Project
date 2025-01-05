@@ -59,13 +59,13 @@ const Departure = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
-    { field: "pilgrimName", headerName: "Pilgrim Name", width: 200 },
-    { field: "departureDate", headerName: "Departure Date", width: 200 },
-    { field: "flightNumber", headerName: "Flight Number", width: 150 },
-    { field: "airportName", headerName: "Airport Name", width: 200 },
-    { field: "terminal", headerName: "Terminal", width: 150 },
-    { field: "gateNumber", headerName: "Gate Number", width: 150 },
-    { field: "remarks", headerName: "Remarks", width: 300 },
+    { field: "agentName", headerName: "Agent Name", width: 200 },
+    { field: "tripType", headerName: "Trip Type", width: 150 },
+    { field: "addressInBangladesh", headerName: "Address In Bangladesh", width: 200 },
+    { field: "visaNumber", headerName: "Visa Number", width: 200 },
+    { field: "visaExpireDate", headerName: "Visa Expire Date", width: 150 },
+    { field: "visaType", headerName: "Visa Type", width: 150 },
+    { field: "visitPurpose", headerName: "Visit Purpose", width: 300 },
     {
       field: "actions",
       headerName: "Actions",

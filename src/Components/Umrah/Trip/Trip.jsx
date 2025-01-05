@@ -29,15 +29,17 @@ const Trip = () => {
   }, []);
 
   const CreateTrip = () => {
-    navigate("/trips/create");
+    navigate("/umrah/trip/create");
   };
 
   const ViewDetails = (id) => {
-    navigate(`/trips/view/${id}`);
+    navigate(`/umrah/trip/view`);
+    // navigate(`/umrah/trip/view/${id}`);
   };
 
   const EditDetails = (id) => {
-    navigate(`/trips/update/${id}`);
+    // navigate(`/umrah/trip/update/${id}`);
+    navigate(`/umrah/trip/update`);
   };
 
   const RemoveDetails = (id) => {

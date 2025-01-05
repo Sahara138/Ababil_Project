@@ -114,6 +114,7 @@ const Pilgrim = () => {
           boxShadow: 3,
           marginBottom: '50px',
           color: isDarkMode ? 'grey.300' : 'grey.900', // Adjust text color for dark mode
+
         }}
       >
         <Typography

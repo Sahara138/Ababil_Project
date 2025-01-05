@@ -1,10 +1,10 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
 import "./App.css";
-import Login from "./components/auth/Login/Login";
+import Login from "./Components/Auth/Login/Login";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Users from "./Components/Users/UserList/Users";
 import User from "./Components/Users/ViewUser/User";
-import AddNewUser from "./Components/Users/AddNewuser/AddNewUser";
+import AddNewUser from "./Components/Users/AddNewuser/CreateUser";
 import SideMenu from "./Components/SideMenu/SideMenu";
 import AppTheme from "./Components/shared-theme/AppTheme";
 import { alpha, Box, CssBaseline, Stack } from "@mui/material";
@@ -34,6 +34,13 @@ import UpdateTicketRequisition from "./Components/Umrah/Ticket_Requisition/Updat
 import CreatePayment from "./Components/Umrah/Payment/CreatePayment";
 import UpdatePayment from "./Components/Umrah/Payment/UpdatePayment";
 import Register from "./Components/Auth/Register/Register";
+import ProtectedRoute from "./Components/Auth/ProtectedRoute/ProtectedRoute";
+import CreateVoucher from "./Components/Umrah/Voucher/CreateVoucher";
+import UpdateVoucher from "./Components/Umrah/Voucher/UpdateVoucher";
+import CreateTrip from "./Components/Umrah/Trip/CreateTrip";
+import { UpdateTwoTone } from "@mui/icons-material";
+import UpdateTrip from "./Components/Umrah/Trip/UpdateTrip";
+import CreateUser from "./Components/Users/AddNewuser/CreateUser";
 
 // import Trip from "./Components/Umrah/Trip/Trip";
 // import UmrahLayout from "./Layout/UmrahLayout";
@@ -90,49 +97,71 @@ function App() {
 
   const router = createBrowserRouter([
     {
+      path: "/register",
+      element: <Register />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+
+    {
       path: "/",
-      element: <Layout />,
+      element: (
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      ),
       children: [
         {
           path: "/dashboard",
           element: <Dashboard />,
         },
-        {
-          path: "/users",
-          element: <Users />,
-        },
+        
+        // For trip Start
         {
           path: "/umrah",
-          element: <Trip />
+          element: <Trip />,
         },
         {
           path: "/umrah/trip",
           element: <Trip />,
         },
+        {
+          path: "/umrah/trip/create",
+          element: <CreateTrip />,
+        },
+        {
+          // path: "/umrah/pilgrim/view/:id",
+          path: "/umrah/trip/view",
+          element: <Pilgrim />,
+        },
+        {
+          // path: "/umrah/trip/update/:id",
+          path: "/umrah/trip/update",
+          element: <UpdateTrip />,
+        },
+        // For trip end
 
         // For Pilgrim start
         {
           path: "/umrah/pilgrim",
           element: <Pilgrim />,
-
         },
         {
           path: "/umrah/pilgrim/create",
-          element: <CreatePilgrim/>,
-
+          element: <CreatePilgrim />,
         },
         {
           path: "/umrah/pilgrim/view/:id",
           element: <Pilgrim />,
-
-        },{
+        },
+        {
           // path: "/umrah/pilgrim/update/:id",
           path: "/umrah/pilgrim/update",
           element: <UpdatePilgrim />,
-
         },
         // For Pilgrim end
-
 
         {
           path: "/umrah/ticket-requisition",
@@ -165,7 +194,7 @@ function App() {
         },
         {
           path: "/umrah/payment/update",
-          element: <UpdatePayment/>,
+          element: <UpdatePayment />,
         },
         {
           path: "/umrah/hotelBooking",
@@ -175,8 +204,19 @@ function App() {
           path: "/umrah/voucher",
           element: <Voucher />,
         },
-        
-        
+        {
+          path: "/umrah/voucher/create",
+          element: <CreateVoucher />,
+        },
+        {
+          path: "/umrah/voucher/view",
+          element: <Ticket_Requisition />,
+        },
+        {
+          path: "/umrah/voucher/update",
+          element: <UpdateVoucher />,
+        },
+
         // For Departure start
         {
           path: "/umrah/departure",
@@ -184,25 +224,26 @@ function App() {
         },
         {
           path: "/umrah/departure/create",
-          element: <CreateDeparture/>,
-
+          element: <CreateDeparture />,
         },
         {
           path: "/umrah/pilgrim/view/:id",
           element: <Pilgrim />,
-
-        },{
+        },
+        {
           // path: "/umrah/pilgrim/update/:id",
           path: "/umrah/departure/update",
           element: <UpdateDeparture />,
-
         },
         // For Departure end
 
-
         {
           path: "/users/create",
-          element: <AddNewUser />,
+          element: <CreateUser />,
+        },
+        {
+          path: "/users/list",
+          element: <Users />,
         },
         {
           path: "/users/view/:user_id",
@@ -212,18 +253,7 @@ function App() {
           path: "/users/update/:user_id",
           element: <UpdateUser />,
         },
-        
-       
-        
       ],
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/register",
-      element: <Register />,
     },
   ]);
 

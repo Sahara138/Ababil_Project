@@ -4,6 +4,7 @@ import ContactsRoundedIcon from '@mui/icons-material/ContactsRounded';
 import { useNavigate, useParams } from "react-router";
 import UmrahTabs from "../../../Tabs/UmrahTabs";
 import { useTheme } from "@emotion/react";
+import Select from 'react-select';
 
 const UpdateDeparture = () => {
   const theme = useTheme(); // Access the current theme
@@ -12,16 +13,21 @@ const UpdateDeparture = () => {
   const { id } = useParams(); // Assuming you have an ID param for the departure to update
 
   // State to store form values
-  const [passportDetails, setPassportDetails] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [gender, setGender] = useState("");
-  const [passportNo, setPassportNo] = useState("");
-  const [passportExpireDate, setPassportExpireDate] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [nationality, setNationality] = useState("");
-  const [reference, setReference] = useState("");
+  const [pilgrim, setPilgrim] = useState("");
+  const [addressInBangladesh, setAddressInBangladesh] = useState("");
+  const [visaNumber, setVisaNumber] = useState("");
+  const [visaExpireDate, setVisaExpireDate] = useState("");
+  const [visaType, setVisaType] = useState("");
+  const [visitPurpose, setVisitPurpose] = useState("");
+  const [tripType, setTripType] = useState("");
+  const [agentName, setAgentName] = useState("");
+
+  const options = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+    { value: 'option4', label: 'Option 4' },
+  ];
 
   // State to handle errors
   const [errors, setErrors] = useState({
@@ -34,7 +40,7 @@ const UpdateDeparture = () => {
     passportExpireDate: "",
     birthDate: "",
     nationality: "",
-    reference: "",
+    pilgrim: "",
   });
 
   // Fetch the current departure details by ID to populate the form (assuming a GET request by ID)
@@ -42,16 +48,15 @@ const UpdateDeparture = () => {
     fetch(`http://localhost:8000/userRows/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        setPassportDetails(data.passportDetails || "");
-        setFirstName(data.firstName || "");
-        setMiddleName(data.middleName || "");
-        setLastName(data.lastName || "");
-        setGender(data.gender || "");
-        setPassportNo(data.passportNo || "");
-        setPassportExpireDate(data.passportExpireDate || "");
-        setBirthDate(data.birthDate || "");
-        setNationality(data.nationality || "");
-        setReference(data.reference || "");
+        setAgentName(data.agentName || "");
+        setTripType(data.tripType || "");
+        setAddressInBangladesh(data.addressInBangladesh || "");
+        setPilgrim(data.pilgrim || "");
+        setVisaNumber(data.visaNumber || "");
+        setVisaType(data.visaType|| "");
+        setVisaExpireDate(data.visaExpireDate || "");
+        setVisitPurpose(data.visitPurpose|| "");
+        
       })
       .catch((err) => console.error("Error fetching user data:", err));
   }, [id]);
@@ -60,40 +65,35 @@ const UpdateDeparture = () => {
   const validate = () => {
     const newErrors = {};
   
-    if (!reference.trim()) {
-      newErrors.reference = "* Reference is required.";
+    if (!pilgrim.trim()) {
+      newErrors.pilgrim = "* Pilgrim is required.";
     }
-    if (!passportDetails.trim()) {
-      newErrors.passportDetails = "* Passport details are required.";
+    if (!agentName.trim()) {
+      newErrors.passportDetails = "* Agent Name are required.";
     }
-    if (!firstName.trim()) {
-      newErrors.firstName = "* First name is required.";
+    if (!tripType.trim()) {
+      newErrors.firstName = "* Trip Type is required.";
     }
-    if (!middleName.trim()) {
-      newErrors.middleName = "* Middle name is required.";
+    if (!visaNumber.trim()) {
+      newErrors.middleName = "* Visa Number is required.";
     }
-    if (!lastName.trim()) {
-      newErrors.lastName = "* Last name is required.";
+    if (!addressInBangladesh.trim()) {
+      newErrors.lastName = "* Address In Bangladesh is required.";
     }
-    if (!gender.trim()) {
-      newErrors.gender = "* Gender is required.";
+    if (!visaType.trim()) {
+      newErrors.gender = "* Visa Type is required.";
     }
-    if (!passportNo.trim()) {
-      newErrors.passportNo = "* Passport number is required.";
-    } else if (!/^[A-Z0-9]{6,9}$/.test(passportNo)) {
-      newErrors.passportNo = "* Invalid passport number format.";
+    if (!visaNumber.trim()) {
+      newErrors.visaNumber= "*Visa number is required.";
+    } else if (!/^[A-Z0-9]{6,9}$/.test(visaNumber)) {
+      newErrors.visaNumber = "* Invalid Visa Number format.";
     }
-    if (!passportExpireDate.trim()) {
-      newErrors.passportExpireDate = "* Passport expiry date is required.";
-    } else if (new Date(passportExpireDate) <= new Date()) {
-      newErrors.passportExpireDate = "* Passport expiry date must be in the future.";
+    if (!visaExpireDate.trim()) {
+      newErrors.visaExpireDate = "* Visa expiry date is required.";
+    } else if (new Date(visaExpireDate) <= new Date()) {
+      newErrors.visaExpireDate = "* Visa expiry date must be in the future.";
     }
-    if (!birthDate.trim()) {
-      newErrors.birthDate = "* Birth date is required.";
-    }
-    if (!nationality.trim()) {
-      newErrors.nationality = "* Nationality is required.";
-    }
+ 
   
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -102,8 +102,16 @@ const UpdateDeparture = () => {
   // Handle form submission (update data)
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = { passportDetails, firstName, middleName, lastName, gender, passportNo, passportExpireDate, birthDate, nationality, reference };
-    if (validate()) {
+    const formData = {
+      pilgrim,
+      addressInBangladesh,
+      visaNumber,
+      visaExpireDate,
+      visaType,
+      visitPurpose,
+      tripType,
+      agentName,
+    };if (validate()) {
       console.log("Form Submitted:", formData);
       fetch(`http://localhost:8000/userRows/${id}`, {
         method: "PUT",
@@ -124,16 +132,14 @@ const UpdateDeparture = () => {
 
   // Handle cancel action (reset form fields)
   const handleCancel = () => {
-    setPassportDetails("");
-    setFirstName("");
-    setMiddleName("");
-    setLastName("");
-    setGender("");
-    setPassportNo("");
-    setPassportExpireDate("");
-    setBirthDate("");
-    setNationality("");
-    setReference("");
+    setPilgrim("");
+     setAddressInBangladesh("");
+     setVisaNumber("");
+     setVisaExpireDate("");
+     setVisaType("");
+     setVisitPurpose("");
+     setTripType("");
+     setAgentName("");
   };
 
   return (
@@ -180,139 +186,124 @@ const UpdateDeparture = () => {
             </div>
           </div>
           <form onSubmit={handleSubmit}>
-            <div className="infoRow">
-              <div className="inputField">
-                <label htmlFor="reference">Reference</label>
-                <select
-                  id="reference"
-                  name="reference"
-                  value={reference}
-                  onChange={(e) => setReference(e.target.value)}
-                >
-                  <option value="">Select Reference</option>
-                  <option value="reference1">Reference 1</option>
-                  <option value="reference2">Reference 2</option>
-                </select>
-                {errors.reference && <span className="error">{errors.reference}</span>}
+              <div className="infoRow">
+                <div className="inputField">
+                  <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="agentName">Agent Name</label>
+                  <input
+                    id="agentName"
+                    name="agentName"
+                    type="text"
+                    value={agentName}
+                    onChange={(e) => setAgentName(e.target.value)}
+                  />
+                  {errors.agentName && <span className="error">{errors.agentName}</span>}
+                </div>
+                <div className="inputField">
+                  <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="tripType">Trip Type</label>
+                  <Select
+                    id="tripType"
+                    name="tripType"
+                    value={options.find((option) => option.value === tripType)}
+                    placeholder="Select Trip Type"
+                    options={options}
+                    onChange={(selectedOption) => setTripType(selectedOption.value)}
+                    className="custom-select"
+                    style={{
+                      color: isDarkMode ? "black" : "inherit",
+                    }}
+                  />
+                  {errors.tripType && <span className="error">{errors.tripType}</span>}
+                </div>
               </div>
-            </div>
+              <div className="infoRow">
+                <div className="inputField">
+                  <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="pilgrim">Pilgrim</label>
+                  <Select
+                    id="pilgrim"
+                    name="pilgrim"
+                    value={options.find((option) => option.value === pilgrim)}
+                    placeholder="Select Pilgrim"
+                    options={options}
+                    onChange={(selectedOption) => setPilgrim(selectedOption.value)}
+                    className="custom-select"
+                    style={{
+                      color: isDarkMode ? "black" : "inherit",
+                    }}
+                  />
+                  {errors.pilgrim && <span className="error">{errors.pilgrim}</span>}
+                </div>
 
-            <div className="inputField">
-              <label htmlFor="passportDetails">Passport Details</label>
-              <textarea
-                id="passportDetails"
-                name="passportDetails"
-                value={passportDetails}
-                onChange={(e) => setPassportDetails(e.target.value)}
-              ></textarea>
-              {errors.passportDetails && <span className="error">{errors.passportDetails}</span>}
-            </div>
-
-            <div className="nameRow">
-              <div className="inputField">
-                <label htmlFor="firstName">First Name</label>
-                <input
-                  id="firstName"
-                  name="firstName"
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-                {errors.firstName && <span className="error">{errors.firstName}</span>}
+                <div className="inputField">
+                  <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="addressInBangladesh">Address in Bangladesh</label>
+                  <Select
+                    id="addressInBangladesh"
+                    name="addressInBangladesh"
+                    value={options.find((option) => option.value === addressInBangladesh)}
+                    placeholder="Select Address"
+                    options={options}
+                    onChange={(selectedOption) =>
+                      setAddressInBangladesh(selectedOption.value)
+                    }
+                    className="custom-select"
+                    style={{
+                      color: isDarkMode ? "black" : "inherit",
+                    }}
+                  />
+                  {errors.addressInBangladesh && <span className="error">{errors.addressInBangladesh}</span>}
+                </div>
               </div>
+              <div className="infoRow">
+                <div className="inputField">
+                  <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="visaNumber">Visa Number</label>
+                  <input
+                    id="visaNumber"
+                    name="visaNumber"
+                    type="text"
+                    value={visaNumber}
+                    onChange={(e) => setVisaNumber(e.target.value)}
+                  />
+                  {errors.visaNumber && <span className="error">{errors.visaNumber}</span>}
+                </div>
 
-              <div className="inputField">
-                <label htmlFor="middleName">Middle Name</label>
-                <input
-                  id="middleName"
-                  name="middleName"
-                  type="text"
-                  value={middleName}
-                  onChange={(e) => setMiddleName(e.target.value)}
-                />
-                {errors.middleName && <span className="error">{errors.middleName}</span>}
+                <div className="inputField">
+                  <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="visaExpireDate">Visa Expiry Date</label>
+                  <input
+                    id="visaExpireDate"
+                    name="visaExpireDate"
+                    type="date"
+                    value={visaExpireDate}
+                    onChange={(e) => setVisaExpireDate(e.target.value)}
+                  />
+                  {errors.visaExpireDate && <span className="error">{errors.visaExpireDate}</span>}
+                </div>
+
+                <div className="inputField">
+                  <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="visaType">Visa Type</label>
+                  <Select
+                    id="visaType"
+                    name="visaType"
+                    value={options.find((option) => option.value === visaType)}
+                    placeholder="Select Visa Type"
+                    options={options}
+                    className="custom-select"
+                    style={{
+                      color: isDarkMode ? "black" : "inherit",
+                    }}
+                    onChange={(selectedOption) => setVisaType(selectedOption.value)}
+                  />
+                  {errors.visaType && <span className="error">{errors.visaType}</span>}
+                </div>
               </div>
-
               <div className="inputField">
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                  id="lastName"
-                  name="lastName"
-                  type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-                {errors.lastName && <span className="error">{errors.lastName}</span>}
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="visitPurpose">Visit Purpose</label>
+                <textarea
+                  id="visitPurpose"
+                  name="visitPurpose"
+                  value={visitPurpose}
+                  onChange={(e) => setVisitPurpose(e.target.value)}
+                ></textarea>
+                {errors.visitPurpose && <span className="error">{errors.visitPurpose}</span>}
               </div>
-            </div>
-
-            <div className="infoRow">
-              <div className="inputField">
-                <label htmlFor="gender">Gender</label>
-                <select
-                  id="gender"
-                  name="gender"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-                {errors.gender && <span className="error">{errors.gender}</span>}
-              </div>
-
-              <div className="inputField">
-                <label htmlFor="birthDate">Birth Date</label>
-                <input
-                  id="birthDate"
-                  name="birthDate"
-                  type="date"
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                />
-                {errors.birthDate && <span className="error">{errors.birthDate}</span>}
-              </div>
-
-              <div className="inputField">
-                <label htmlFor="nationality">Nationality</label>
-                <input
-                  id="nationality"
-                  name="nationality"
-                  type="text"
-                  value={nationality}
-                  onChange={(e) => setNationality(e.target.value)}
-                />
-                {errors.nationality && <span className="error">{errors.nationality}</span>}
-              </div>
-            </div>
-
-            <div className="infoRow">
-              <div className="inputField">
-                <label htmlFor="passportNo">Passport No</label>
-                <input
-                  id="passportNo"
-                  name="passportNo"
-                  type="text"
-                  value={passportNo}
-                  onChange={(e) => setPassportNo(e.target.value)}
-                />
-                {errors.passportNo && <span className="error">{errors.passportNo}</span>}
-              </div>
-
-              <div className="inputField">
-                <label htmlFor="passportExpireDate">Passport Expiry Date</label>
-                <input
-                  id="passportExpireDate"
-                  name="passportExpireDate"
-                  type="date"
-                  value={passportExpireDate}
-                  onChange={(e) => setPassportExpireDate(e.target.value)}
-                />
-                {errors.passportExpireDate && <span className="error">{errors.passportExpireDate}</span>}
-              </div>
-            </div>
-
             <div className="formActions">
               <Button type="button" onClick={handleCancel} variant="outlined">
                 Cancel

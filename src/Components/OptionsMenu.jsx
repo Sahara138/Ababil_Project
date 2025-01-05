@@ -23,6 +23,12 @@ export default function OptionsMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    sessionStorage.clear();
+   window.location.href = "/login";
+    // localStorage.clear();
+    // window.location.href="/login"
   };
   return (
     <React.Fragment>

@@ -145,7 +145,7 @@ const CreatePayment = () => {
           <form onSubmit={handleSubmit}>
             <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="paymentId">Payment ID</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="paymentId">Payment ID</label>
                 <input
                   id="paymentId"
                   name="paymentId"
@@ -155,11 +155,8 @@ const CreatePayment = () => {
                 />
                 {errors.paymentId && <span className="error">{errors.paymentId}</span>}
               </div>
-            </div>
-
-            <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="pilgrimName">Pilgrim Name</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="pilgrimName">Pilgrim Name</label>
                 <input
                   id="pilgrimName"
                   name="pilgrimName"
@@ -169,11 +166,12 @@ const CreatePayment = () => {
                 />
                 {errors.pilgrimName && <span className="error">{errors.pilgrimName}</span>}
               </div>
+              
             </div>
 
             <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="amountPaid">Amount Paid</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="amountPaid">Amount Paid</label>
                 <input
                   id="amountPaid"
                   name="amountPaid"
@@ -183,11 +181,8 @@ const CreatePayment = () => {
                 />
                 {errors.amountPaid && <span className="error">{errors.amountPaid}</span>}
               </div>
-            </div>
-
-            <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="paymentDate">Payment Date</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="paymentDate">Payment Date</label>
                 <input
                   id="paymentDate"
                   name="paymentDate"
@@ -198,10 +193,9 @@ const CreatePayment = () => {
                 {errors.paymentDate && <span className="error">{errors.paymentDate}</span>}
               </div>
             </div>
-
             <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="paymentMethod">Payment Method</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="paymentMethod">Payment Method</label>
                 <input
                   id="paymentMethod"
                   name="paymentMethod"
@@ -211,11 +205,8 @@ const CreatePayment = () => {
                 />
                 {errors.paymentMethod && <span className="error">{errors.paymentMethod}</span>}
               </div>
-            </div>
-
-            <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="transactionId">Transaction ID</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="transactionId">Transaction ID</label>
                 <input
                   id="transactionId"
                   name="transactionId"
@@ -229,7 +220,7 @@ const CreatePayment = () => {
 
             <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="remarks">Remarks</label>
+                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="remarks">Remarks</label>
                 <textarea
                   id="remarks"
                   name="remarks"

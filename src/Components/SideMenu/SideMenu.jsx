@@ -155,7 +155,7 @@ const Drawer = styled(MuiDrawer)(({ theme }) => ({
   [`& .${drawerClasses.paper}`]: {
     width: drawerWidth,
     boxSizing: "border-box",
-    backgroundColor: theme.palette.mode === 'dark' ? '#424242' : '#D9F3F9', // Dark mode background
+    backgroundColor: theme.palette.mode === 'dark' ? '#1B222A' : '#D9F3F9', // Dark mode background
     borderRadius: "20px",
     p: 1,
     height: 'auto',
@@ -178,6 +178,7 @@ export default function SideMenu() {
         display: { xs: "none", md: "block" },
         width: drawerWidth,
         overflow: "hidden",
+        boxShadow:3
       }}
     >
       <Box
@@ -194,8 +195,8 @@ export default function SideMenu() {
         }}
       >
         <Link to="/dashboard" className="logo-icon">
-          <FlightTakeoffIcon /> 
-          <h3>ABABIL HAJJ GROUP</h3>
+          <FlightTakeoffIcon  style={{color: theme.palette.mode === 'dark' ? 'white' : '#0A2540'}}/> 
+          <h3  style={{color: theme.palette.mode === 'dark' ? 'white' : '#0A2540'}}>ABABIL HAJJ GROUP</h3>
         </Link>
       </Box>
       <Box

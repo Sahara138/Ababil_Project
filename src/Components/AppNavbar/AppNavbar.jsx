@@ -38,6 +38,9 @@ export default function AppNavbar() {
   return (
     <AppBar
       position="fixed"
+      // position='fixed'
+      //   top='0'
+      //   right='0'
       sx={{
         display: { xs: 'auto', md: 'none' },
         boxShadow: 0,
