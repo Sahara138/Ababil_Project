@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
-import UmrahTabs from "../../../Tabs/UmrahTabs";
 import { useTheme } from "@emotion/react";
 import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
 import Select from "react-select";
@@ -113,7 +112,7 @@ const CreateUser = () => {
           backgroundColor: isDarkMode ? "grey.900" : "white",
           boxShadow: 3,
           marginBottom: "50px",
-          color: isDarkMode ? "grey.300" : "grey.900",
+          color: isDarkMode ? "#99a1b7" : "grey.900",
         }}
       >
         <Typography
@@ -123,14 +122,14 @@ const CreateUser = () => {
             mt: 2,
             mb: 3,
             fontSize: 25,
-            color: isDarkMode ? "grey.300" : "inherit",
+            color: isDarkMode ? "#99a1b7" : "inherit",
           }}
         >
           User Management
         </Typography>
         <Divider
           sx={{
-            backgroundColor: isDarkMode ? "grey.700" : "grey.300",
+            backgroundColor: isDarkMode ? "grey.700" : "#99a1b7",
           }}
         />
 
@@ -146,18 +145,19 @@ const CreateUser = () => {
           <form onSubmit={handleSubmit}>
             <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="id">ID</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="id">ID</label>
                 <input
                   id="id"
                   name="id"
                   type="text"
                   value={userData.id}
                   onChange={(e) => handleChange("id", e.target.value)}
+                  
                 />
                 {errors.id && <span className="error">{errors.id}</span>}
               </div>
               <div className="inputField">
-                <label htmlFor="name">Name</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="name">Name</label>
                 <input
                   id="name"
                   name="name"
@@ -168,7 +168,7 @@ const CreateUser = () => {
                 {errors.name && <span className="error">{errors.name}</span>}
               </div>
               <div className="inputField">
-                <label htmlFor="phone">Phone</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="phone">Phone</label>
                 <input
                   id="phone"
                   name="phone"
@@ -182,7 +182,7 @@ const CreateUser = () => {
 
             <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="email">Email</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="email">Email</label>
                 <input
                   id="email"
                   name="email"
@@ -193,7 +193,7 @@ const CreateUser = () => {
                 {errors.email && <span className="error">{errors.email}</span>}
               </div>
               <div className="inputField">
-                <label htmlFor="avatar">Avatar</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="avatar">Avatar</label>
                 <input
                   id="avatar"
                   name="avatar"
@@ -203,7 +203,7 @@ const CreateUser = () => {
                 />
               </div>
               <div className="inputField">
-                <label htmlFor="position">Position</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="position">Position</label>
                 <input
                   id="position"
                   name="position"
@@ -216,7 +216,7 @@ const CreateUser = () => {
 
             <div className="infoRow">
               <div className="inputField">
-                <label htmlFor="password">Password</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="password">Password</label>
                 <input
                   id="password"
                   name="password"
@@ -227,7 +227,7 @@ const CreateUser = () => {
                 {errors.password && <span className="error">{errors.password}</span>}
               </div>
               <div className="inputField">
-                <label htmlFor="role">Role</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="role">Role</label>
                 <Select
                   id="role"
                   name="role"
@@ -243,7 +243,7 @@ const CreateUser = () => {
                 {errors.role && <span className="error">{errors.role}</span>}
               </div>
               <div className="inputField">
-                <label htmlFor="permission">Permission</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="permission">Permission</label>
                 <Select
                   id="permission"
                   name="permission"
@@ -264,7 +264,7 @@ const CreateUser = () => {
               <Button type="button" onClick={handleCancel} variant="outlined">
                 Cancel
               </Button>
-              <Button type="submit" variant="contained">
+              <Button type="submit" variant="contained" >
                 Create User
               </Button>
             </div>

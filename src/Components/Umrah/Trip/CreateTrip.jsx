@@ -111,7 +111,7 @@ const CreateTrip = () => {
           backgroundColor: isDarkMode ? 'grey.900' : 'white',
           boxShadow: 3,
           marginBottom: '50px',
-          color: isDarkMode ? 'grey.300' : 'grey.900',
+          color: isDarkMode ? '#99a1b7' : 'grey.900',
         }}
       >
         <Typography
@@ -121,14 +121,14 @@ const CreateTrip = () => {
             mt: 2,
             mb: 3,
             fontSize: 25,
-            color: isDarkMode ? 'grey.300' : 'inherit',
+            color: isDarkMode ? '#99a1b7' : 'inherit',
           }}
         >
           Trip Management
         </Typography>
         <Divider
           sx={{
-            backgroundColor: isDarkMode ? 'grey.700' : 'grey.300',
+            backgroundColor: isDarkMode ? 'grey.700' : '#99a1b7',
           }}
         />
         
@@ -144,7 +144,7 @@ const CreateTrip = () => {
           <form onSubmit={handleSubmit}>
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="tripId">Trip ID</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="tripId">Trip ID</label>
                 <input
                   id="tripId"
                   name="tripId"
@@ -155,7 +155,7 @@ const CreateTrip = () => {
                 {errors.tripId && <span className="error">{errors.tripId}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="tripType">Trip Type</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="tripType">Trip Type</label>
                 <input
                   id="tripType"
                   name="tripType"
@@ -166,7 +166,7 @@ const CreateTrip = () => {
                 {errors.tripType && <span className="error">{errors.tripType}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="tripName">Trip Name</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="tripName">Trip Name</label>
                 <input
                   id="tripName"
                   name="tripName"
@@ -180,7 +180,7 @@ const CreateTrip = () => {
 
             <div className="infoRow">
               <div className="inputField">
-                  <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="destination">Destination</label>
+                  <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="destination">Destination</label>
                   <input
                     id="destination"
                     name="destination"
@@ -191,7 +191,7 @@ const CreateTrip = () => {
                   {errors.destination && <span className="error">{errors.destination}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="departureDate">Departure Date</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="departureDate">Departure Date</label>
                 <input
                   id="departureDate"
                   name="departureDate"
@@ -202,7 +202,7 @@ const CreateTrip = () => {
                 {errors.departureDate && <span className="error">{errors.departureDate}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="returnDate">Return Date</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="returnDate">Return Date</label>
                 <input
                   id="returnDate"
                   name="returnDate"
@@ -216,7 +216,7 @@ const CreateTrip = () => {
 
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="remarks">Remarks</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="remarks">Remarks</label>
                 <textarea
                   id="remarks"
                   name="remarks"

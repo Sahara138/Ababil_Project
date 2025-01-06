@@ -119,7 +119,7 @@ const UpdateTicketRequisition = () => {
           backgroundColor: isDarkMode ? 'grey.900' : 'white',
           boxShadow: 3,
           marginBottom: '50px',
-          color: isDarkMode ? 'grey.300' : 'grey.900',
+          color: isDarkMode ? '#99a1b7' : 'grey.900',
         }}
       >
         <Typography
@@ -129,14 +129,14 @@ const UpdateTicketRequisition = () => {
             mt: 2,
             mb: 3,
             fontSize: 25,
-            color: isDarkMode ? 'grey.300' : 'inherit',
+            color: isDarkMode ? '#99a1b7' : 'inherit',
           }}
         >
           Ticket Requisition Management
         </Typography>
         <Divider
           sx={{
-            backgroundColor: isDarkMode ? 'grey.700' : 'grey.300',
+            backgroundColor: isDarkMode ? 'grey.700' : '#99a1b7',
           }}
         />
         
@@ -152,7 +152,7 @@ const UpdateTicketRequisition = () => {
           <form onSubmit={handleSubmit}>
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="agentName">Agent Name</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="agentName">Agent Name</label>
                 <input
                   id="agentName"
                   name="agentName"
@@ -163,7 +163,7 @@ const UpdateTicketRequisition = () => {
                 {errors.agentName && <span className="error">{errors.agentName}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="agentType">Agent Type</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="agentType">Agent Type</label>
                 <Select
                   id="agentType"
                   name="agentType"
@@ -180,7 +180,7 @@ const UpdateTicketRequisition = () => {
                 {errors.agentType && <span className="error">{errors.agentType}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="pilgrimOrGroupName">Pilgrim or Group Name</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="pilgrimOrGroupName">Pilgrim or Group Name</label>
                 <Select
                   id="pilgrimOrGroupName"
                   name="pilgrimOrGroupName"
@@ -201,7 +201,7 @@ const UpdateTicketRequisition = () => {
 
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="flightDate">Flight Date</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="flightDate">Flight Date</label>
                 <input
                   id="flightDate"
                   name="flightDate"
@@ -212,7 +212,7 @@ const UpdateTicketRequisition = () => {
                 {errors.flightDate && <span className="error">{errors.flightDate}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="returnDate">Return Date</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="returnDate">Return Date</label>
                 <input
                   id="returnDate"
                   name="returnDate"

@@ -141,7 +141,7 @@ const CreateDeparture = () => {
           backgroundColor: isDarkMode ? 'grey.900' : 'white', // Adjust for dark mode
           boxShadow: 3,
           marginBottom: '50px',
-          color: isDarkMode ? 'grey.300' : 'grey.900', // Adjust text color for dark mode
+          color: isDarkMode ? '#99a1b7' : 'grey.900', // Adjust text color for dark mode
         }}
       >
         <Typography
@@ -151,14 +151,14 @@ const CreateDeparture = () => {
             mt: 2,
             mb: 3,
             fontSize: 25,
-            color: isDarkMode ? 'grey.300' : 'inherit', // Adjust heading color for dark mode
+            color: isDarkMode ? '#99a1b7' : 'inherit', // Adjust heading color for dark mode
           }}
         >
           Departure Management
         </Typography>
         <Divider
           sx={{
-            backgroundColor: isDarkMode ? 'grey.700' : 'grey.300', // Adjust divider color
+            backgroundColor: isDarkMode ? 'grey.700' : '#99a1b7', // Adjust divider color
           }}
         />
         
@@ -175,7 +175,7 @@ const CreateDeparture = () => {
             
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="agentName">Agent Name</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="agentName">Agent Name</label>
                 <input
                   id="agentName"
                   name="agentName"
@@ -186,7 +186,7 @@ const CreateDeparture = () => {
                 {errors.agentName && <span className="error">{errors.agentName}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="tripType">Trip Type</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="tripType">Trip Type</label>
                 <Select
                   id="tripType"
                   name="tripType"
@@ -204,7 +204,7 @@ const CreateDeparture = () => {
             </div>
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="pilgrim">Pilgrim</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="pilgrim">Pilgrim</label>
                 <Select
                   id="pilgrim"
                   name="pilgrim"
@@ -221,7 +221,7 @@ const CreateDeparture = () => {
               </div>
 
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="addressInBangladesh">Address in Bangladesh</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="addressInBangladesh">Address in Bangladesh</label>
                 <Select
                   id="addressInBangladesh"
                   name="addressInBangladesh"
@@ -241,7 +241,7 @@ const CreateDeparture = () => {
             </div>
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="visaNumber">Visa Number</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="visaNumber">Visa Number</label>
                 <input
                   id="visaNumber"
                   name="visaNumber"
@@ -253,7 +253,7 @@ const CreateDeparture = () => {
               </div>
 
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="visaExpireDate">Visa Expiry Date</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="visaExpireDate">Visa Expiry Date</label>
                 <input
                   id="visaExpireDate"
                   name="visaExpireDate"
@@ -265,7 +265,7 @@ const CreateDeparture = () => {
               </div>
 
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="visaType">Visa Type</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="visaType">Visa Type</label>
                 <Select
                   id="visaType"
                   name="visaType"
@@ -282,7 +282,7 @@ const CreateDeparture = () => {
               </div>
             </div>
             <div className="inputField">
-              <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="visitPurpose">Visit Purpose</label>
+              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="visitPurpose">Visit Purpose</label>
               <textarea
                 id="visitPurpose"
                 name="visitPurpose"

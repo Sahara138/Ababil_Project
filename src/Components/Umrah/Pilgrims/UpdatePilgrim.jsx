@@ -221,7 +221,7 @@ const UpdatePilgrim = () => {
           backgroundColor: isDarkMode ? "grey.900" : "white", // Adjust for dark mode
           boxShadow: 3,
           marginBottom: "50px",
-          color: isDarkMode ? "grey.300" : "grey.900", // Adjust text color for dark mode
+          color: isDarkMode ? "#99a1b7" : "grey.900", // Adjust text color for dark mode
         }}
       >
         <Typography
@@ -231,14 +231,14 @@ const UpdatePilgrim = () => {
             mt: 2,
             mb: 3,
             fontSize: 25,
-            color: isDarkMode ? "grey.300" : "inherit", // Adjust heading color for dark mode
+            color: isDarkMode ? "#99a1b7" : "inherit", // Adjust heading color for dark mode
           }}
         >
           Pilgrim Management
         </Typography>
         <Divider
           sx={{
-            backgroundColor: isDarkMode ? "grey.700" : "grey.300", // Adjust divider color
+            backgroundColor: isDarkMode ? "grey.700" : "#99a1b7", // Adjust divider color
           }}
         />
 
@@ -263,7 +263,7 @@ const UpdatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="reference"
-                  style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Reference
                 </label>
@@ -287,7 +287,7 @@ const UpdatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="trip"
-                  style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Trip
                 </label>
@@ -309,7 +309,7 @@ const UpdatePilgrim = () => {
             <div className="inputField">
               <label
                 htmlFor="passportDetails"
-                style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
               >
                 Passport Details
               </label>
@@ -328,7 +328,7 @@ const UpdatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="firstName"
-                  style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   First Name
                 </label>
@@ -347,7 +347,7 @@ const UpdatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="middleName"
-                  style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Middle Name
                 </label>
@@ -366,7 +366,7 @@ const UpdatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="lastName"
-                  style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Last Name
                 </label>
@@ -387,7 +387,7 @@ const UpdatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="gender"
-                  style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Gender
                 </label>
@@ -411,7 +411,7 @@ const UpdatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="birthDate"
-                  style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Birth Date
                 </label>
@@ -430,7 +430,7 @@ const UpdatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="nationality"
-                  style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Nationality
                 </label>
@@ -451,7 +451,7 @@ const UpdatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="passportNo"
-                  style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Passport No
                 </label>
@@ -471,7 +471,7 @@ const UpdatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="passportExpireDate"
-                  style={{ color: isDarkMode ? "grey.300" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Passport Expiry Date
                 </label>

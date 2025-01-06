@@ -3,8 +3,7 @@ import "./App.css";
 import Login from "./Components/Auth/Login/Login";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Users from "./Components/Users/UserList/Users";
-import User from "./Components/Users/ViewUser/User";
-import AddNewUser from "./Components/Users/AddNewuser/CreateUser";
+import User from "./Components/Users/ViewUser/ViewUser";
 import SideMenu from "./Components/SideMenu/SideMenu";
 import AppTheme from "./Components/shared-theme/AppTheme";
 import { alpha, Box, CssBaseline, Stack } from "@mui/material";
@@ -38,9 +37,10 @@ import ProtectedRoute from "./Components/Auth/ProtectedRoute/ProtectedRoute";
 import CreateVoucher from "./Components/Umrah/Voucher/CreateVoucher";
 import UpdateVoucher from "./Components/Umrah/Voucher/UpdateVoucher";
 import CreateTrip from "./Components/Umrah/Trip/CreateTrip";
-import { UpdateTwoTone } from "@mui/icons-material";
 import UpdateTrip from "./Components/Umrah/Trip/UpdateTrip";
 import CreateUser from "./Components/Users/AddNewuser/CreateUser";
+import ViewUser from "./Components/Users/ViewUser/ViewUser";
+import Agents from "./Components/Agent/Agents";
 
 // import Trip from "./Components/Umrah/Trip/Trip";
 // import UmrahLayout from "./Layout/UmrahLayout";
@@ -108,9 +108,9 @@ function App() {
     {
       path: "/",
       element: (
-        <ProtectedRoute>
+        // <ProtectedRoute>
           <Layout />
-        </ProtectedRoute>
+        // </ProtectedRoute>
       ),
       children: [
         {
@@ -246,13 +246,56 @@ function App() {
           element: <Users />,
         },
         {
-          path: "/users/view/:user_id",
-          element: <User />,
+          // path: "/users/view/:user_id",
+          path: "/users/view",
+          element: <ViewUser />,
         },
         {
-          path: "/users/update/:user_id",
+          path: "/users/update",
+          // path: "/users/update/:user_id",
           element: <UpdateUser />,
         },
+        // Agent start
+        {
+          path: "/agents/list",
+          element: <Agents />,
+        },
+        {
+          path: "/agent/create",
+          element: <Users />,
+        },
+        {
+          // path: "/users/view/:user_id",
+          path: "/agent/view",
+          element: <ViewUser />,
+        },
+        {
+          path: "/agent/update",
+          // path: "/users/update/:user_id",
+          element: <UpdateUser />,
+        },
+        // Agent end
+       
+        // Employee start
+        {
+          path: "/employee/list",
+          element: <CreateUser />,
+        },
+        {
+          path: "/employee/create",
+          element: <Users />,
+        },
+        {
+          // path: "/users/view/:user_id",
+          path: "/employee/view",
+          element: <ViewUser />,
+        },
+        {
+          path: "/employee/update",
+          // path: "/users/update/:user_id",
+          element: <UpdateUser />,
+        },
+        // Employee end
       ],
     },
   ]);

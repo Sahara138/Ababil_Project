@@ -21,10 +21,15 @@ const Pilgrim = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8000/pilgrims")
+    fetch("http://192.168.0.100:5000/api/auth/getallpilgrim")
       .then((res) => res.json())
       .then((data) => {
-        setPilgrims(data);
+        const updatedPilgrims = data.map((pilgrim) => ({
+          ...pilgrim,
+          id: pilgrim._id, // Assuming _id is the identifier in your API
+        }));
+        setPilgrims(updatedPilgrims);
+        // setPilgrims(data);
       })
       .catch((err) => {
         console.log(err.message);
@@ -45,7 +50,7 @@ const Pilgrim = () => {
 
   const RemoveDetails = (id) => {
     if (window.confirm("Are you sure you want to delete this pilgrim?")) {
-      fetch(`http://localhost:8000/pilgrims/${id}`, {
+      fetch(`http://192.168.0.100:5000/api/auth/createpilgrim/${id}`, {
         method: "DELETE",
       })
         .then(() => {
@@ -59,15 +64,15 @@ const Pilgrim = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     { field: "firstName", headerName: "First Name", width: 150 },
     { field: "middleName", headerName: "Middle Name", width: 150 },
     { field: "lastName", headerName: "Last Name", width: 150 },
     { field: "gender", headerName: "Gender", width: 100 },
-    { field: "dob", headerName: "Date of Birth", width: 150 },
+    { field: "birthday", headerName: "Date of Birth", width: 150 },
     { field: "nationality", headerName: "Nationality", width: 150 },
     { field: "passportNo", headerName: "Passport No", width: 150 },
-    { field: "passportExpiry", headerName: "Passport Expiry Date", width: 150 },
+    { field: "passportExpiredDate", headerName: "Passport Expiry Date", width: 150 },
+    { field: "payment", headerName: "Payment", width: 150 },
     {
       field: "reference",
       headerName: "Reference",
@@ -150,11 +155,15 @@ const Pilgrim = () => {
             Add New Pilgrim
           </Button>
         </div>
-
         <DataTable
-          rows={pilgrims && pilgrims.map((item) => item)}
+          rows={pilgrims && pilgrims.map((item) => item)} // Ensure pilgrims contains data with unique _id
           columns={columns}
+          getRowId={(row) => row._id} // Specify the unique identifier
         />
+        {/* <DataTable
+          rows={pilgrims && pilgrims.map((item) => item)}
+          columns={columns} 
+        /> */}
       </div>
     </div>
       </Box>

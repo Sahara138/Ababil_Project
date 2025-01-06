@@ -39,7 +39,7 @@ export default function ColorModeSelect(props) {
     return null; // Ensure the hook is available
   }
 
-  const { mode, setMode } = colorScheme;
+  const { mode = 'system', setMode } = colorScheme;
 
   if (!setMode) {
     return null; // Ensure the setter function exists
@@ -47,7 +47,7 @@ export default function ColorModeSelect(props) {
 
   return (
     <Select
-      value={mode}
+      value={mode || 'system'}
       onChange={(event) => setMode(event.target.value)}
       {...props} // Spread additional props
       SelectDisplayProps={{

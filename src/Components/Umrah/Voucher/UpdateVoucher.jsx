@@ -120,7 +120,7 @@ const UpdateVoucher = () => {
           backgroundColor: isDarkMode ? "grey.900" : "white",
           boxShadow: 3,
           marginBottom: "50px",
-          color: isDarkMode ? "grey.300" : "grey.900",
+          color: isDarkMode ? "#99a1b7" : "grey.900",
         }}
       >
         <Typography
@@ -130,14 +130,14 @@ const UpdateVoucher = () => {
             mt: 2,
             mb: 3,
             fontSize: 25,
-            color: isDarkMode ? "grey.300" : "inherit",
+            color: isDarkMode ? "#99a1b7" : "inherit",
           }}
         >
           Voucher Management
         </Typography>
         <Divider
           sx={{
-            backgroundColor: isDarkMode ? "grey.700" : "grey.300",
+            backgroundColor: isDarkMode ? "grey.700" : "#99a1b7",
           }}
         />
 
@@ -153,7 +153,7 @@ const UpdateVoucher = () => {
           <form onSubmit={handleSubmit}>
             <div className="infoRow">
             <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="agent">Agent</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="agent">Agent</label>
                 <Select
                   id="agent"
                   name="agent"
@@ -170,7 +170,7 @@ const UpdateVoucher = () => {
                 {errors.agent && <span className="error">{errors.agent}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="category">Category</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="category">Category</label>
                 <Select
                   id="category"
                   name="category"
@@ -189,7 +189,7 @@ const UpdateVoucher = () => {
                 {errors.category && <span className="error">{errors.category}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="quantity">Quantity</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="quantity">Quantity</label>
                 <input
                   id="quantity"
                   name="quantity"
@@ -200,7 +200,7 @@ const UpdateVoucher = () => {
                 {errors.quantity && <span className="error">{errors.quantity}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="totalAmount">Total Amount</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="totalAmount">Total Amount</label>
                 <input
                   id="totalAmount"
                   name="totalAmount"
@@ -214,7 +214,7 @@ const UpdateVoucher = () => {
 
             {/* <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="remarks">Remarks</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="remarks">Remarks</label>
                 <textarea
                   id="remarks"
                   name="remarks"

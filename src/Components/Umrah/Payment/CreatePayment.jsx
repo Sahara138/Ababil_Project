@@ -112,7 +112,7 @@ const CreatePayment = () => {
           backgroundColor: isDarkMode ? 'grey.900' : 'white',
           boxShadow: 3,
           marginBottom: '50px',
-          color: isDarkMode ? 'grey.300' : 'grey.900',
+          color: isDarkMode ? '#99a1b7' : 'grey.900',
         }}
       >
         <Typography
@@ -122,14 +122,14 @@ const CreatePayment = () => {
             mt: 2,
             mb: 3,
             fontSize: 25,
-            color: isDarkMode ? 'grey.300' : 'inherit',
+            color: isDarkMode ? '#99a1b7' : 'inherit',
           }}
         >
           Payment Management
         </Typography>
         <Divider
           sx={{
-            backgroundColor: isDarkMode ? 'grey.700' : 'grey.300',
+            backgroundColor: isDarkMode ? 'grey.700' : '#99a1b7',
           }}
         />
         
@@ -145,7 +145,7 @@ const CreatePayment = () => {
           <form onSubmit={handleSubmit}>
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="paymentId">Payment ID</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}htmlFor="paymentId">Payment ID</label>
                 <input
                   id="paymentId"
                   name="paymentId"
@@ -156,7 +156,7 @@ const CreatePayment = () => {
                 {errors.paymentId && <span className="error">{errors.paymentId}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="pilgrimName">Pilgrim Name</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}htmlFor="pilgrimName">Pilgrim Name</label>
                 <input
                   id="pilgrimName"
                   name="pilgrimName"
@@ -171,7 +171,7 @@ const CreatePayment = () => {
 
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="amountPaid">Amount Paid</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}htmlFor="amountPaid">Amount Paid</label>
                 <input
                   id="amountPaid"
                   name="amountPaid"
@@ -182,7 +182,7 @@ const CreatePayment = () => {
                 {errors.amountPaid && <span className="error">{errors.amountPaid}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="paymentDate">Payment Date</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}htmlFor="paymentDate">Payment Date</label>
                 <input
                   id="paymentDate"
                   name="paymentDate"
@@ -195,7 +195,7 @@ const CreatePayment = () => {
             </div>
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="paymentMethod">Payment Method</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}htmlFor="paymentMethod">Payment Method</label>
                 <input
                   id="paymentMethod"
                   name="paymentMethod"
@@ -206,7 +206,7 @@ const CreatePayment = () => {
                 {errors.paymentMethod && <span className="error">{errors.paymentMethod}</span>}
               </div>
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="transactionId">Transaction ID</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}htmlFor="transactionId">Transaction ID</label>
                 <input
                   id="transactionId"
                   name="transactionId"
@@ -220,7 +220,7 @@ const CreatePayment = () => {
 
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }}htmlFor="remarks">Remarks</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}htmlFor="remarks">Remarks</label>
                 <textarea
                   id="remarks"
                   name="remarks"

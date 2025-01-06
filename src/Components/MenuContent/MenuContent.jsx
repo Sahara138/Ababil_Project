@@ -44,7 +44,14 @@ const mainListItems = [
       { path: '/umrah/ticket-requisition', text: 'Ticket Requsation' },
       { path: '/umrah/payment', text: 'Payment' },
       { path: '/umrah/hotelBooking', text: 'Hotel Booking' },
-      { path: '/umrah/voucher', text: 'Voucher' },
+      { 
+        path: '/umrah/voucher',
+        text: 'Voucher',
+        children:[
+          { path: '/umrah/voucher/create', text: 'Create Voucher' },
+          { path: '/umrah/voucher', text: 'Voucher List' }
+        ]
+       },
       { path: '/umrah/departure', text: 'Departure' }
     ]
   },{
