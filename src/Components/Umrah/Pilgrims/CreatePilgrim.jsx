@@ -563,24 +563,24 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Button,
-  Card,
+  // Card,
   Divider,
-  FormControl,
-  FormLabel,
+  // FormControl,
+  // FormLabel,
   Typography,
 } from "@mui/material";
 import "../../Users/UserList/Users";
 import "../../Users/AddNewuser/CreateUser";
 import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import UmrahTabs from "../../../Tabs/UmrahTabs";
 import { useTheme } from "@emotion/react";
 import Select from "react-select";
 
-const CreatePilgrim = () => {
+const CreatePilgrim = (id) => {
   const theme = useTheme(); // Access the current theme
   const isDarkMode = theme.palette.mode === "dark"; // Check if the current theme is dark
-  const navigate = useNavigate();
+
   
   // State variables
   const [reference, setReference] = useState("");
@@ -596,7 +596,7 @@ const CreatePilgrim = () => {
   const [passportExpiredDate, setPassportExpiredDate] = useState("");
 
   const options = [
-    { value: "option1", label: "Option 1" },
+    { value: "63e9e2a8f1b23c1a2f12345", label: "Option 1" },
     { value: "option2", label: "Option 2" },
     { value: "option3", label: "Option 3" },
     { value: "option4", label: "Option 4" },
@@ -607,26 +607,7 @@ const CreatePilgrim = () => {
     { value: "other", label: "Other" },
   ];
 
-  // Fetch data and populate the form
-  useEffect(() => {
-    fetch("http://192.168.0.100:5000/api/auth/createpilgrim")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data) {
-          setFirstName(data.firstName);
-          setMiddleName(data.middleName);
-          setLastName(data.lastName);
-          setReference(data.reference);
-          setNationality(data.nationality);
-          setBirthday(data.birthday);
-          setPassportNo(data.passportNo);
-          setPassportExpiredDate(data.passportExpiredDate);
-          setPayment(data.payment);
-          setGender(data.gender);
-        }
-      })
-      .catch((err) => console.error("Error fetching user data:", err));
-  }, []); // Fetch only once when component mounts
+
 
   const [errors, setErrors] = useState({
     reference: "",
@@ -679,7 +660,7 @@ const CreatePilgrim = () => {
     }
 
     const formData = {
-      reference: reference,
+      reference: reference == id ? reference.value : "",
       trip: trip ? trip.value : "",
       payment: paymentAmount,
       firstName,
@@ -702,14 +683,14 @@ const CreatePilgrim = () => {
         },
         body: JSON.stringify(formData),
       })
-        .then((res) => {
-          if (res.ok) {
-            alert("User Data Saved Successfully");
-            navigate("/umrah/pilgrim");
-          } else {
-            console.error("Error:", res.statusText);
-          }
-        })
+        // .then((res) => {
+        //   if (res.ok) {
+        //     alert("User Data Saved Successfully");
+        //     navigate("/umrah/pilgrim");
+        //   } else {
+        //     console.error("Error:", res.statusText);
+        //   }
+        // })
         .catch((err) => {
           console.log(err.message);
         });
@@ -780,7 +761,7 @@ const CreatePilgrim = () => {
               <div className="inputField">
                 <label
                   htmlFor="reference"
-                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
+                  style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} 
                 >
                   Reference
                 </label>

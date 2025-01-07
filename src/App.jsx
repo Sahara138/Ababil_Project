@@ -41,6 +41,7 @@ import UpdateTrip from "./Components/Umrah/Trip/UpdateTrip";
 import CreateUser from "./Components/Users/AddNewuser/CreateUser";
 import ViewUser from "./Components/Users/ViewUser/ViewUser";
 import Agents from "./Components/Agent/Agents";
+import CreateAgent from "./Components/Agent/CreateAgent";
 
 // import Trip from "./Components/Umrah/Trip/Trip";
 // import UmrahLayout from "./Layout/UmrahLayout";
@@ -261,8 +262,8 @@ function App() {
           element: <Agents />,
         },
         {
-          path: "/agent/create",
-          element: <Users />,
+          path: "/agents/create",
+          element: <CreateAgent />,
         },
         {
           // path: "/users/view/:user_id",

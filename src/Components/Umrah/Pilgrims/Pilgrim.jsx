@@ -160,10 +160,6 @@ const Pilgrim = () => {
           columns={columns}
           getRowId={(row) => row._id} // Specify the unique identifier
         />
-        {/* <DataTable
-          rows={pilgrims && pilgrims.map((item) => item)}
-          columns={columns} 
-        /> */}
       </div>
     </div>
       </Box>

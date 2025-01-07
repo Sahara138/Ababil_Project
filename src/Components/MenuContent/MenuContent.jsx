@@ -102,18 +102,18 @@ const mainListItems = [
     icon: <PersonIcon />,
     children: [
       { path: '/users/create', text: 'Create User' },
-      { path: '/users/list', text: 'User List' }
+      { path: '/users/list', text: 'All User' }
     ]
   },
   // Additional main menu items
   {
     segment: 'agents',
-    path: '/',
+    path: '/agents/list',
     text: 'Agents',
     icon:<PeopleIcon />,
     children: [
-      { path: '/agents/create', text: 'Create Agents' },
-      { path: '/agents/list', text: 'Agent List' }
+      { path: '/agents/create', text: 'Create Agent' },
+      { path: '/agents/list', text: 'All Agent' }
     ]
   },  
   {

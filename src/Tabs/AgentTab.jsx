@@ -11,14 +11,14 @@ const AgentTab = () => {
   const theme = useTheme(); // Access the current theme
 
   const agentTab = [
-    { label: 'Create Agent', value: '/agent/create' },
-    { label: 'All agent', value: '/agent/list' },
+    { label: 'Create Agent', value: '/agents/create' },
+    { label: 'All agent', value: '/agents/list' },
   ];
 
   // Get current route to set the active tab
   const currentPath = location.pathname;
   const value =
-    agentTab.find((tab) => currentPath.startsWith(tab.value))?.value || '/users/list';
+    agentTab.find((tab) => currentPath.startsWith(tab.value))?.value || '/agents/list';
 
   // Get the label for the current tab or default to a fallback
   const currentTab = agentTab.find((tab) => tab.value === value);
