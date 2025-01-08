@@ -65,31 +65,38 @@ const mainListItems = [
       { path: '/hajj/ticketRequsation', text: 'Ticket Requsation' },
       { path: '/hajj/payment', text: 'Payment' },
       { path: '/hajj/hotelBooking', text: 'Hotel Booking' },
-      { path: '/hajj/voucher', text: 'Voucher' },
+      { 
+        path: '/hajj/voucher',
+         text: 'Voucher' ,
+         children:[
+          { path: '/hajj/voucher/create', text: 'Create Voucher' },
+          { path: '/hajj/voucher', text: 'Voucher List' }
+        ]
+        },
       { path: '/hajj/departure', text: 'Departure' }
     ]
   },
   {
-    path: '/',
+    path: '/ksa',
     segment: 'ksa',
     text: 'KSA',
     icon: <FlagIcon />,
     children: [] 
   },
   {
-    path: '/',
+    path: '/ticket-manager',
     segment: 'ticket-manager',
     text: 'Ticket Manager',
     icon: <ConfirmationNumberIcon />,
     children: []  
   },{
-    path: '/',
+    path: '/account-manager',
     segment: 'account-manager',
     text: 'Account Manager',
     icon:  <AccountBoxIcon />,
     children: [] 
   },{
-    path: '/',
+    path: '/settings',
     segment: 'settings',
     text: 'Settings',
     icon: <SettingsIcon />,
@@ -118,7 +125,7 @@ const mainListItems = [
   },  
   {
     segment: 'employee',
-    path: '/',
+    path: '/employee/list',
     text: 'Employee',
     icon: <WorkIcon />,
     children: [

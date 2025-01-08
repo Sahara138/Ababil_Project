@@ -1,33 +1,23 @@
 {
-  "createpilgrim": [
-    {
-      "firstName": "Alice",
-      "middleName": "B.",
-      "lastName": "Smith",
-      "reference": "63f0e8c9d1b2b1a3c4f123457",
-      "nationality": "Canadian",
-      "birthday": "1985-07-15",
-      "passportExpiredDate": "2028-12-31",
-      "passportNo": "B98765432",
-      "payment": 2500.75,
-      "gender": "Female"
-    },
-    {
-      "id": "7b0c",
-      "reference": {
-        "value": "option2",
-        "label": "Option 2"
-      },
-      "trip": "option2",
-      "payment": 30000,
-      "firstName": "Rafsan",
-      "middleName": "Jamal",
-      "lastName": "Lavlo",
-      "gender": "female",
-      "birthday": "1991-02-06",
-      "nationality": "Uganda",
-      "passportNo": "987654321",
-      "passportExpiredDate": "2025-01-25"
-    }
-  ]
+    "agents":{
+        "agentName": "Rafsan",
+        "agentType": "officeAgent",
+        "fatherName": "Raihan",
+        "motherName": "Rubina",
+        "dob": "2000-07-07",
+        "nid": "1082783791",
+        "passportNumber": "A953773684",
+        "passportExpiryDate": "2025-01-10",
+        "mobileNumber": "0183563618",
+        "ksaPhoneNumber": "0183867210",
+        "email": "rafsan@gmail.com",
+        "agentPresentAddress": "Dhaka",
+        "emergencyInformation": "Dinajpur-0184708937",
+        "agentPhoto": "",
+        "passportImage": "",
+        "nidImageFront": "",
+        "nidImageBack": "",
+        "payment": "20000",
+        "pilgrim": "Umrah"
+        }
 }

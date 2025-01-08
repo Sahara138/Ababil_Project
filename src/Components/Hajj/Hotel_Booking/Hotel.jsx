@@ -81,7 +81,7 @@ import "./Hotel.css";
 import { Button, Card, CardContent, Typography, CardActions, Box, Divider } from "@mui/material";
 
 import { useNavigate } from "react-router";
-import UmrahTabs from "../../../Tabs/UmrahTabs";
+import HajjTabs from "../../../Tabs/HajjTabs";
 
 const Hotel = () => {
   const theme = useTheme(); // Access the current theme
@@ -92,13 +92,13 @@ const Hotel = () => {
   //   alert(`Viewing details for Hotel ID: ${id}`);
   // };
    const CreateHotel = () => {
-    navigate('/umrah/hotelBooking/create')
+    navigate('/hajj/hotelBooking/create')
   };
 
 
   return (
     <div style={{ width: '100%' }}>
-      <UmrahTabs />
+      <HajjTabs />
       <Box
         sx={{
           marginTop: 5,

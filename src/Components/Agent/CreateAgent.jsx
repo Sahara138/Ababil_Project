@@ -88,21 +88,35 @@ const CreateAgent = () => {
     const files = e.target.files[0];
     if (!files) return;
   
+    // Use FormData for file upload
     const formData = new FormData();
     formData.append("file", files);
-    console.log("FormData before sending:", formData);  // Log to inspect the FormData content
-    // Assuming you're using Cloudinary for file upload, you can adjust the endpoint and params accordingly
-    const res = await fetch("http://192.168.0.100:5000/api/auth/agents", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: formData,  // Change to FormData for image file upload
-    });
-    
-    const file = await res.json();
-    setFormData({ ...formData, [field]: file.secure_url });  // Assuming file.secure_url is the returned image URL
+    formData.append("upload_preset", "c_tags");
+  
+    try {
+      const res = await fetch("http://localhost:8000/agents", {
+        method: "POST",
+        headers: {
+                    "Content-Type": "application/json",
+             },
+        body: JSON.stringify(formData),
+        // body: formData, // Send the FormData directly
+      });
+  
+      if (!res.ok) {
+        throw new Error(`Failed to upload image: ${res.statusText}`);
+      }
+  
+      const result = await res.json();
+      setFormData((prevData) => ({
+        ...prevData,
+        [field]: result.secure_url, // Assuming the API returns the uploaded file's URL as `secure_url`
+      }));
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
   };
+  
   
 
 //   const handleImageChange = async (e,field) => {
@@ -139,7 +153,8 @@ const CreateAgent = () => {
 
 
     if (validate()) {
-      fetch("http://192.168.0.100:5000/api/auth/agents", {
+    //   fetch("http://192.168.0.100:5000/api/auth/agents", {
+      fetch("http://localhost:8000/agents", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -509,416 +524,9 @@ const CreateAgent = () => {
           </Button>
         </Box>
       </form>
-          {/* <form onSubmit={handleSubmit}>
-            <div className="infoRow">
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="id">ID</label>
-                <input
-                  id="id"
-                  name="id"
-                  type="text"
-                  value={userData.id}
-                  onChange={(e) => handleChange("id", e.target.value)}
-                  
-                />
-                {errors.id && <span className="error">{errors.id}</span>}
-              </div>
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="name">Name</label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  value={userData.name}
-                  onChange={(e) => handleChange("name", e.target.value)}
-                />
-                {errors.name && <span className="error">{errors.name}</span>}
-              </div>
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="phone">Phone</label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="text"
-                  value={userData.phone}
-                  onChange={(e) => handleChange("phone", e.target.value)}
-                />
-                {errors.phone && <span className="error">{errors.phone}</span>}
-              </div>
-            </div>
-
-            <div className="infoRow">
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={userData.email}
-                  onChange={(e) => handleChange("email", e.target.value)}
-                />
-                {errors.email && <span className="error">{errors.email}</span>}
-              </div>
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="avatar">Avatar</label>
-                <input
-                  id="avatar"
-                  name="avatar"
-                  type="text"
-                  value={userData.avatar}
-                  onChange={(e) => handleChange("avatar", e.target.value)}
-                />
-              </div>
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="position">Position</label>
-                <input
-                  id="position"
-                  name="position"
-                  type="text"
-                  value={userData.position}
-                  onChange={(e) => handleChange("position", e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="infoRow">
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={userData.password}
-                  onChange={(e) => handleChange("password", e.target.value)}
-                />
-                {errors.password && <span className="error">{errors.password}</span>}
-              </div>
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="role">Role</label>
-                <Select
-                  id="role"
-                  name="role"
-                  options={roleOptions}
-                  value={roleOptions.find((option) => option.value === userData.role)}
-                  onChange={(option) => handleChange("role", option?.value)}
-                  placeholder="Select Role"
-                  className="custom-select"
-                  style={{
-                    color: isDarkMode ? "black" : "inherit",
-                  }}
-                />
-                {errors.role && <span className="error">{errors.role}</span>}
-              </div>
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="permission">Permission</label>
-                <Select
-                  id="permission"
-                  name="permission"
-                  options={permissionOptions}
-                  value={permissionOptions.find((option) => option.value === userData.permission)}
-                  onChange={(option) => handleChange("permission", option?.value)}
-                  placeholder="Select Permission"
-                  className="custom-select"
-                  style={{
-                    color: isDarkMode ? "black" : "inherit",
-                  }}
-                />
-                {errors.permission && <span className="error">{errors.permission}</span>}
-              </div>
-            </div>
-
-            <div className="formActions">
-              <Button type="button" onClick={handleCancel} variant="outlined">
-                Cancel
-              </Button>
-              <Button type="submit" variant="contained" >
-                Create User
-              </Button>
-            </div>
-          </form> */}
         </div>
       </Box>
     </div>
-    // <div style={{ width: "100%" }}>
-    //   <AgentTab />
-    //   <Box
-    //   sx={{
-    //     marginTop: 5,
-    //     padding: "30px",
-    //     backgroundColor: isDarkMode ? "grey.900" : "white",
-    //     boxShadow: 3,
-    //     color: isDarkMode ? "#99a1b7" : "grey.900",
-    //   }}
-    // >
-    //   <Typography
-    //     component="h4"
-    //     variant="h6"
-    //     sx={{ mb: 3, fontSize: 25, color: isDarkMode ? "#99a1b7" : "inherit" }}
-    //   >
-    //     Agent Management
-    //   </Typography>
-    //   <Divider sx={{ backgroundColor: isDarkMode ? "grey.700" : "#99a1b7" }} />
-
-    //   <form onSubmit={handleSubmit}>
-    //     <div className="infoRow">
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="agentPhoto">Agent Photo URL</label>
-    //         <input
-    //             id="agentPhoto"
-    //             name="agentPhoto"
-    //             type="text"
-    //             value={formData.agentPhoto}
-    //             onChange={handleInputChange}
-    //         />
-    //         </div>
-    //         <div className="inputField">
-    //             <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="agentName">Agent Name</label>
-    //             <input
-    //             id="agentName"
-    //             name="agentName"
-    //             type="text"
-    //             value={formData.agentName}
-    //             onChange={handleInputChange}
-    //             />
-    //             {errors.agentName && <span className="error">{errors.agentName}</span>}
-    //         </div>
-
-    //         <div className="inputField">
-    //             <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="agentType">Agent Type</label>
-    //             <Select
-    //             id="agentType"
-    //             name="agentType"
-    //             value={agentTypeOptions.find((opt) => opt.value === formData.agentType) || null}
-    //             options={agentTypeOptions}
-    //             placeholder="Select Agent Type"
-    //             onChange={(option) => handleSelectChange("agentType", option)}
-    //             />
-    //             {errors.agentType && <span className="error">{errors.agentType}</span>}
-    //         </div>
-    //     </div>
-    //     <div className="infoRow">
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="fatherName">Father Name</label>
-    //         <input
-    //             id="fatherName"
-    //             name="fatherName"
-    //             type="text"
-    //             value={formData.fatherName}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.fatherName && <span className="error">{errors.fatherName}</span>}
-    //         </div>
-
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="motherName">Mother Name</label>
-    //         <input
-    //             id="motherName"
-    //             name="motherName"
-    //             type="text"
-    //             value={formData.motherName}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.motherName && <span className="error">{errors.motherName}</span>}
-    //         </div>
-
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="dob">Date of Birth</label>
-    //         <input
-    //             id="dob"
-    //             name="dob"
-    //             type="date"
-    //             value={formData.dob}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.dob && <span className="error">{errors.dob}</span>}
-    //         </div>
-    //     </div>
-    //     <div className="infoRow">
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="nid">NID</label>
-    //         <input
-    //             id="nid"
-    //             name="nid"
-    //             type="text"
-    //             value={formData.nid}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.nid && <span className="error">{errors.nid}</span>}
-    //         </div>
-
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="passportNumber">Passport Number</label>
-    //         <input
-    //             id="passportNumber"
-    //             name="passportNumber"
-    //             type="text"
-    //             value={formData.passportNumber}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.passportNumber && <span className="error">{errors.passportNumber}</span>}
-    //         </div>
-
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="passportExpiryDate">Passport Expiry Date</label>
-    //         <input
-    //             id="passportExpiryDate"
-    //             name="passportExpiryDate"
-    //             type="date"
-    //             value={formData.passportExpiryDate}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.passportExpiryDate && <span className="error">{errors.passportExpiryDate}</span>}
-    //         </div>
-    //     </div>
-    //     <div className="infoRow">           
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="email">Email</label>
-    //         <input
-    //             id="email"
-    //             name="email"
-    //             type="email"
-    //             value={formData.email}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.email && <span className="error">{errors.email}</span>}
-    //         </div>
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="mobileNumber">Mobile Number</label>
-    //         <input
-    //             id="mobileNumber"
-    //             name="mobileNumber"
-    //             type="text"
-    //             value={formData.mobileNumber}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.mobileNumber && <span className="error">{errors.mobileNumber}</span>}
-    //         </div>
-
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="ksaPhoneNumber">KSA Phone Number</label>
-    //         <input
-    //             id="ksaPhoneNumber"
-    //             name="ksaPhoneNumber"
-    //             type="text"
-    //             value={formData.ksaPhoneNumber}
-    //             onChange={handleInputChange}
-    //         />
-    //         </div>
-
-    //     </div>
-
-    //     <div className="infoRow">
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="agentPresentAddress">Agent Present Address</label>
-    //         <input
-    //             id="agentPresentAddress"
-    //             name="agentPresentAddress"
-    //             type="text"
-    //             value={formData.agentPresentAddress}
-    //             onChange={handleInputChange}
-    //         />
-    //         </div>
-
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="emergencyInformation">Emergency Information</label>
-    //         <input
-    //             id="emergencyInformation"
-    //             name="emergencyInformation"
-    //             type="text"
-    //             value={formData.emergencyInformation}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.emergencyInformation && <span className="error">{errors.emergencyInformation}</span>}
-    //         </div>
-    //     </div>
-    //     <div className="infoRow">
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="passportImage">Passport Image URL</label>
-    //         <input
-    //             id="passportImage"
-    //             name="passportImage"
-    //             type="text"
-    //             value={formData.passportImage}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.passportImage && <span className="error">{errors.passportImage}</span>}
-    //         </div>
-
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="nidImageFront">NID Image Front URL</label>
-    //         <input
-    //             id="nidImageFront"
-    //             name="nidImageFront"
-    //             type="text"
-    //             value={formData.nidImageFront}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.nidImageFront && <span className="error">{errors.nidImageFront}</span>}
-    //         </div>
-
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="nidImageBack">NID Image Back URL</label>
-    //         <input
-    //             id="nidImageBack"
-    //             name="nidImageBack"
-    //             type="text"
-    //             value={formData.nidImageBack}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.nidImageBack && <span className="error">{errors.nidImageBack}</span>}
-    //         </div>
-    //     </div>
-    //     <div className="infoRow">
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="payment">Payment</label>
-    //         <input
-    //             id="payment"
-    //             name="payment"
-    //             type="number"
-    //             value={formData.payment}
-    //             onChange={handleInputChange}
-    //         />
-    //         </div>
-
-    //         <div className="inputField">
-    //         <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="pilgrim">Pilgrim Name</label>
-    //         <input
-    //             id="pilgrim"
-    //             name="pilgrim"
-    //             type="text"
-    //             value={formData.pilgrim}
-    //             onChange={handleInputChange}
-    //         />
-    //         {errors.pilgrim && <span className="error">{errors.pilgrim}</span>}
-    //         </div>
-    //     </div>
-    //     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-    //       <Button
-    //         variant="outlined"
-    //         onClick={handleCancel} // Reset form
-    //         sx={{ borderRadius: 3, textTransform: "none" }}
-    //       >
-    //         Cancel
-    //       </Button>
-    //       <Button
-    //         type="submit"
-    //         variant="contained"
-    //         sx={{
-    //           backgroundColor: isDarkMode ? "grey.700" : "#1976d2",
-    //           color: "white",
-    //           textTransform: "none",
-    //           borderRadius: 3,
-    //           ":hover": {
-    //             backgroundColor: isDarkMode ? "grey.600" : "#1565c0",
-    //           },
-    //         }}
-    //       >
-    //         Submit
-    //       </Button>
-    //     </Box>
-    //   </form>
-    // </Box>
-    // </div>
   );
 };
 

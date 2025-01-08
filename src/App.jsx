@@ -3,7 +3,6 @@ import "./App.css";
 import Login from "./Components/Auth/Login/Login";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Users from "./Components/Users/UserList/Users";
-import User from "./Components/Users/ViewUser/ViewUser";
 import SideMenu from "./Components/SideMenu/SideMenu";
 import AppTheme from "./Components/shared-theme/AppTheme";
 import { alpha, Box, CssBaseline, Stack } from "@mui/material";
@@ -42,6 +41,23 @@ import CreateUser from "./Components/Users/AddNewuser/CreateUser";
 import ViewUser from "./Components/Users/ViewUser/ViewUser";
 import Agents from "./Components/Agent/Agents";
 import CreateAgent from "./Components/Agent/CreateAgent";
+import UpdateAgent from "./Components/Agent/UpdateAgent";
+import ViewAgent from "./Components/Agent/ViewAgent";
+import ViewTrip from "./Components/Umrah/Trip/ViewTrip";
+import ViewPilgrim from "./Components/Umrah/Pilgrims/ViewPilgrim";
+import Employees from "./Components/Employee/Employees";
+import CreateEmployee from "./Components/Employee/CreateEmployee";
+import UpdateEmployee from "./Components/Employee/UpdateEmployee";
+import ViewEmployee from "./Components/Employee/ViewEmployee";
+import ViewDeparture from "./Components/Umrah/Departure/ViewDeparture";
+import ViewPayment from "./Components/Umrah/Payment/ViewPayment";
+import ViewTicketRequisition from "./Components/Umrah/Ticket_Requisition/ViewTicket_Requisition";
+import AddHotel from "./Components/Umrah/Hotel_Booking/AddHotel";
+import ViewHotel from "./Components/Umrah/Hotel_Booking/ViewHotel";
+import UpdateHotel from "./Components/Umrah/Hotel_Booking/UpdateHotel";
+import BookHotelForPilgrim from "./Components/Umrah/Hotel_Booking/BookHotelForPilgrim";
+import BookHotelForGroup from "./Components/Umrah/Hotel_Booking/BookHotelForGroup";
+import ViewVoucher from "./Components/Umrah/Voucher/ViewVoucher";
 
 // import Trip from "./Components/Umrah/Trip/Trip";
 // import UmrahLayout from "./Layout/UmrahLayout";
@@ -135,7 +151,7 @@ function App() {
         {
           // path: "/umrah/pilgrim/view/:id",
           path: "/umrah/trip/view",
-          element: <Pilgrim />,
+          element: <ViewTrip />,
         },
         {
           // path: "/umrah/trip/update/:id",
@@ -154,8 +170,9 @@ function App() {
           element: <CreatePilgrim />,
         },
         {
-          path: "/umrah/pilgrim/view/:id",
-          element: <Pilgrim />,
+          // path: "/umrah/pilgrim/view/:id",
+          path: "/umrah/pilgrim/view",
+          element: <ViewPilgrim />,
         },
         {
           // path: "/umrah/pilgrim/update/:id",
@@ -174,7 +191,7 @@ function App() {
         },
         {
           path: "/umrah/ticket-requisition/view",
-          element: <Ticket_Requisition />,
+          element: <ViewTicketRequisition />,
         },
         {
           path: "/umrah/ticket-requisition/update",
@@ -191,7 +208,7 @@ function App() {
         },
         {
           path: "/umrah/payment/view",
-          element: <Ticket_Requisition />,
+          element: <ViewPayment />,
         },
         {
           path: "/umrah/payment/update",
@@ -200,6 +217,26 @@ function App() {
         {
           path: "/umrah/hotelBooking",
           element: <Hotel />,
+        },
+        {
+          path: "/umrah/hotelBooking/create",
+          element: <AddHotel />,
+        },
+        {
+          path: "/umrah/hotelBooking/pilgrimCreate",
+          element: <BookHotelForPilgrim/>,
+        },
+        {
+          path: "/umrah/hotelBooking/groupCreate",
+          element: <BookHotelForGroup />,
+        },
+        {
+          path: "/umrah/hotelBooking/view",
+          element: <ViewHotel />,
+        },
+        {
+          path: "/umrah/hotelBooking/update",
+          element: <UpdateHotel />,
         },
         {
           path: "/umrah/voucher",
@@ -211,7 +248,7 @@ function App() {
         },
         {
           path: "/umrah/voucher/view",
-          element: <Ticket_Requisition />,
+          element: <ViewVoucher />,
         },
         {
           path: "/umrah/voucher/update",
@@ -228,8 +265,9 @@ function App() {
           element: <CreateDeparture />,
         },
         {
-          path: "/umrah/pilgrim/view/:id",
-          element: <Pilgrim />,
+          // path: "/umrah/departure/view/:id",
+          path: "/umrah/departure/view",
+          element: <ViewDeparture />,
         },
         {
           // path: "/umrah/pilgrim/update/:id",
@@ -237,6 +275,149 @@ function App() {
           element: <UpdateDeparture />,
         },
         // For Departure end
+
+
+        ////// For Hajj Start///////
+        {
+          path: "/hajj",
+          element: <Trip />,
+        },
+        {
+          path: "/hajj/trip",
+          element: <Trip />,
+        },
+        {
+          path: "/hajj/trip/create",
+          element: <CreateTrip />,
+        },
+        {
+          // path: "/umrah/pilgrim/view/:id",
+          path: "/hajj/trip/view",
+          element: <ViewTrip />,
+        },
+        {
+          // path: "/umrah/trip/update/:id",
+          path: "/hajj/trip/update",
+          element: <UpdateTrip />,
+        },
+        // For trip end
+
+        // For Pilgrim start
+        {
+          path: "/hajj/pilgrim",
+          element: <Pilgrim />,
+        },
+        {
+          path: "/hajj/pilgrim/create",
+          element: <CreatePilgrim />,
+        },
+        {
+          // path: "/umrah/pilgrim/view/:id",
+          path: "/hajj/pilgrim/view",
+          element: <ViewPilgrim />,
+        },
+        {
+          // path: "/umrah/pilgrim/update/:id",
+          path: "/hajj/pilgrim/update",
+          element: <UpdatePilgrim />,
+        },
+        // For Pilgrim end
+
+        {
+          path: "/hajj/ticket-requisition",
+          element: <Ticket_Requisition />,
+        },
+        {
+          path: "/hajj/ticket-requisition/create",
+          element: <CreateTicketRequisition />,
+        },
+        {
+          path: "/hajj/ticket-requisition/view",
+          element: <ViewTicketRequisition />,
+        },
+        {
+          path: "/hajj/ticket-requisition/update",
+          element: <UpdateTicketRequisition />,
+        },
+        {
+          path: "/hajj/payment",
+          element: <Payment />,
+        },
+
+        {
+          path: "/hajj/payment/create",
+          element: <CreatePayment />,
+        },
+        {
+          path: "/hajj/payment/view",
+          element: <ViewPayment />,
+        },
+        {
+          path: "/hajj/payment/update",
+          element: <UpdatePayment />,
+        },
+        {
+          path: "/hajj/hotelBooking",
+          element: <Hotel />,
+        },
+        {
+          path: "/hajj/hotelBooking/create",
+          element: <AddHotel />,
+        },
+        {
+          path: "/hajj/hotelBooking/pilgrimCreate",
+          element: <BookHotelForPilgrim/>,
+        },
+        {
+          path: "/hajj/hotelBooking/groupCreate",
+          element: <BookHotelForGroup />,
+        },
+        {
+          path: "/hajj/hotelBooking/view",
+          element: <ViewHotel />,
+        },
+        {
+          path: "/hajj/hotelBooking/update",
+          element: <UpdateHotel />,
+        },
+        {
+          path: "/hajj/voucher",
+          element: <Voucher />,
+        },
+        {
+          path: "/hajj/voucher/create",
+          element: <CreateVoucher />,
+        },
+        {
+          path: "/hajj/voucher/view",
+          element: <ViewVoucher />,
+        },
+        {
+          path: "/hajj/voucher/update",
+          element: <UpdateVoucher />,
+        },
+
+        // For Departure start
+        {
+          path: "/hajj/departure",
+          element: <Departure />,
+        },
+        {
+          path: "/hajj/departure/create",
+          element: <CreateDeparture />,
+        },
+        {
+          // path: "/umrah/departure/view/:id",
+          path: "/hajj/departure/view",
+          element: <ViewDeparture />,
+        },
+        {
+          // path: "/umrah/pilgrim/update/:id",
+          path: "/hajj/departure/update",
+          element: <UpdateDeparture />,
+        },
+        // For Departure end
+        ///// Hajj end //////
 
         {
           path: "/users/create",
@@ -267,34 +448,34 @@ function App() {
         },
         {
           // path: "/users/view/:user_id",
-          path: "/agent/view",
-          element: <ViewUser />,
+          path: "/agents/view",
+          element: <ViewAgent />,
         },
         {
-          path: "/agent/update",
+          path: "/agents/update",
           // path: "/users/update/:user_id",
-          element: <UpdateUser />,
+          element: <UpdateAgent />,
         },
         // Agent end
        
         // Employee start
         {
           path: "/employee/list",
-          element: <CreateUser />,
+          element: <Employees />,
         },
         {
           path: "/employee/create",
-          element: <Users />,
+          element: <CreateEmployee />,
         },
         {
           // path: "/users/view/:user_id",
           path: "/employee/view",
-          element: <ViewUser />,
+          element: <ViewEmployee />,
         },
         {
           path: "/employee/update",
           // path: "/users/update/:user_id",
-          element: <UpdateUser />,
+          element: <UpdateEmployee />,
         },
         // Employee end
       ],
