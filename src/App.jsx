@@ -58,6 +58,38 @@ import UpdateHotel from "./Components/Umrah/Hotel_Booking/UpdateHotel";
 import BookHotelForPilgrim from "./Components/Umrah/Hotel_Booking/BookHotelForPilgrim";
 import BookHotelForGroup from "./Components/Umrah/Hotel_Booking/BookHotelForGroup";
 import ViewVoucher from "./Components/Umrah/Voucher/ViewVoucher";
+import HajjTrip from "./Components/Hajj/Trip/HajjTrip";
+import CreateHajjTrip from "./Components/Hajj/Trip/CreateHajjTrip";
+import ViewHajjTrip from "./Components/Hajj/Trip/ViewHajjTrip";
+import UpdateHajjTrip from "./Components/Hajj/Trip/UpdateHajjTrip";
+import HajjPilgrim from "./Components/Hajj/Pilgrims/HajjPilgrim";
+import CreateHajjPilgrim from "./Components/Hajj/Pilgrims/CreateHajjPilgrim";
+import ViewHajjPilgrim from "./Components/Hajj/Pilgrims/ViewHajjPilgrim";
+import UpdateHajjPilgrim from "./Components/Hajj/Pilgrims/UpdateHajjPilgrim";
+import HajjTicket_Requisition from "./Components/Hajj/Ticket_Requisition/HajjTicket_Requisition";
+import CreateHajjTicket_Reuisition from "./Components/Hajj/Ticket_Requisition/CreateHajjTicket_Reuisition";
+import ViewHajjTicket_Requisition from "./Components/Hajj/Ticket_Requisition/ViewHajjTicket_Requisition";
+import UpdateHajjTicket_Reuisition from "./Components/Hajj/Ticket_Requisition/UpdateHajjTicket_Reuisition";
+import HajjPayment from "./Components/Hajj/Payment/HajjPayment";
+import CreateHajjPayment from "./Components/Hajj/Payment/CreateHajjPayment";
+import ViewHajjPayment from "./Components/Hajj/Payment/ViewHajjPayment";
+import UpdateHajjPayment from "./Components/Hajj/Payment/UpdateHajjPayment";
+import HajjHotel from "./Components/Hajj/Hotel_Booking/HajjHotel";
+import AddHajjHotel from "./Components/Hajj/Hotel_Booking/AddHajjHotel";
+import BookHotelForHajjPilgrim from "./Components/Hajj/Hotel_Booking/BookHotelForHajjPilgrim";
+import BookHotelForHajjGroup from "./Components/Hajj/Hotel_Booking/BookHotelForHajjGroup";
+import ViewHajjHotel from "./Components/Hajj/Hotel_Booking/ViewHajjHotel";
+import UpdateHajjHotel from "./Components/Hajj/Hotel_Booking/UpdateHajjHotel";
+import HajjVoucher from "./Components/Hajj/Voucher/HajjVoucher";
+import CreateHajjVoucher from "./Components/Hajj/Voucher/CreateHajjVoucher";
+import ViewHajjVoucher from "./Components/Hajj/Voucher/ViewHajjVoucher";
+import UpdateHajjVoucher from "./Components/Hajj/Voucher/UpdateHajjVoucher";
+import HajjDeparture from "./Components/Hajj/Departure/HajjDeparture";
+import CreateHajjDeparture from "./Components/Hajj/Departure/CreateHajjDeparture";
+import UpdateHajjDeparture from "./Components/Hajj/Departure/UpdateHajjDeparture";
+import Settings from "./Components/Settings/Settings";
+import Profile from "./Components/Profile/Profile";
+import Calculator from "./Components/Calculator/Calculator";
 
 // import Trip from "./Components/Umrah/Trip/Trip";
 // import UmrahLayout from "./Layout/UmrahLayout";
@@ -133,6 +165,10 @@ function App() {
         {
           path: "/dashboard",
           element: <Dashboard />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
         },
         
         // For trip Start
@@ -280,144 +316,150 @@ function App() {
         ////// For Hajj Start///////
         {
           path: "/hajj",
-          element: <Trip />,
+          element: <HajjTrip/>,
         },
         {
           path: "/hajj/trip",
-          element: <Trip />,
+          element: <HajjTrip />,
         },
         {
           path: "/hajj/trip/create",
-          element: <CreateTrip />,
+          element: <CreateHajjTrip />,
         },
         {
           // path: "/umrah/pilgrim/view/:id",
           path: "/hajj/trip/view",
-          element: <ViewTrip />,
+          element: <ViewHajjTrip />,
         },
         {
           // path: "/umrah/trip/update/:id",
           path: "/hajj/trip/update",
-          element: <UpdateTrip />,
+          element: <UpdateHajjTrip />,
         },
         // For trip end
 
         // For Pilgrim start
         {
           path: "/hajj/pilgrim",
-          element: <Pilgrim />,
+          element: <HajjPilgrim />,
         },
         {
           path: "/hajj/pilgrim/create",
-          element: <CreatePilgrim />,
+          element: <CreateHajjPilgrim />,
         },
         {
           // path: "/umrah/pilgrim/view/:id",
           path: "/hajj/pilgrim/view",
-          element: <ViewPilgrim />,
+          element: <ViewHajjPilgrim />,
         },
         {
           // path: "/umrah/pilgrim/update/:id",
           path: "/hajj/pilgrim/update",
-          element: <UpdatePilgrim />,
+          element: <UpdateHajjPilgrim/>,
         },
         // For Pilgrim end
 
         {
           path: "/hajj/ticket-requisition",
-          element: <Ticket_Requisition />,
+          element: <HajjTicket_Requisition />,
         },
         {
           path: "/hajj/ticket-requisition/create",
-          element: <CreateTicketRequisition />,
+          element: <CreateHajjTicket_Reuisition/>,
         },
         {
           path: "/hajj/ticket-requisition/view",
-          element: <ViewTicketRequisition />,
+          element: <ViewHajjTicket_Requisition />,
         },
         {
           path: "/hajj/ticket-requisition/update",
-          element: <UpdateTicketRequisition />,
+          element: <UpdateHajjTicket_Reuisition/>,
         },
         {
           path: "/hajj/payment",
-          element: <Payment />,
+          element: <HajjPayment />,
         },
 
         {
           path: "/hajj/payment/create",
-          element: <CreatePayment />,
+          element: <CreateHajjPayment />,
         },
         {
           path: "/hajj/payment/view",
-          element: <ViewPayment />,
+          element: <ViewHajjPayment />,
         },
         {
           path: "/hajj/payment/update",
-          element: <UpdatePayment />,
+          element: <UpdateHajjPayment />,
         },
         {
           path: "/hajj/hotelBooking",
-          element: <Hotel />,
+          element: <HajjHotel />,
         },
         {
           path: "/hajj/hotelBooking/create",
-          element: <AddHotel />,
+          element: <AddHajjHotel />,
         },
         {
           path: "/hajj/hotelBooking/pilgrimCreate",
-          element: <BookHotelForPilgrim/>,
+          element: <BookHotelForHajjPilgrim/>,
         },
         {
           path: "/hajj/hotelBooking/groupCreate",
-          element: <BookHotelForGroup />,
+          element: <BookHotelForHajjGroup />,
         },
         {
           path: "/hajj/hotelBooking/view",
-          element: <ViewHotel />,
+          element: <ViewHajjHotel />,
         },
         {
           path: "/hajj/hotelBooking/update",
-          element: <UpdateHotel />,
+          element: <UpdateHajjHotel />,
         },
         {
           path: "/hajj/voucher",
-          element: <Voucher />,
+          element: <HajjVoucher />,
         },
         {
           path: "/hajj/voucher/create",
-          element: <CreateVoucher />,
+          element: <CreateHajjVoucher />,
         },
         {
           path: "/hajj/voucher/view",
-          element: <ViewVoucher />,
+          element: <ViewHajjVoucher/>,
         },
         {
           path: "/hajj/voucher/update",
-          element: <UpdateVoucher />,
+          element: <UpdateHajjVoucher />,
         },
 
         // For Departure start
         {
           path: "/hajj/departure",
-          element: <Departure />,
+          element: <HajjDeparture />,
         },
         {
           path: "/hajj/departure/create",
-          element: <CreateDeparture />,
+          element: <CreateHajjDeparture />,
         },
         {
           // path: "/umrah/departure/view/:id",
           path: "/hajj/departure/view",
-          element: <ViewDeparture />,
+          element: <ViewHajjVoucher/>,
         },
         {
           // path: "/umrah/pilgrim/update/:id",
           path: "/hajj/departure/update",
-          element: <UpdateDeparture />,
+          element: <UpdateHajjDeparture />,
         },
         // For Departure end
         ///// Hajj end //////
+        /////// Settings //////
+        {
+          path: "/settings",
+          element: <Settings />,
+        },
+        /////// Settings //////
 
         {
           path: "/users/create",
@@ -478,6 +520,10 @@ function App() {
           element: <UpdateEmployee />,
         },
         // Employee end
+        {
+          path: "/calculator",
+          element: <Calculator />,
+        },
       ],
     },
   ]);

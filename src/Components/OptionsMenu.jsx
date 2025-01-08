@@ -10,6 +10,7 @@ import ListItemIcon, { listItemIconClasses } from '@mui/material/ListItemIcon';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import MenuButton from './MenuButton';
+import { useNavigate } from 'react-router';
 
 const MenuItem = styled(MuiMenuItem)({
   margin: '2px 0',
@@ -18,9 +19,13 @@ const MenuItem = styled(MuiMenuItem)({
 export default function OptionsMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const handleProfile = () =>{
+    navigate('/profile')
+  }
   const handleClose = () => {
     setAnchorEl(null);
     localStorage.removeItem("access_token");
@@ -59,7 +64,7 @@ export default function OptionsMenu() {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleProfile}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>Add another account</MenuItem>

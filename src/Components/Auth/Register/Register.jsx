@@ -15,10 +15,13 @@ import {
   Typography,
   CircularProgress,
   Stack,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import AppTheme from "../../shared-theme/AppTheme";
 import ColorModeSelect from '../../shared-theme/ColorModeSelect';
 import { styled } from "@mui/material/styles";
+import { GridVisibilityOffIcon } from "@mui/x-data-grid";
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -99,6 +102,7 @@ const Register = (props) => {
   });
 
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -292,7 +296,37 @@ const Register = (props) => {
                   />
               </FormControl>
               <FormControl fullWidth margin="normal">
-                  <TextField
+              <TextField
+                  type={showPassword ? "text" : "password"}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <div
+                         onClick={() => setShowPassword(!showPassword)}>
+                          {showPassword ? <GridVisibilityOffIcon /> : <GridVisibilityOffIcon />}
+                        </div>
+                      </InputAdornment>
+                    ),
+                  }}
+                  error={!!errors.password}
+                    helperText={errors.password}
+                    id="password"
+                    // type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Password"
+                    autoComplete="password"
+                    autoFocus
+                    required
+                    fullWidth
+                    variant="outlined"
+                    style={{cursor:"pointer"}}
+                    color={errors.name ? 'error' : 'primary'}
+                  // Other props...
+                />
+
+                  {/* <TextField
                     error={!!errors.password}
                     helperText={errors.password}
                     id="password"
@@ -307,7 +341,7 @@ const Register = (props) => {
                     fullWidth
                     variant="outlined"
                     color={errors.name ? 'error' : 'primary'}
-                  />
+                  /> */}
               </FormControl>
               <FormControl fullWidth margin="normal">
                   <TextField

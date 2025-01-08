@@ -61,7 +61,7 @@ const mainListItems = [
     icon: <FontAwesomeIcon icon={faKaaba} />,
     children: [
       { path: '/hajj/trip', text: 'Trip' },
-      { path: '/hajj/addPilgrim', text: 'Pilgrims' },
+      { path: '/hajj/pilgrim', text: 'Pilgrims' },
       { path: '/hajj/ticketRequsation', text: 'Ticket Requsation' },
       { path: '/hajj/payment', text: 'Payment' },
       { path: '/hajj/hotelBooking', text: 'Hotel Booking' },
@@ -95,7 +95,8 @@ const mainListItems = [
     text: 'Account Manager',
     icon:  <AccountBoxIcon />,
     children: [] 
-  },{
+  },
+  {
     path: '/settings',
     segment: 'settings',
     text: 'Settings',
@@ -132,6 +133,13 @@ const mainListItems = [
       { path: '/employee/create', text: 'Create Employee' },
       { path: '/employee/list', text: 'Employee List' }
     ]
+  },
+  {
+    path: '/calculator',
+    segment: 'calculator',
+    text: 'Calculator',
+    icon: <SettingsIcon />,
+    children: [] 
   },
 
 ];

@@ -56,7 +56,7 @@ function SideMenuMobile({ open, toggleDrawer }) {
           <MenuContent />
           <Divider />
         </Stack>
-        <CardAlert />
+        {/* <CardAlert /> */}
         <Stack sx={{ p: 2 }}>
           <Button
             variant="outlined"

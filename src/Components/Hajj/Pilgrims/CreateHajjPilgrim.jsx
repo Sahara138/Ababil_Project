@@ -13,7 +13,7 @@
 // import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
 // import { useNavigate } from "react-router";
 // // import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-// import UmrahTabs from "../../../Tabs/UmrahTabs";
+// import HajjTabs from "../../../Tabs/HajjTabs";
 // import { useTheme } from "@emotion/react";
 // import Select from "react-select";
 
@@ -158,7 +158,7 @@
 //   //     })
 //   //       .then((res) => {
 //   //         alert("User Data Saved Successfully");
-//   //         navigate("/umrah/pilgrim");
+//   //         navigate("/hajj/pilgrim");
 //   //       })
 //   //       .catch((err) => {
 //   //         console.log(err.message);
@@ -207,7 +207,7 @@
 //         .then((res) => {
 //           if (res.ok) {
 //             alert("User Data Saved Successfully");
-//             navigate("/umrah/pilgrim");
+//             navigate("/hajj/pilgrim");
 //           } else {
 //             console.error("Error:", res.statusText);
 //           }
@@ -238,7 +238,7 @@
 
 //   return (
 //     <div style={{ width: "100%" }}>
-//       <UmrahTabs />
+//       <HajjTabs />
 //       <Box
 //         sx={{
 //           marginTop: 5,
@@ -573,11 +573,11 @@ import "../../Users/UserList/Users";
 import "../../Users/AddNewuser/CreateUser";
 import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
 // import { useNavigate } from "react-router";
-import UmrahTabs from "../../../Tabs/UmrahTabs";
+import HajjTabs from "../../../Tabs/HajjTabs";
 import { useTheme } from "@emotion/react";
 import Select from "react-select";
 
-const CreatePilgrim = (id) => {
+const CreateHajjPilgrim = (id) => {
   const theme = useTheme(); // Access the current theme
   const isDarkMode = theme.palette.mode === "dark"; // Check if the current theme is dark
 
@@ -686,7 +686,7 @@ const CreatePilgrim = (id) => {
         // .then((res) => {
         //   if (res.ok) {
         //     alert("User Data Saved Successfully");
-        //     navigate("/umrah/pilgrim");
+        //     navigate("/hajj/pilgrim");
         //   } else {
         //     console.error("Error:", res.statusText);
         //   }
@@ -716,7 +716,7 @@ const CreatePilgrim = (id) => {
 
   return (
     <div style={{ width: "100%" }}>
-      <UmrahTabs />
+      <HajjTabs />
       <Box
         sx={{
           marginTop: 5,
@@ -956,7 +956,6 @@ const CreatePilgrim = (id) => {
                 )}
               </div>
             </div>
-
             <div className="formActions">
               <Button type="button" onClick={handleCancel} variant="outlined">
                 Cancel
@@ -972,4 +971,4 @@ const CreatePilgrim = (id) => {
   );
 };
 
-export default CreatePilgrim;
+export default CreateHajjPilgrim;
