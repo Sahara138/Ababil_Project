@@ -97,7 +97,7 @@ const mainListItems = [
     children: [] 
   },
   {
-    path: '/settings',
+    path: '/settings/theme',
     segment: 'settings',
     text: 'Settings',
     icon: <SettingsIcon />,

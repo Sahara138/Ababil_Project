@@ -11,6 +11,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import MenuButton from './MenuButton';
 import { useNavigate } from 'react-router';
+import App from '../App';
 
 const MenuItem = styled(MuiMenuItem)({
   margin: '2px 0',
@@ -26,14 +27,21 @@ export default function OptionsMenu() {
   const handleProfile = () =>{
     navigate('/profile')
   }
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleAnotherAccount = () =>{
+    navigate('/register')
+  }
+  const handleSettings = () =>{
+    navigate('/settings/theme')
+  }
+  const handleLogout = () =>{
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     sessionStorage.clear();
    window.location.href = "/login";
-    // localStorage.clear();
-    // window.location.href="/login"
+  }
+  const handleClose = () => {
+    setAnchorEl(null);
+  
   };
   return (
     <React.Fragment>
@@ -48,7 +56,7 @@ export default function OptionsMenu() {
         anchorEl={anchorEl}
         id="menu"
         open={open}
-        onClose={handleClose}
+        // onClose={handleClose}
         onClick={handleClose}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -65,13 +73,13 @@ export default function OptionsMenu() {
         }}
       >
         <MenuItem onClick={handleProfile}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleProfile}>My account</MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>Add another account</MenuItem>
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
+        <MenuItem onClick={handleAnotherAccount}>Add another account</MenuItem>
+        <MenuItem onClick={handleSettings}>Settings</MenuItem>
         <Divider />
         <MenuItem
-          onClick={handleClose}
+          onClick={handleLogout}
           sx={{
             [`& .${listItemIconClasses.root}`]: {
               ml: 'auto',

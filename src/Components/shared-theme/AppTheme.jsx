@@ -9,8 +9,9 @@ import { navigationCustomizations } from './customizations/navigation';
 import { surfacesCustomizations } from './customizations/Surfaces';
 import { colorSchemes, typography, shadows, shape } from './ThemePrimitives';
 
+
 function AppTheme(props) {
-  const { children, disableCustomTheme, themeComponents } = props;
+  const { children, disableCustomTheme, themeComponents} = props;
   const theme = React.useMemo(() => {
     return disableCustomTheme
       ? {}
@@ -20,7 +21,7 @@ function AppTheme(props) {
             colorSchemeSelector: 'data-mui-color-scheme',
             cssVarPrefix: 'template',
           },
-          colorSchemes, // Recently added in v6 for building light & dark mode app, see https://mui.com/material-ui/customization/palette/#color-schemes
+          colorSchemes,// Recently added in v6 for building light & dark mode app, see https://mui.com/material-ui/customization/palette/#color-schemes
           typography,
           shadows,
           shape,
@@ -38,9 +39,11 @@ function AppTheme(props) {
     return <React.Fragment>{children}</React.Fragment>;
   }
   return (
-    <ThemeProvider theme={theme} disableTransitionOnChange>
-      {children}
-    </ThemeProvider>
+
+      <ThemeProvider theme={theme} disableTransitionOnChange>
+        {children}
+      </ThemeProvider>
+
   );
 }
 

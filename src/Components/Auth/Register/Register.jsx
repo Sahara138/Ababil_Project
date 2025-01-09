@@ -16,7 +16,6 @@ import {
   CircularProgress,
   Stack,
   InputAdornment,
-  IconButton,
 } from "@mui/material";
 import AppTheme from "../../shared-theme/AppTheme";
 import ColorModeSelect from '../../shared-theme/ColorModeSelect';
@@ -87,6 +86,7 @@ const Background = styled(Grid)(() => ({
 }));
 
 const Register = (props) => {
+  // const { setUser } = useUser();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -158,7 +158,7 @@ const Register = (props) => {
         // Store the access and refresh tokens
         localStorage.setItem("accessToken", result.accessToken);
         localStorage.setItem("refreshToken", result.refreshToken);
-
+        // localStorage.setItem("userData", JSON.stringify(result.user));
         console.log("Registration successful:", result);
         alert("Registration successful!");
       } else {
@@ -224,77 +224,81 @@ const Register = (props) => {
               Sign in with Email address
             </Typography> */}
             <Box component="form" noValidate onSubmit={handleSubmit}>
-              <FormControl fullWidth margin="normal">
-                {/* <FormLabel htmlFor="email">Name</FormLabel> */}
-                <TextField
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  id="name"
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Name"
-                  // placeholder={errors.name? errors.name:"Name"}
-                  autoComplete="name"
-                  autoFocus
-                  required
-                  fullWidth
-                  variant="outlined"
-                  color={errors.name? 'error' :'secondary'}
-                />
-              </FormControl>
+              <div className="infoRow">
                 <FormControl fullWidth margin="normal">
+                  {/* <FormLabel htmlFor="email">Name</FormLabel> */}
                   <TextField
-                    error={!!errors.email}
-                    helperText={errors.email}
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder={!!errors.email ? errors.email: "your@email.com"}
-                    autoComplete="email"
-                    autoFocus
-                    required
-                    fullWidth
-                    variant="outlined"
-                    color={errors.email ? 'error' : 'primary'}
-                  />
-              </FormControl>
-              <FormControl fullWidth margin="normal">
-                  <TextField
-                    id="avatar"
+                    error={!!errors.name}
+                    helperText={errors.name}
+                    id="name"
                     type="text"
-                    name="avatar"
-                    value={formData.avatar}
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
-                    placeholder="Avatar URL"
-                    autoComplete="avatar"
+                    placeholder="Name"
+                    // placeholder={errors.name? errors.name:"Name"}
+                    autoComplete="name"
                     autoFocus
                     required
                     fullWidth
                     variant="outlined"
+                    color={errors.name? 'error' :'secondary'}
                   />
-              </FormControl>
-              <FormControl fullWidth margin="normal">
-                  <TextField
-                    error={!!errors.phone}
-                    helperText={errors.phone}
-                    id="phone"
-                    type="number"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="Phone No."
-                    autoComplete="phone"
-                    autoFocus
-                    required
-                    fullWidth
-                    variant="outlined"
-                    color={errors.name ? 'error' : 'primary'}
-                  />
-              </FormControl>
+                </FormControl>
+                  <FormControl fullWidth margin="normal">
+                    <TextField
+                      error={!!errors.email}
+                      helperText={errors.email}
+                      id="email"
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder={!!errors.email ? errors.email: "your@email.com"}
+                      autoComplete="email"
+                      autoFocus
+                      required
+                      fullWidth
+                      variant="outlined"
+                      color={errors.email ? 'error' : 'primary'}
+                    />
+                </FormControl>
+              </div>
+              <div className="infoRow">
+                <FormControl fullWidth margin="normal">
+                    <TextField
+                      id="avatar"
+                      type="text"
+                      name="avatar"
+                      value={formData.avatar}
+                      onChange={handleChange}
+                      placeholder="Avatar URL"
+                      autoComplete="avatar"
+                      autoFocus
+                      required
+                      fullWidth
+                      variant="outlined"
+                    />
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                    <TextField
+                      error={!!errors.phone}
+                      helperText={errors.phone}
+                      id="phone"
+                      type="number"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="Phone No."
+                      autoComplete="phone"
+                      autoFocus
+                      required
+                      fullWidth
+                      variant="outlined"
+                      color={errors.name ? 'error' : 'primary'}
+                    />
+                </FormControl>
+              </div>
               <FormControl fullWidth margin="normal">
               <TextField
                   type={showPassword ? "text" : "password"}
@@ -343,58 +347,60 @@ const Register = (props) => {
                     color={errors.name ? 'error' : 'primary'}
                   /> */}
               </FormControl>
-              <FormControl fullWidth margin="normal">
-                  <TextField
-                    error={!!errors.role}
-                    helperText={errors.role}
-                    id="role"
-                    type="text"
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    placeholder="Role"
-                    autoComplete="role"
-                    autoFocus
-                    required
-                    fullWidth
-                    variant="outlined"
-                    color={errors.name ? 'error' : 'primary'}
-                  />
-              </FormControl>
-              <FormControl fullWidth margin="normal">
-                  <TextField
-                    id="permission"
-                    type="text"
-                    name="permission"
-                    value={formData.permissiion}
-                    onChange={handleChange}
-                    placeholder="Permission"
-                    autoComplete="permission"
-                    autoFocus
-                    required
-                    fullWidth
-                    variant="outlined"
-                  />
-              </FormControl>
-              <FormControl fullWidth margin="normal">
-                  {/* <FormLabel htmlFor="email">Email</FormLabel> */}
-                  <TextField
-                    error={!!errors.status}
-                    helperText={errors.status}
-                    id="status"
-                    type="boolean"
-                    name="status"
-                    value={formData.status}
-                    onChange={handleChange}
-                    placeholder="Status"
-                    autoComplete="status"
-                    autoFocus
-                    required
-                    fullWidth
-                    variant="outlined"
-                    color={errors.name ? 'error' : 'primary'}
-                  />
-              </FormControl>
+              <div className="infoRow">
+                <FormControl fullWidth margin="normal">
+                    <TextField
+                      error={!!errors.role}
+                      helperText={errors.role}
+                      id="role"
+                      type="text"
+                      name="role"
+                      value={formData.role}
+                      onChange={handleChange}
+                      placeholder="Role"
+                      autoComplete="role"
+                      autoFocus
+                      required
+                      fullWidth
+                      variant="outlined"
+                      color={errors.name ? 'error' : 'primary'}
+                    />
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                    <TextField
+                      id="permission"
+                      type="text"
+                      name="permission"
+                      value={formData.permissiion}
+                      onChange={handleChange}
+                      placeholder="Permission"
+                      autoComplete="permission"
+                      autoFocus
+                      required
+                      fullWidth
+                      variant="outlined"
+                    />
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                    {/* <FormLabel htmlFor="email">Email</FormLabel> */}
+                    <TextField
+                      error={!!errors.status}
+                      helperText={errors.status}
+                      id="status"
+                      type="boolean"
+                      name="status"
+                      value={formData.status}
+                      onChange={handleChange}
+                      placeholder="Status"
+                      autoComplete="status"
+                      autoFocus
+                      required
+                      fullWidth
+                      variant="outlined"
+                      color={errors.name ? 'error' : 'primary'}
+                    />
+                </FormControl>
+              </div>
 
               <FormControlLabel
                 control={<Checkbox color="primary" />}

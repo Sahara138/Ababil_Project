@@ -90,6 +90,13 @@ import UpdateHajjDeparture from "./Components/Hajj/Departure/UpdateHajjDeparture
 import Settings from "./Components/Settings/Settings";
 import Profile from "./Components/Profile/Profile";
 import Calculator from "./Components/Calculator/Calculator";
+import { ThemeContext } from "@emotion/react";
+import ThemeCustomization from "./Components/Settings/ThemeCustomization";
+import Support from "./Components/Settings/Support";
+import AccountSettings from "./Components/Settings/AccountSettings";
+import PrivacyCenter from "./Components/Settings/PrivacyCenter";
+import Feedback from "./Components/Settings/Feedback";
+import History from "./Components/Settings/History";
 
 // import Trip from "./Components/Umrah/Trip/Trip";
 // import UmrahLayout from "./Layout/UmrahLayout";
@@ -104,43 +111,44 @@ const xThemeComponents = {
 function App() {
   const Layout = (props) => {
     return (
-      <AppTheme {...props} themeComponents={xThemeComponents}>
-        <CssBaseline enableColorScheme />
-        <Box sx={{ display: "flex" }}>
-          <SideMenu style={{ margin: "50px" }} />
-          <AppNavbar />
-          {/* Main content */}
-          <Box
-            component="main"
-            sx={(theme) => ({
-              flexGrow: 1,
-              backgroundColor: theme.vars
-                ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
-                : alpha(theme.palette.background.default, 1),
-              overflow: "auto",
-            })}
-          >
-            <Stack
-              className="menu-footer"
-              spacing={2}
-              sx={{
-                alignItems: "center",
-                mx: 3,
-                pb: 5,
-                mt: { xs: 8, md: 0 },
-                position: "absolute",
-                top: "50px",
-                left: "400px",
-                right: "50px",
-                bottom: "50px",
-              }}
-            >
-              <Header />
-              <Outlet />
-            </Stack>
-          </Box>
-        </Box>
-      </AppTheme>
+        <AppTheme {...props} themeComponents={xThemeComponents} >
+              <CssBaseline enableColorScheme />
+              <Box sx={{ display: "flex" }}>
+                <SideMenu style={{ margin: "50px" }} />
+                <AppNavbar />
+                {/* Main content */}
+                <Box
+                  component="main"
+                  sx={(theme) => ({
+                    flexGrow: 1,
+                    backgroundColor: theme.vars
+                      ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
+                      : alpha(theme.palette.background.default, 1),
+                    overflow: "auto",
+                  })}
+                >
+                  <Stack
+                    className="menu-footer"
+                    spacing={2}
+                    sx={{
+                      alignItems: "center",
+                      mx: 3,
+                      pb: 5,
+                      mt: { xs: 8, md: 0 },
+                      position: "absolute",
+                      top: "50px",
+                      left: "400px",
+                      right: "50px",
+                      bottom: "50px",
+                    }}
+                  >
+                    <Header />
+                    <Outlet />
+                  </Stack>
+                </Box>
+              </Box>
+            </AppTheme>
+         
     );
   };
 
@@ -454,10 +462,47 @@ function App() {
         },
         // For Departure end
         ///// Hajj end //////
+        {
+          path: "/ksa",
+          element: <Dashboard />,
+        },{
+
+          path: "/ticket-manager",
+          element: <Dashboard />,
+        },{
+
+          path: "/account-manager",
+          element: <Dashboard />,
+        },
         /////// Settings //////
         {
           path: "/settings",
-          element: <Settings />,
+          element:<Settings />,
+          children:[
+            {
+              path:"theme", 
+              element:<ThemeCustomization />
+            },
+            {
+              path:"support", 
+              element:<Support />
+            },
+            {
+              path:"account", 
+              element:<AccountSettings/>
+            },{
+              path:"privacy", 
+              element:<PrivacyCenter />
+            },{
+              path:"feedback", 
+              element:<Feedback />
+            },
+            {
+              path:"history", 
+              element:<History />
+            },
+          ]
+                        
         },
         /////// Settings //////
 

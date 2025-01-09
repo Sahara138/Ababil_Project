@@ -13,6 +13,7 @@ import {
   Stack,
   Divider,
   FormControl,
+  InputAdornment,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axiosInstance from "../axiosInstance";
@@ -21,6 +22,7 @@ import AppTheme from "../../shared-theme/AppTheme";
 import ColorModeSelect from '../../shared-theme/ColorModeSelect';
 import { Link } from "react-router";
 import { useTheme } from "@emotion/react";
+import { GridVisibilityOffIcon } from "@mui/x-data-grid";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -91,6 +93,8 @@ const Login = (props) => {
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  
+  const [showPassword, setShowPassword] = useState(false);
 
   // Load saved data from localStorage if "Remember Me" was clicked
   useEffect(() => {
@@ -120,7 +124,6 @@ const Login = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-
     setIsLoading(true);
     window.location.href="/dashboard"
    
@@ -131,7 +134,7 @@ const Login = (props) => {
       // Save tokens in localStorage
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
-
+      localStorage.setItem("userData", JSON.stringify(response.data));
       // Save email and password only if "Remember Me" is checked
       if (rememberMe) {
         localStorage.setItem("remembered_email", email);
@@ -203,10 +206,20 @@ const Login = (props) => {
               </FormControl>
               <FormControl fullWidth margin="normal">
                   <TextField
+                    type={showPassword ? "text" : "password"}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end" style={{cursor:"pointer"}}>
+                          <div
+                           onClick={() => setShowPassword(!showPassword)}>
+                            {showPassword ? <GridVisibilityOffIcon /> : <GridVisibilityOffIcon />}
+                          </div>
+                        </InputAdornment>
+                      ),
+                    }}
                     error={!!errors.password}
                     helperText={errors.password}
                     id="password"
-                    type="password"
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}

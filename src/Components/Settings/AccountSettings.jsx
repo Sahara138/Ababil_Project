@@ -6,21 +6,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Divider from '@mui/material/Divider';
-import './Profile.css';
+import '../Profile/Profile.css';
 import { useState } from 'react';
-// import { useState } from 'react';
 
-
-const Profile = () => {
-  // const { user } = JSON.parse(localStorage.getItem("userData"));
-
-  // const register = {
-  //   name: formData.name || "Default Name",
-  //   email: formData.email || "default@example.com",
-  //   role: formData.role || "User",
-  //   avatar: formData.avatar || "/assets/avatar.png",
-  // };
-  // console.log(register)
+const AccountSettings = () => {
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === "dark";
     const user = {
@@ -79,134 +68,7 @@ const Profile = () => {
         //   setErrors(newErrors);
         //   return Object.keys(newErrors).length === 0;
         // };
-
   return (
-    // <div style={{width:"100%"}}>
-    //      <Box
-    //     sx={{
-    //       padding: "30px",
-    //       backgroundColor: isDarkMode ? "grey.800" : "white",
-    //       boxShadow: 4,
-    //       marginBottom: "50px",
-    //       color: isDarkMode ? "#f0f0f0" : "grey.900",
-    //       marginTop: 5,
-    //       borderRadius: 3,
-    //       margin: "30px auto",
-    //     }}
-    //   >
-    //     {/* Header */}
-    //     <Typography
-    //       variant="h4"
-    //       sx={{
-    //         fontSize: 28,
-    //         fontWeight: "bold",
-    //         textAlign: "center",
-    //         marginBottom: 3,
-    //         color: isDarkMode ? "#b0bec5" : "#263238",
-    //       }}
-    //     >
-    //       User Profile
-    //     </Typography>
-    //     <Divider sx={{ backgroundColor: isDarkMode ? "grey.800" : "#cfd8dc", mb: 3 }} />
-
-    //     {/* Payment Details Grid */}
-    //     <Box
-    //       sx={{
-    //         display: "grid",
-    //         gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    //         gap: 3,
-    //       }}
-    //     >
-    //         <div >
-    //             <Box >
-    //                 <CardContent>
-    //                     <Stack spacing={2} sx={{ alignItems: 'center' }}>
-    //                     <div>
-    //                         <Avatar src={user.avatar} sx={{ height: '80px', width: '80px' }} />
-    //                     </div>
-    //                     <Stack spacing={1} sx={{ textAlign: 'center' }}>
-    //                         <Typography variant="h5">{user.name}</Typography>
-    //                         <Typography color="text.secondary" variant="body2">
-    //                         {user.city} {user.country}
-    //                         </Typography>
-    //                         <Typography color="text.secondary" variant="body2">
-    //                         {user.timezone}
-    //                         </Typography>
-    //                     </Stack>
-    //                     </Stack>
-    //                 </CardContent>
-    //                 <Divider />
-    //                 <CardActions>
-    //                     <Button fullWidth variant="text">
-    //                     Upload picture
-    //                     </Button>
-    //                 </CardActions>
-    //             </Box> 
-    //         </div>
-            
-    //     <form
-    //     onSubmit={(event) => {
-    //         event.preventDefault();
-    //     }}
-    //     >
-    //     <Card>
-    //         <CardHeader subheader="The information can be edited" title="Profile" />
-    //         <Divider />
-    //         <CardContent>
-    //         <Grid container spacing={3}>
-    //             <Grid md={6} xs={12}>
-    //             <FormControl fullWidth required>
-    //                 <InputLabel>First name</InputLabel>
-    //                 <OutlinedInput defaultValue="Sofia" label="First name" name="firstName" />
-    //             </FormControl>
-    //             </Grid>
-    //             <Grid md={6} xs={12}>
-    //             <FormControl fullWidth required>
-    //                 <InputLabel>Last name</InputLabel>
-    //                 <OutlinedInput defaultValue="Rivers" label="Last name" name="lastName" />
-    //             </FormControl>
-    //             </Grid>
-    //             <Grid md={6} xs={12}>
-    //             <FormControl fullWidth required>
-    //                 <InputLabel>Email address</InputLabel>
-    //                 <OutlinedInput defaultValue="sofia@devias.io" label="Email address" name="email" />
-    //             </FormControl>
-    //             </Grid>
-    //             <Grid md={6} xs={12}>
-    //             <FormControl fullWidth>
-    //                 <InputLabel>Phone number</InputLabel>
-    //                 <OutlinedInput label="Phone number" name="phone" type="tel" />
-    //             </FormControl>
-    //             </Grid>
-    //             <Grid md={6} xs={12}>
-    //             <FormControl fullWidth>
-    //                 <InputLabel>State</InputLabel>
-    //                 <Select defaultValue="New York" label="State" name="state" variant="outlined">
-    //                 {states.map((option) => (
-    //                     <MenuItem key={option.value} value={option.value}>
-    //                     {option.label}
-    //                     </MenuItem>
-    //                 ))}
-    //                 </Select>
-    //             </FormControl>
-    //             </Grid>
-    //             <Grid md={6} xs={12}>
-    //             <FormControl fullWidth>
-    //                 <InputLabel>City</InputLabel>
-    //                 <OutlinedInput label="City" />
-    //             </FormControl>
-    //             </Grid>
-    //         </Grid>
-    //         </CardContent>
-    //         <Divider />
-    //         <CardActions sx={{ justifyContent: 'flex-end' }}>
-    //         <Button variant="contained">Save details</Button>
-    //         </CardActions>
-    //     </Card>
-    //     </form>
-    //     </Box>
-    //   </Box>
-    // </div>
     <div style={{ width: "100%" }}>
       <Box
         sx={{
@@ -217,21 +79,20 @@ const Profile = () => {
           color: isDarkMode ? "#f0f0f0" : "grey.900",
           marginTop: 5,
           borderRadius: 3,
-          margin: "30px auto",
+          margin: "50px auto",
         }}
       >
         {/* Header */}
-        <Typography
-          variant="h4"
-          sx={{
-            fontSize: 28,
-            fontWeight: "bold",
-            // textAlign: "center",
-            marginBottom: 3,
-            color: isDarkMode ? "#b0bec5" : "#263238",
-          }}
-        >
-          Account
+         <Typography
+                    component="h2"
+                    variant="h6"
+                    sx={{
+                    mt: 2,
+                    mb: 3,
+                    fontSize: 25,
+                    }}
+                    >
+          Account Details
         </Typography>
         <Divider sx={{ backgroundColor: isDarkMode ? "grey.800" : "#cfd8dc", mb: 3 }} />
         <Box
@@ -440,8 +301,7 @@ const Profile = () => {
         </Box>
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
-
+export default AccountSettings;
