@@ -15,7 +15,6 @@ import {
 } from "./Components/theme/customizations";
 import Header from "./Components/Header";
 import UpdateUser from "./Components/Users/UpdateUser/UpdateUser";
-// import UmrahTabs from "./Tabs/UmrahTabs";
 import Pilgrim from "./Components/Umrah/Pilgrims/Pilgrim";
 import Ticket_Requisition from "./Components/Umrah/Ticket_Requisition/Ticket_Requisition";
 import Payment from "./Components/Umrah/Payment/Payment";
@@ -32,7 +31,6 @@ import UpdateTicketRequisition from "./Components/Umrah/Ticket_Requisition/Updat
 import CreatePayment from "./Components/Umrah/Payment/CreatePayment";
 import UpdatePayment from "./Components/Umrah/Payment/UpdatePayment";
 import Register from "./Components/Auth/Register/Register";
-import ProtectedRoute from "./Components/Auth/ProtectedRoute/ProtectedRoute";
 import CreateVoucher from "./Components/Umrah/Voucher/CreateVoucher";
 import UpdateVoucher from "./Components/Umrah/Voucher/UpdateVoucher";
 import CreateTrip from "./Components/Umrah/Trip/CreateTrip";
@@ -90,16 +88,13 @@ import UpdateHajjDeparture from "./Components/Hajj/Departure/UpdateHajjDeparture
 import Settings from "./Components/Settings/Settings";
 import Profile from "./Components/Profile/Profile";
 import Calculator from "./Components/Calculator/Calculator";
-import { ThemeContext } from "@emotion/react";
 import ThemeCustomization from "./Components/Settings/ThemeCustomization";
 import Support from "./Components/Settings/Support";
 import AccountSettings from "./Components/Settings/AccountSettings";
 import PrivacyCenter from "./Components/Settings/PrivacyCenter";
 import Feedback from "./Components/Settings/Feedback";
 import History from "./Components/Settings/History";
-
-// import Trip from "./Components/Umrah/Trip/Trip";
-// import UmrahLayout from "./Layout/UmrahLayout";
+import RequireAuth from "./Components/Auth/RequireAuth";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -165,9 +160,10 @@ function App() {
     {
       path: "/",
       element: (
-        // <ProtectedRoute>
+        <RequireAuth>
           <Layout />
-        // </ProtectedRoute>
+        </RequireAuth>
+        
       ),
       children: [
         {

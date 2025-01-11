@@ -128,7 +128,7 @@ const HajjVoucher = () => {
                       Add New Voucher
                     </Button>
                   </div>
-                  <DataTable rows={vouchers} columns={columns} />
+                  <DataTable rows={vouchers} columns={columns} getRowId={(row) => row._id}/>
                   {/* {loading ? (
                     <CircularProgress />
                   ) : (

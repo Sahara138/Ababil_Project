@@ -130,7 +130,7 @@ const Departure = () => {
                       Add New Departure
                     </Button>
                   </div>
-                  <DataTable rows={departures} columns={columns} />
+                  <DataTable rows={departures} columns={columns} getRowId={(row) => row._id} />
 
                   {/* {loading ? (
                     <CircularProgress />

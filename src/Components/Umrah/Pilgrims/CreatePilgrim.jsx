@@ -576,8 +576,10 @@ import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
 import UmrahTabs from "../../../Tabs/UmrahTabs";
 import { useTheme } from "@emotion/react";
 import Select from "react-select";
+import { useNavigate } from "react-router";
 
 const CreatePilgrim = (id) => {
+  const navigate = useNavigate()
   const theme = useTheme(); // Access the current theme
   const isDarkMode = theme.palette.mode === "dark"; // Check if the current theme is dark
 
@@ -594,6 +596,7 @@ const CreatePilgrim = (id) => {
   const [nationality, setNationality] = useState("");
   const [passportNo, setPassportNo] = useState("");
   const [passportExpiredDate, setPassportExpiredDate] = useState("");
+  // const [pilgrims, setPilgrims] = useState([]); // Store multiple pilgrims
 
   const options = [
     { value: "63e9e2a8f1b23c1a2f12345", label: "Option 1" },
@@ -683,14 +686,59 @@ const CreatePilgrim = (id) => {
         },
         body: JSON.stringify(formData),
       })
-        // .then((res) => {
-        //   if (res.ok) {
-        //     alert("User Data Saved Successfully");
-        //     navigate("/umrah/pilgrim");
-        //   } else {
-        //     console.error("Error:", res.statusText);
-        //   }
-        // })
+        .then((res) => {
+          if (res.ok) {
+            alert("User Data Saved Successfully");
+            navigate("/umrah/pilgrim");
+          } else {
+            console.error("Error:", res.statusText);
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    } else {
+      console.log("Validation Failed");
+    }
+  };
+  const handleAddPilgrim = (e) => {
+    e.preventDefault();
+
+    const paymentAmount = parseFloat(payment);
+    if (isNaN(paymentAmount)) {
+      console.error("Invalid payment value");
+      return;
+    }
+    const addformData = {
+      reference: reference.value,
+      trip: trip.value,
+      payment: parseFloat(payment),
+      firstName,
+      middleName,
+      lastName,
+      gender: gender.value,
+      birthday,
+      nationality,
+      passportNo,
+      passportExpiredDate,
+    };
+    if (validate()) {
+      fetch("http://192.168.0.100:5000/api/auth/createpilgrim", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(addformData),
+      })
+        .then((res) => {
+          if (res.ok) {
+            alert("User Data Saved Successfully");
+            handleCancel(); 
+            navigate("/umrah/pilgrim/create");
+          } else {
+            console.error("Error:", res.statusText);
+          }
+        })
         .catch((err) => {
           console.log(err.message);
         });
@@ -712,6 +760,8 @@ const CreatePilgrim = (id) => {
     setNationality("");
     setPassportNo("");
     setPassportExpiredDate("");
+    setErrors({});
+    navigate('/umrah/pilgrim')
   };
 
   return (
@@ -961,8 +1011,11 @@ const CreatePilgrim = (id) => {
               <Button type="button" onClick={handleCancel} variant="outlined">
                 Cancel
               </Button>
-              <Button type="submit" variant="contained">
-                Create Pilgrim
+              <Button type="submit" variant="contained" onClick={handleAddPilgrim}>
+                Save & Add New Pilgrim
+              </Button>
+              <Button type="submit" variant="contained" onClick={handleSubmit}>
+                Save
               </Button>
             </div>
           </form>

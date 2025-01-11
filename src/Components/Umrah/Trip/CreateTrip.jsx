@@ -144,17 +144,6 @@ const CreateTrip = () => {
           <form onSubmit={handleSubmit}>
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="tripId">Trip ID</label>
-                <input
-                  id="tripId"
-                  name="tripId"
-                  type="text"
-                  value={tripId}
-                  onChange={(e) => setTripId(e.target.value)}
-                />
-                {errors.tripId && <span className="error">{errors.tripId}</span>}
-              </div>
-              <div className="inputField">
                 <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="tripType">Trip Type</label>
                 <input
                   id="tripType"

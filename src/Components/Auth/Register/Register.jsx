@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState } from "react";
 import './Register.css';
 import MuiCard from '@mui/material/Card';
 import {
@@ -21,6 +21,8 @@ import AppTheme from "../../shared-theme/AppTheme";
 import ColorModeSelect from '../../shared-theme/ColorModeSelect';
 import { styled } from "@mui/material/styles";
 import { GridVisibilityOffIcon } from "@mui/x-data-grid";
+import { toast } from "react-toastify";
+
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -44,8 +46,8 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
-  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
-  minHeight: '100%',
+  // height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
+  minHeight: '100vh',
   padding: theme.spacing(2),
   [theme.breakpoints.up('sm')]: {
     padding: theme.spacing(4),
@@ -64,6 +66,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
         'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
     }),
   },
+
 }));
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText("#673ab7"),
@@ -86,7 +89,6 @@ const Background = styled(Grid)(() => ({
 }));
 
 const Register = (props) => {
-  // const { setUser } = useUser();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -95,15 +97,16 @@ const Register = (props) => {
     avatar: "",
     position: "",
     password: "",
-    confirmPassword: "",
+    // confirmPassword: "",
     role: "",
     permission: "",
-    status: "",
+    status: 0,
   });
 
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -121,12 +124,13 @@ const Register = (props) => {
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address.";
     }
-    if (!formData.password || formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters long.";
+    if (!formData.password || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$/.test(formData.password)) {
+      newErrors.password = "Password must include uppercase, lowercase, number, and special character, and be 6-24 characters long.";
     }
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match.";
-    }
+    
+    // if (formData.password !== formData.confirmPassword) {
+    //   newErrors.confirmPassword = "Passwords do not match.";
+    // }
     if (!formData.role) {
       newErrors.role = "Role is required.";
     }
@@ -136,49 +140,105 @@ const Register = (props) => {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
+  }
 
   // Submit function that communicates with the backend
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!validate()) return;
+  //   setIsLoading(true); // Start loading spinner
+  //   setFormData("")
+  //   console.log(formData)
+  //   console.log("Validation Failed")
+    
+
+  //   // try {
+  //   //   const response = await fetch("http://192.168.0.100:5000/api/auth/register", {
+  //   //     method: "POST",
+  //   //     headers: { "Content-Type": "application/json" },
+  //   //     body: JSON.stringify(formData),
+  //   //     withCredentials: true
+  //   //   });
+  //   //   console.log(response);
+  //   //   window.location.href='/login'
+  //   //   // const result = await response.json();
+  //   //   // if (response.ok) {
+  //   //   //   // Store the access and refresh tokens
+  //   //   //   localStorage.setItem("accessToken", result.accessToken);
+  //   //   //   // localStorage.setItem("refreshToken", result.refreshToken);
+  //   //   //   localStorage.setItem("userData", JSON.stringify(result.user));
+  //   //   //   console.log("Registration successful:", result);
+  //   //   //   toast("Registration successful!");
+  //   //   //   alert("Registration successful!");
+  //   //   // }
+  //   //   // else if (!errors?.response) {
+  //   //   //   setErrors('No Server Response');
+  //   //   // } 
+  //   //   //  else {
+  //   //   //   console.error("Registration failed:", result.message);
+  //   //   //   setErrors({ server: result.message || "Registration failed." });
+  //   //   // }
+  //   // } catch (error) {
+  //   //   console.error("Error:", error);
+  //   //   setErrors({ server: "An unexpected error occurred. Please try again." });
+  //   //   toast("Failed")
+  //   //   // errRef.current.focus();
+  //   // } finally {
+  //   //   setIsLoading(false); // End loading spinner
+  //   // }
+  // };
+
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validate()) return;
-
+    e.preventDefault(); // Prevent default form submission behavior
+  
+    // Validate the form data
+    if (!validate()) {
+      console.log("Validation Failed");
+      return;
+    }
+  
     setIsLoading(true); // Start loading spinner
-
+  
     try {
-      const response = await fetch("http://192.168.0.100:5000/api/auth/register", {
+      // Log the formData to ensure it's populated correctly
+      console.log("Form Data:", formData);
+  
+      // Send data to the backend
+      const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
-      const result = await response.json();
-
+  
       if (response.ok) {
-        // Store the access and refresh tokens
-        localStorage.setItem("accessToken", result.accessToken);
-        localStorage.setItem("refreshToken", result.refreshToken);
-        // localStorage.setItem("userData", JSON.stringify(result.user));
-        console.log("Registration successful:", result);
-        alert("Registration successful!");
+        // Handle success
+        console.log("Registration successful");
+        toast("Registration successful!");
+        window.location.href = "/login";
       } else {
-        console.error("Registration failed:", result.message);
+        // Handle server errors
+        const result = await response.json();
         setErrors({ server: result.message || "Registration failed." });
+        toast.error("Registration failed: " + result.message);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error during registration:", error);
       setErrors({ server: "An unexpected error occurred. Please try again." });
+      toast.error("Registration failed due to a network error.");
     } finally {
-      setIsLoading(false); // End loading spinner
+      setIsLoading(false); // Stop loading spinner
     }
   };
+  
 
   return (
     <AppTheme {...props}>
       <Background container>
         <CssBaseline enableColorScheme/>
         <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
-        <SignUpContainer direction="column" justifyContent="space-between">
+        <SignUpContainer className="register" direction="column" display="flex" flexWrap="wrap" overflow="auto" justifyContent="space-between">
           <Card variant="outlined">
           <Typography
             component="h1"
@@ -236,7 +296,6 @@ const Register = (props) => {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Name"
-                    // placeholder={errors.name? errors.name:"Name"}
                     autoComplete="name"
                     autoFocus
                     required
@@ -304,7 +363,7 @@ const Register = (props) => {
                   type={showPassword ? "text" : "password"}
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="end">
+                      <InputAdornment position="end" style={{cursor:"pointer"}}>
                         <div
                          onClick={() => setShowPassword(!showPassword)}>
                           {showPassword ? <GridVisibilityOffIcon /> : <GridVisibilityOffIcon />}
@@ -330,23 +389,59 @@ const Register = (props) => {
                   // Other props...
                 />
 
-                  {/* <TextField
-                    error={!!errors.password}
-                    helperText={errors.password}
-                    id="password"
-                    type="password"
-                    name="password"
-                    value={formData.password}
+                  
+              </FormControl>
+              <FormControl fullWidth margin="normal">
+                    <TextField
+                      error={!!errors.position}
+                      helperText={errors.position}
+                      id="position"
+                      type="text"
+                      name="position"
+                      value={formData.position}
+                      onChange={handleChange}
+                      placeholder="Position"
+                      autoComplete="position"
+                      autoFocus
+                      required
+                      fullWidth
+                      variant="outlined"
+                      color={errors.position ? 'error' : 'primary'}
+                    />
+                </FormControl>
+              {/* <FormControl fullWidth margin="normal">
+              <TextField
+                  type={showPassword ? "text" : "password"}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end" style={{cursor:"pointer"}}>
+                        <div
+                         onClick={() => setShowPassword(!showPassword)}>
+                          {showPassword ? <GridVisibilityOffIcon /> : <GridVisibilityOffIcon />}
+                        </div>
+                      </InputAdornment>
+                    ),
+                  }}
+                  error={!!errors.confirmPassword}
+                    helperText={errors.confirmPassword}
+                    id="confirmPassword"
+                    // type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
                     onChange={handleChange}
-                    placeholder="Password"
+                    placeholder="Confirm Password"
                     autoComplete="password"
                     autoFocus
                     required
                     fullWidth
                     variant="outlined"
-                    color={errors.name ? 'error' : 'primary'}
-                  /> */}
-              </FormControl>
+                    style={{cursor:"pointer"}}
+                    color={errors.confirmPassword ? 'error' : 'primary'}
+                  // Other props...
+                />
+
+                  
+              </FormControl> */}
               <div className="infoRow">
                 <FormControl fullWidth margin="normal">
                     <TextField
@@ -371,7 +466,7 @@ const Register = (props) => {
                       id="permission"
                       type="text"
                       name="permission"
-                      value={formData.permissiion}
+                      value={formData.permission}
                       onChange={handleChange}
                       placeholder="Permission"
                       autoComplete="permission"

@@ -12,6 +12,9 @@ import { useEffect, useState } from "react";
 import { Box, Divider, useTheme } from '@mui/material';
 import UmrahTabs from '../../../Tabs/UmrahTabs';
 // import Users from '../../Users/Users';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+
 
 const Pilgrim = () => {
   const theme = useTheme(); // Access the current theme
@@ -19,6 +22,7 @@ const Pilgrim = () => {
   const isDarkMode = theme.palette.mode === 'dark'; // Check if the current theme is dark
   const [pilgrims, setPilgrims] = useState([]);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     fetch("http://192.168.0.100:5000/api/auth/getallpilgrim")
@@ -91,6 +95,9 @@ const Pilgrim = () => {
       width: 200,
       renderCell: (params) => (
         <div className="action">
+          <div className="addPilgrim" onClick={() => AddPilgrim(params.row.id)}>
+                    <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: "8px", color: "#fff" }} />
+                    </div>
           <div className="view" onClick={() => ViewDetails(params.row.id)}>
             <ViewQuiltIcon />
           </div>

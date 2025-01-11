@@ -143,7 +143,7 @@ const Ticket_Requisition = () => {
 
               <DataTable
                 rows={tickets && tickets.map((item) => item)}
-                columns={columns}
+                columns={columns} getRowId={(row) => row._id}
               />
             </div>
           </div>

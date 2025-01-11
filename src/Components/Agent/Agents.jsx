@@ -222,7 +222,8 @@ import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import { useEffect, useState } from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import AgentTab from "../../Tabs/AgentTab";
 
 const Agents = () => {
@@ -232,6 +233,7 @@ const Agents = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null); // Error state
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     fetch("http://192.168.0.100:5000/api/auth/allagents")
@@ -252,6 +254,9 @@ const Agents = () => {
   }, []);
 
   const CreateAgent = () => {
+    navigate("/agents/create");
+  };
+  const AddPilgrim = () => {
     navigate("/agents/create");
   };
 
@@ -298,6 +303,9 @@ const Agents = () => {
       width: 200,
       renderCell: (params) => (
         <div className="action">
+          <div className="addPilgrim" onClick={() => AddPilgrim(params.row.id)}>
+          <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: "8px", color: "#fff" }} />
+          </div>
           <div className="view" onClick={() => ViewDetails(params.row.id)}>
             <ViewQuiltIcon />
           </div>
@@ -355,7 +363,7 @@ const Agents = () => {
                   Add New Agent
                 </Button>
               </div>
-              <DataTable rows={agents} columns={columns} />
+              <DataTable rows={agents} columns={columns} getRowId={(row) => row._id}/>
             </div>
           </Box>
         </div>

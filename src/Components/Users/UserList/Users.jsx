@@ -149,7 +149,7 @@ const Users = () => {
 
                   <DataTable
                     rows={users && users.map((item) => item)}
-                    columns={columns}
+                    columns={columns} getRowId={(row) => row._id}
                   />
                 </div>
               </div>

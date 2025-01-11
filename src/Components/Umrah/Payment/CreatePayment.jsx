@@ -144,17 +144,7 @@ const CreatePayment = () => {
           </div>
           <form onSubmit={handleSubmit}>
             <div className="infoRow">
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}htmlFor="paymentId">Payment ID</label>
-                <input
-                  id="paymentId"
-                  name="paymentId"
-                  type="text"
-                  value={paymentId}
-                  onChange={(e) => setPaymentId(e.target.value)}
-                />
-                {errors.paymentId && <span className="error">{errors.paymentId}</span>}
-              </div>
+              
               <div className="inputField">
                 <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}htmlFor="pilgrimName">Pilgrim Name</label>
                 <input

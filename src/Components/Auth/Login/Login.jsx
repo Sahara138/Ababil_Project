@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import MuiCard from '@mui/material/Card';
 import {
   Box,
@@ -20,9 +20,13 @@ import axiosInstance from "../axiosInstance";
 import AppTheme from "../../shared-theme/AppTheme";
 
 import ColorModeSelect from '../../shared-theme/ColorModeSelect';
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useTheme } from "@emotion/react";
 import { GridVisibilityOffIcon } from "@mui/x-data-grid";
+import AuthContext from "../Context/AuthProvider";
+import axios from "axios";
+import { toast } from "react-toastify";
+import useAuth from "../hooks/useAuth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -44,8 +48,8 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
-  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
-  minHeight: '100%',
+  // height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
+  minHeight: '100vh',
   padding: theme.spacing(2),
   [theme.breakpoints.up('sm')]: {
     padding: theme.spacing(4),
@@ -87,6 +91,8 @@ const Background = styled(Grid)(() => ({
 
 
 const Login = (props) => {
+  const { setAuth } = useAuth();
+  const navigate = useNavigate()
   const theme = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -109,32 +115,40 @@ const Login = (props) => {
     }
   }, []);
 
-  const validate = () => {
-    const newErrors = {};
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Please enter a valid email address.";
-    }
-    if (!password || password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters long.";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  // const validate = () => {
+  //   const newErrors = {};
+  //   if (!email || !/\S+@\S+\.\S+/.test(email)) {
+  //     newErrors.email = "Please enter a valid email address.";
+  //   }
+  //   if (!password || password.length < 6) {
+  //     newErrors.password = "Password must be at least 6 characters long.";
+  //   }
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validate()) return;
+    // if (!validate()) return;
     setIsLoading(true);
-    window.location.href="/dashboard"
+    // window.location.href="/dashboard"
    
     try {
-      const response = await axiosInstance.post("/auth/login", { email, password });
-      const { accessToken, refreshToken } = response.data;
+      const response = await axiosInstance.post("http://localhost:5000/api/auth/login", { email, password });
+      console.log(response);
+      console.log(JSON.stringify(response?.data));
+      const accessToken = response?.data?.accessToken;
+      console.log(accessToken)
+      const roles = response?.data?.role;
+      setAuth({user:email, password, roles, accessToken });
+      setEmail('');
+      setPassword('');
+      // const { accessToken, refreshToken } = response.data;
 
-      // Save tokens in localStorage
-      localStorage.setItem("access_token", accessToken);
-      localStorage.setItem("refresh_token", refreshToken);
-      localStorage.setItem("userData", JSON.stringify(response.data));
+      // Save access token to local storage
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("userRole", roles);
+
       // Save email and password only if "Remember Me" is checked
       if (rememberMe) {
         localStorage.setItem("remembered_email", email);
@@ -146,15 +160,55 @@ const Login = (props) => {
       }
       console.log(email,password)
       // Redirect to dashboard and clear login credentials if "Remember Me" is not checked
-      window.location.href = "/dashboard";
+      toast.success("Login successfully!");
+      navigate("/dashboard"); // Redirect to dashboard
       
     } catch (error) {
-      console.error(error.response?.data?.message || "Login failed.");
+      if (!error?.response) {
+        setErrors('No Server Response');
+    } else if (error.response?.status === 400) {
+        setErrors('Missing Username or Password');
+    } else if (error.response?.status === 401) {
+        setErrors('Unauthorized');
+    }else{
+      toast(error.response?.data?.message || "Login failed.");
       setErrors({ server: error.response?.data?.message || "An error occurred." });
+    }
     } finally {
       setIsLoading(false);
     }
   };
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//         const response = await axios.post(`http://192.168.0.100:5000/api/auth/login`,
+//             JSON.stringify({ email, password }),
+//             {
+//                 headers: { 'Content-Type': 'application/json' },
+//                 withCredentials: true
+//             }
+//         );
+//         console.log(JSON.stringify(response?.data));
+//         //console.log(JSON.stringify(response));
+//         const accessToken = response?.data?.accessToken;
+//         const roles = response?.data?.roles;
+//         setAuth({ email, password, roles, accessToken });
+//         setEmail('');
+//         setPassword('');
+//         window.location.href = '/dashboard'
+//     } catch (err) {
+//         if (!err?.response) {
+//             setErrors('No Server Response');
+//         } else if (err.response?.status === 400) {
+//             setErrors('Missing Username or Password');
+//         } else if (err.response?.status === 401) {
+//             setErrors('Unauthorized');
+//         } else {
+//             setErrors('Login Failed');
+//         }
+//     }
+// }
 
   return (
     <AppTheme {...props}>

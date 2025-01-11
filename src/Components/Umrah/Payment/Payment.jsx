@@ -129,7 +129,7 @@ const Payment = () => {
                       Add New Payment
                     </Button>
                   </div>
-                  <DataTable rows={payments} columns={columns} />
+                  <DataTable rows={payments} columns={columns} getRowId={(row) => row._id}/>
                   {/* {loading ? (
                     <CircularProgress />
                   ) : (

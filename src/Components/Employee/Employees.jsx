@@ -151,7 +151,7 @@ const Employees = () => {
               Add New Employee
             </Button>
           </div>
-          <DataTable rows={employees} columns={columns} />
+          <DataTable rows={employees} columns={columns} getRowId={(row) => row._id}/>
         </div>
       </Box>
     </div>

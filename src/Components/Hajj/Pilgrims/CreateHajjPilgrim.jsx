@@ -576,10 +576,12 @@ import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
 import HajjTabs from "../../../Tabs/HajjTabs";
 import { useTheme } from "@emotion/react";
 import Select from "react-select";
+import { useNavigate } from "react-router";
 
 const CreateHajjPilgrim = (id) => {
   const theme = useTheme(); // Access the current theme
   const isDarkMode = theme.palette.mode === "dark"; // Check if the current theme is dark
+  const navigate = useNavigate()
 
   
   // State variables
@@ -648,6 +650,51 @@ const CreateHajjPilgrim = (id) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  const handleAddPilgrim = (e) => {
+    e.preventDefault();
+
+    const paymentAmount = parseFloat(payment);
+    if (isNaN(paymentAmount)) {
+      console.error("Invalid payment value");
+      return;
+    }
+    const addformData = {
+      reference: reference.value,
+      trip: trip.value,
+      payment: parseFloat(payment),
+      firstName,
+      middleName,
+      lastName,
+      gender: gender.value,
+      birthday,
+      nationality,
+      passportNo,
+      passportExpiredDate,
+    };
+    if (validate()) {
+      fetch("http://192.168.0.100:5000/api/auth/createpilgrim", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(addformData),
+      })
+        .then((res) => {
+          if (res.ok) {
+            alert("User Data Saved Successfully");
+            handleCancel(); 
+            navigate("/hajj/pilgrim/create");
+          } else {
+            console.error("Error:", res.statusText);
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    } else {
+      console.log("Validation Failed");
+    }
+  };
 
   // Submit form data
   const handleSubmit = (e) => {
@@ -683,14 +730,14 @@ const CreateHajjPilgrim = (id) => {
         },
         body: JSON.stringify(formData),
       })
-        // .then((res) => {
-        //   if (res.ok) {
-        //     alert("User Data Saved Successfully");
-        //     navigate("/hajj/pilgrim");
-        //   } else {
-        //     console.error("Error:", res.statusText);
-        //   }
-        // })
+        .then((res) => {
+          if (res.ok) {
+            alert("User Data Saved Successfully");
+            navigate("/hajj/pilgrim");
+          } else {
+            console.error("Error:", res.statusText);
+          }
+        })
         .catch((err) => {
           console.log(err.message);
         });
@@ -712,6 +759,7 @@ const CreateHajjPilgrim = (id) => {
     setNationality("");
     setPassportNo("");
     setPassportExpiredDate("");
+    navigate('/hajj/pilgrim')
   };
 
   return (
@@ -960,8 +1008,11 @@ const CreateHajjPilgrim = (id) => {
               <Button type="button" onClick={handleCancel} variant="outlined">
                 Cancel
               </Button>
-              <Button type="submit" variant="contained">
-                Create Pilgrim
+              <Button type="submit" variant="contained" onClick={handleAddPilgrim}>
+                Save & Add New Pilgrim
+              </Button>
+              <Button type="submit" variant="contained" onClick={handleSubmit}>
+                Save
               </Button>
             </div>
           </form>
