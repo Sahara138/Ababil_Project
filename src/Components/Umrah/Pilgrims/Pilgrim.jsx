@@ -4,7 +4,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
@@ -17,6 +17,7 @@ import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 
 const Pilgrim = () => {
+  // const {_id} = useParams()
   const theme = useTheme(); // Access the current theme
 
   const isDarkMode = theme.palette.mode === 'dark'; // Check if the current theme is dark
@@ -25,7 +26,7 @@ const Pilgrim = () => {
   
 
   useEffect(() => {
-    fetch("http://192.168.0.100:5000/api/auth/getallpilgrim")
+    fetch("http://localhost:5000/api/auth/getallpilgrim")
       .then((res) => res.json())
       .then((data) => {
         const updatedPilgrims = data.map((pilgrim) => ({
@@ -44,17 +45,17 @@ const Pilgrim = () => {
     navigate("/umrah/pilgrim/create");
   };
 
-  const ViewDetails = (id) => {
-    navigate(`/pilgrim/view/${id}`);
+  const ViewDetails = (_id) => {
+    navigate(`/umrah/pilgrim/view/${_id}`);
   };
 
-  const EditDetails = (id) => {
-    navigate(`/pilgrim/update/${id}`);
+  const EditDetails = (_id) => {
+    navigate(`/umrah/pilgrim/update/${_id}`);
   };
 
-  const RemoveDetails = (id) => {
+  const RemoveDetails = (_id) => {
     if (window.confirm("Are you sure you want to delete this pilgrim?")) {
-      fetch(`http://192.168.0.100:5000/api/auth/createpilgrim/${id}`, {
+      fetch(`http://localhost:5000/api/auth/deletepilgrim/${_id}`, {
         method: "DELETE",
       })
         .then(() => {

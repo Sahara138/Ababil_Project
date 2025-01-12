@@ -650,6 +650,8 @@ const CreateHajjPilgrim = (id) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+
   const handleAddPilgrim = (e) => {
     e.preventDefault();
 
@@ -672,7 +674,7 @@ const CreateHajjPilgrim = (id) => {
       passportExpiredDate,
     };
     if (validate()) {
-      fetch("http://192.168.0.100:5000/api/auth/createpilgrim", {
+      fetch("http://localhost:5000/api/auth/createpilgrim", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -723,7 +725,7 @@ const CreateHajjPilgrim = (id) => {
     console.log("Form Data Submitted:", formData);
 
     if (validate()) {
-      fetch("http://192.168.0.100:5000/api/auth/createpilgrim", {
+      fetch("http://localhost:5000/api/auth/createpilgrim", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

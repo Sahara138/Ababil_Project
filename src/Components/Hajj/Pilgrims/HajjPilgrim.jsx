@@ -21,7 +21,7 @@ const HajjPilgrim = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://192.168.0.100:5000/api/auth/getallpilgrim")
+    fetch("http://localhost:5000/api/auth/getallpilgrim")
       .then((res) => res.json())
       .then((data) => {
         const updatedPilgrims = data.map((pilgrim) => ({
@@ -40,17 +40,17 @@ const HajjPilgrim = () => {
     navigate("/hajj/pilgrim/create");
   };
 
-  const ViewDetails = (id) => {
-    navigate(`/pilgrim/view/${id}`);
+  const ViewDetails = (_id) => {
+    navigate(`/pilgrim/view/${_id}`);
   };
 
-  const EditDetails = (id) => {
-    navigate(`/pilgrim/update/${id}`);
+  const EditDetails = (_id) => {
+    navigate(`/pilgrim/update/${_id}`);
   };
 
-  const RemoveDetails = (id) => {
+  const RemoveDetails = (_id) => {
     if (window.confirm("Are you sure you want to delete this pilgrim?")) {
-      fetch(`http://192.168.0.100:5000/api/auth/createpilgrim/${id}`, {
+      fetch(`http://localhost:5000/api/auth/deletepilgrim/${_id}`, {
         method: "DELETE",
       })
         .then(() => {

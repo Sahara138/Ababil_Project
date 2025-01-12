@@ -95,6 +95,8 @@ import PrivacyCenter from "./Components/Settings/PrivacyCenter";
 import Feedback from "./Components/Settings/Feedback";
 import History from "./Components/Settings/History";
 import RequireAuth from "./Components/Auth/RequireAuth";
+import Unauthorized from "./Components/Auth/Unauthorized";
+import NotFound from "./Components/NotFound/NotFound";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -102,6 +104,7 @@ const xThemeComponents = {
   ...datePickersCustomizations,
   ...treeViewCustomizations,
 };
+
 
 function App() {
   const Layout = (props) => {
@@ -156,11 +159,15 @@ function App() {
       path: "/login",
       element: <Login />,
     },
+    {
+      path: "/unauthorized",
+      element: <Unauthorized />
+    },
 
     {
       path: "/",
       element: (
-        <RequireAuth>
+        <RequireAuth allowedRoles={"admin"}>
           <Layout />
         </RequireAuth>
         
@@ -189,13 +196,13 @@ function App() {
           element: <CreateTrip />,
         },
         {
-          // path: "/umrah/pilgrim/view/:id",
-          path: "/umrah/trip/view",
+          path: "/umrah/trip/view/:id",
+          // path: "/umrah/trip/view",
           element: <ViewTrip />,
         },
         {
-          // path: "/umrah/trip/update/:id",
-          path: "/umrah/trip/update",
+          path: "/umrah/trip/update/:_id",
+          // path: "/umrah/trip/update",
           element: <UpdateTrip />,
         },
         // For trip end
@@ -210,13 +217,13 @@ function App() {
           element: <CreatePilgrim />,
         },
         {
-          // path: "/umrah/pilgrim/view/:id",
-          path: "/umrah/pilgrim/view",
-          element: <ViewPilgrim />,
+          path: "/umrah/pilgrim/view/:_id",
+          // path: "/umrah/pilgrim/view",
+          element: <ViewPilgrim />
         },
         {
-          // path: "/umrah/pilgrim/update/:id",
-          path: "/umrah/pilgrim/update",
+          path: "/umrah/pilgrim/update/:_id",
+          // path: "/umrah/pilgrim/update",
           element: <UpdatePilgrim />,
         },
         // For Pilgrim end
@@ -331,13 +338,13 @@ function App() {
           element: <CreateHajjTrip />,
         },
         {
-          // path: "/umrah/pilgrim/view/:id",
-          path: "/hajj/trip/view",
+          path: "/umrah/trip/view/:_id",
+          // path: "/hajj/trip/view",
           element: <ViewHajjTrip />,
         },
         {
-          // path: "/umrah/trip/update/:id",
-          path: "/hajj/trip/update",
+          path: "/umrah/trip/update/:_id",
+          // path: "/hajj/trip/update",
           element: <UpdateHajjTrip />,
         },
         // For trip end
@@ -352,13 +359,13 @@ function App() {
           element: <CreateHajjPilgrim />,
         },
         {
-          // path: "/umrah/pilgrim/view/:id",
-          path: "/hajj/pilgrim/view",
+          path: "/umrah/pilgrim/view/:_id",
+          // path: "/hajj/pilgrim/view",
           element: <ViewHajjPilgrim />,
         },
         {
-          // path: "/umrah/pilgrim/update/:id",
-          path: "/hajj/pilgrim/update",
+          path: "/umrah/pilgrim/update/:_id",
+          // path: "/hajj/pilgrim/update",
           element: <UpdateHajjPilgrim/>,
         },
         // For Pilgrim end
@@ -567,6 +574,10 @@ function App() {
         },
       ],
     },
+    {
+      path:"*", 
+      element:<NotFound />
+    }
   ]);
 
   return <RouterProvider router={router} />;

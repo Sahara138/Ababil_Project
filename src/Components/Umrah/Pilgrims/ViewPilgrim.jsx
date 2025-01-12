@@ -1,31 +1,30 @@
 import { Box, Button, Typography, Divider } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import UmrahTabs from "../../../Tabs/UmrahTabs";
+import { useEffect, useState } from "react";
 
 const ViewPilgrim = () => {
+  const {_id } = useParams();
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
   const navigate = useNavigate();
+  const [umrahPilgrimData,setUmrahPilgrimData] = useState({})
 
-  // Static mock data
-  const mockPilgrimData = {
-    reference: "REF12345",
-    trip: "Hajj 2025",
-    payment: "$5000",
-    firstName: "Ahmed",
-    middleName: "Ibrahim",
-    lastName: "Khan",
-    gender: "Male",
-    birthday: "1985-05-20",
-    nationality: "Saudi Arabian",
-    passportNo: "A12345678",
-    passportExpiredDate: "2030-12-31",
-  };
+  useEffect(()=>{
+    fetch(`http://localhost:5000/api/auth/getpilgrimbyid/${_id}`)
+    .then((res)=> res.json())
+    .then((data)=>{
+      setUmrahPilgrimData(data)
+      console.log(data)
+    }).catch((err)=>{
+        console.log(err.message)
+    })
+},[])
 
   // Navigate back to the pilgrim list
   const handleBack = () => {
-    navigate("/pilgrims/list");
+    navigate("/umrah/pilgrim");
   };
 
   return (
@@ -60,51 +59,55 @@ const ViewPilgrim = () => {
         <Divider sx={{ backgroundColor: isDarkMode ? "grey.800" : "#cfd8dc", mb: 3 }} />
 
         {/* Pilgrim Details Grid */}
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: 3,
-          }}
-        >
-          {[
-            { label: "Reference", value: mockPilgrimData.reference },
-            { label: "Trip", value: mockPilgrimData.trip },
-            { label: "Payment", value: mockPilgrimData.payment },
-            { label: "First Name", value: mockPilgrimData.firstName },
-            { label: "Middle Name", value: mockPilgrimData.middleName },
-            { label: "Last Name", value: mockPilgrimData.lastName },
-            { label: "Gender", value: mockPilgrimData.gender },
-            { label: "Birthday", value: mockPilgrimData.birthday },
-            { label: "Nationality", value: mockPilgrimData.nationality },
-            { label: "Passport No.", value: mockPilgrimData.passportNo },
-            { label: "Passport Expiry Date", value: mockPilgrimData.passportExpiredDate },
-          ].map((item, index) => (
+        {
+          umrahPilgrimData && (
             <Box
-              key={index}
               sx={{
-                padding: 2,
-                borderRadius: 2,
-                backgroundColor: isDarkMode ? "grey.800" : "#f5f5f5",
-                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.05)",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                gap: 3,
               }}
             >
-              <Typography
-                variant="body2"
-                sx={{
-                  fontWeight: "bold",
-                  color: isDarkMode ? "#b0bec5" : "#37474f",
-                  marginBottom: 1,
-                }}
-              >
-                {item.label}
-              </Typography>
-              <Typography variant="body1" sx={{ color: isDarkMode ? "#e0e0e0" : "#616161" }}>
-                {item.value || "N/A"}
-              </Typography>
+              {[
+                { label: "Reference", value: umrahPilgrimData.reference },
+                { label: "Trip", value: umrahPilgrimData.trip },
+                { label: "Payment", value: umrahPilgrimData.payment },
+                { label: "First Name", value:umrahPilgrimData.firstName },
+                { label: "Middle Name", value: umrahPilgrimData.middleName },
+                { label: "Last Name", value: umrahPilgrimData.lastName },
+                { label: "Gender", value: umrahPilgrimData.gender },
+                { label: "Birthday", value: umrahPilgrimData.birthday },
+                { label: "Nationality", value: umrahPilgrimData.nationality },
+                { label: "Passport No.", value: umrahPilgrimData.passportNo },
+                { label: "Passport Expiry Date", value: umrahPilgrimData.passportExpiredDate },
+              ].map((item, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    padding: 2,
+                    borderRadius: 2,
+                    backgroundColor: isDarkMode ? "grey.800" : "#f5f5f5",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.05)",
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontWeight: "bold",
+                      color: isDarkMode ? "#b0bec5" : "#37474f",
+                      marginBottom: 1,
+                    }}
+                  >
+                    {item.label}
+                  </Typography>
+                  <Typography variant="body1" sx={{ color: isDarkMode ? "#e0e0e0" : "#616161" }}>
+                    {item.value || "N/A"}
+                  </Typography>
+                </Box>
+              ))}
             </Box>
-          ))}
-        </Box>
+          )
+        }
 
         {/* Action Buttons */}
         <Box

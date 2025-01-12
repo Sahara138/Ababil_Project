@@ -92,7 +92,9 @@ const Background = styled(Grid)(() => ({
 
 const Login = (props) => {
   const { setAuth } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/dashboard";
+
   const theme = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -115,35 +117,23 @@ const Login = (props) => {
     }
   }, []);
 
-  // const validate = () => {
-  //   const newErrors = {};
-  //   if (!email || !/\S+@\S+\.\S+/.test(email)) {
-  //     newErrors.email = "Please enter a valid email address.";
-  //   }
-  //   if (!password || password.length < 6) {
-  //     newErrors.password = "Password must be at least 6 characters long.";
-  //   }
-  //   setErrors(newErrors);
-  //   return Object.keys(newErrors).length === 0;
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!validate()) return;
     setIsLoading(true);
-    // window.location.href="/dashboard"
+
    
     try {
       const response = await axiosInstance.post("http://localhost:5000/api/auth/login", { email, password });
       console.log(response);
-      console.log(JSON.stringify(response?.data));
+      console.log(JSON.stringify(response?.data));         
+
       const accessToken = response?.data?.accessToken;
+  
       console.log(accessToken)
       const roles = response?.data?.role;
       setAuth({user:email, password, roles, accessToken });
-      setEmail('');
-      setPassword('');
-      // const { accessToken, refreshToken } = response.data;
+     
 
       // Save access token to local storage
       localStorage.setItem("accessToken", accessToken);
@@ -161,8 +151,11 @@ const Login = (props) => {
       console.log(email,password)
       // Redirect to dashboard and clear login credentials if "Remember Me" is not checked
       toast.success("Login successfully!");
-      navigate("/dashboard"); // Redirect to dashboard
-      
+      // navigate("/dashboard"); // Redirect to dashboard
+      navigate(from, { replace: true });
+      setEmail('');
+      setPassword('');
+     
     } catch (error) {
       if (!error?.response) {
         setErrors('No Server Response');

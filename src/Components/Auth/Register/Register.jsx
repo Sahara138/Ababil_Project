@@ -16,6 +16,7 @@ import {
   CircularProgress,
   Stack,
   InputAdornment,
+  MenuItem,
 } from "@mui/material";
 import AppTheme from "../../shared-theme/AppTheme";
 import ColorModeSelect from '../../shared-theme/ColorModeSelect';
@@ -98,7 +99,8 @@ const Register = (props) => {
     position: "",
     password: "",
     // confirmPassword: "",
-    role: "",
+    // role: ["Admin","User"],
+    role: [],
     permission: "",
     status: 0,
   });
@@ -444,7 +446,8 @@ const Register = (props) => {
               </FormControl> */}
               <div className="infoRow">
                 <FormControl fullWidth margin="normal">
-                    <TextField
+                <TextField
+
                       error={!!errors.role}
                       helperText={errors.role}
                       id="role"
@@ -460,6 +463,8 @@ const Register = (props) => {
                       variant="outlined"
                       color={errors.name ? 'error' : 'primary'}
                     />
+                  
+              
                 </FormControl>
                 <FormControl fullWidth margin="normal">
                     <TextField

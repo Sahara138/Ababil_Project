@@ -8,13 +8,14 @@ import { Link, useNavigate, useParams } from "react-router";
 import UmrahTabs from "../../../Tabs/UmrahTabs";
 import { useTheme } from "@emotion/react";
 import Select from "react-select";
+// import axios from "../../Api/axios";
 
 const UpdatePilgrim = () => {
   const theme = useTheme(); // Access the current theme
 
   const isDarkMode = theme.palette.mode === "dark"; // Check if the current theme is dark
+  const {_id } = useParams();
 
-  const { user_id } = useParams();
   const navigate = useNavigate();
   const [reference, setReference] = useState("");
   const [trip, setTrip] = useState("");
@@ -55,12 +56,22 @@ const UpdatePilgrim = () => {
 
   // Fetch existing data to generate the ID dynamically
   useEffect(() => {
-    fetch("http://localhost:8000/userRows")
+    fetch(`http://localhost:5000/api/auth/getpilgrimbyid/${_id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        // const maxId = data.reduce((max, user) => Math.max(max, user.id), 0);
-        // setId(maxId + 1); // Set the next ID
+        setReference(data.reference)
+        setTrip(data.trip)
+        setPassportDetails(data.passportDetails);
+        setFirstName(data.firstName);
+        setMiddleName(data.middleName);
+        setLastName(data.lastName);
+        setGender(data.gender);
+        setBirthDate(data.birthDate);
+        setNationality(data.nationality);
+        setPassportNo(data.passportNo);
+        setPassportExpireDate(data.passportExpireDate);
+       
       })
       .catch((err) => console.error("Error fetching user data:", err));
   }, []);
@@ -69,49 +80,49 @@ const UpdatePilgrim = () => {
     const newErrors = {};
 
     // Validate each field
-    if (!reference.trim()) {
+    if (!reference) {
       newErrors.reference = "* Reference is required.";
     }
 
-    if (!trip.trim()) {
+    if (!trip) {
       newErrors.trip = "* Trip is required.";
     }
 
-    if (!passportDetails.trim()) {
+    if (!passportDetails) {
       newErrors.passportDetails = "* Passport details are required.";
     }
 
-    if (!firstName.trim()) {
+    if (!firstName) {
       newErrors.firstName = "* First name is required.";
     }
 
-    if (!middleName.trim()) {
+    if (!middleName) {
       newErrors.middleName = "* Middle name is required.";
     }
 
-    if (!lastName.trim()) {
+    if (!lastName) {
       newErrors.lastName = "* Last name is required.";
     }
 
-    if (!gender.trim()) {
+    if (!gender) {
       newErrors.gender = "* Gender is required.";
     }
 
-    if (!birthDate.trim()) {
+    if (!birthDate) {
       newErrors.birthDate = "* Birth date is required.";
     }
 
-    if (!nationality.trim()) {
+    if (!nationality) {
       newErrors.nationality = "* Nationality is required.";
     }
 
-    if (!passportNo.trim()) {
+    if (!passportNo) {
       newErrors.passportNo = "* Passport number is required.";
     } else if (!/^[A-Z0-9]{6,9}$/.test(passportNo)) {
       newErrors.passportNo = "* Invalid passport number format.";
     }
 
-    if (!passportExpireDate.trim()) {
+    if (!passportExpireDate) {
       newErrors.passportExpireDate = "* Passport expiry date is required.";
     } else if (new Date(passportExpireDate) <= new Date()) {
       newErrors.passportExpireDate =
@@ -122,41 +133,50 @@ const UpdatePilgrim = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  useEffect(() => {
-    fetch("http://localhost:8000/userRows/" + user_id)
-      .then((res) => res.json())
-      .then((data) => {
-        setReference(data.reference);
-        setTrip(data.trip);
-        setPassportDetails(data.passportDetails);
-        setFirstName(data.firstName);
-        setMiddleName(data.middleName);
-        setLastName(data.lastName);
-        setGender(data.gender);
-        setBirthDate(data.birthDate);
-        setNationality(data.nationality);
-        setPassportNo(data.passportNo);
-        setPassportExpireDate(data.passportExpireDate);
-        console.log(
-          reference,
-          trip,
-          passportDetails,
-          firstName,
-          middleName,
-          lastName,
-          gender,
-          birthDate,
-          nationality,
-          passportNo,
-          passportExpireDate
-        );
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  
+  //   // Prepare the updated form data
+  //   const updatedFormData = {
+  //     reference,
+  //     trip,
+  //     passportDetails,
+  //     firstName,
+  //     middleName,
+  //     lastName,
+  //     gender,
+  //     birthDate,
+  //     nationality,
+  //     passportNo,
+  //     passportExpireDate,
+  //   };
 
-  const handleSubmit = (e) => {
+  //     try {
+  //       console.log("Form Submitted:", updatedFormData);
+  
+  //       // Axios PUT request
+  //       const response = await axios.put(
+  //         `/getallpilgrim/${_id}`,
+  //         updatedFormData,
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  
+  //       if (response.status === 200) {
+  //         alert("User Data Updated Successfully");
+  //         navigate("/umrah/pilgrim");
+  //       } else {
+  //         console.error("Unexpected response status:", response.status);
+  //       }
+  //     } catch (err) {
+  //       console.error("Error updating data:", err.message);
+  //     }
+  // };
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
     // Handle form submission here, such as API request or form validation
     const updatedFormData = {
@@ -174,38 +194,71 @@ const UpdatePilgrim = () => {
     };
     if (validate()) {
       console.log("Form Submitted:", updatedFormData);
-      fetch("http://localhost:8000/userRows" + user_id, {
+      const apiUrl = `http://localhost:5000/api/auth/updatepilgrimbyid/${_id}`;
+      console.log("API URL: ", apiUrl);
+
+
+      if(_id == apiUrl){
+        console.log("Same")
+      }
+
+
+      fetch(apiUrl, {
         method: "PUT",
         headers: {
-          "content-type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(updatedFormData),
       })
-        .then((res) => {
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Response: ", data);
           alert("User Data Updated Successfully");
           navigate("/umrah/pilgrim");
         })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    } else {
-      console.log("Validation Failed");
-    }
+        .catch((err) => console.error("Error during update: ", err.message));
+      }
+    // try {
+    //   const response = await fetch(`http://localhost:5000/api/auth/updatepilgrimbyid/${_id}`, {
+    //     method: "PUT",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(updatedFormData),
+    //   });
+    
+    //   if (!response.ok) {
+    //     throw new Error("Failed to update pilgrim data");
+    //   }
+    
+    //   alert("Pilgrim data updated successfully");
+    //   navigate("/umrah/pilgrim");
+    // } catch (error) {
+    //   console.error("Error updating pilgrim data:", error.message);
+    //   alert("An error occurred. Please try again.");
+    // }
+    // } else {
+    //   console.log("Validation Failed");
+    // }
   };
 
   const handleCancel = () => {
+    navigate('/umrah/pilgrim')
     // Reset all fields if user clicks on Cancel
-    setReference("");
-    setTrip("");
-    setPassportDetails("");
-    setFirstName("");
-    setMiddleName("");
-    setLastName("");
-    setGender("");
-    setBirthDate("");
-    setNationality("");
-    setPassportNo("");
-    setPassportExpireDate("");
+    // setReference("");
+    // setTrip("");
+    // setPassportDetails("");
+    // setFirstName("");
+    // setMiddleName("");
+    // setLastName("");
+    // setGender("");
+    // setBirthDate("");
+    // setNationality("");
+    // setPassportNo("");
+    // setPassportExpireDate("");
   };
 
   return (

@@ -70,7 +70,7 @@ const CreateTrip = () => {
     };
     if (validate()) {
       console.log("Form Submitted:", formData);
-      fetch("http://localhost:8000/trips", {
+      fetch("http://localhost:5000/api/auth/createtrip", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

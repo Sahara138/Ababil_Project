@@ -679,7 +679,7 @@ const CreatePilgrim = (id) => {
     console.log("Form Data Submitted:", formData);
 
     if (validate()) {
-      fetch("http://192.168.0.100:5000/api/auth/createpilgrim", {
+      fetch("http://localhost:5000/api/auth/createpilgrim", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -723,7 +723,7 @@ const CreatePilgrim = (id) => {
       passportExpiredDate,
     };
     if (validate()) {
-      fetch("http://192.168.0.100:5000/api/auth/createpilgrim", {
+      fetch("http://localhost:5000/api/auth/createpilgrim", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

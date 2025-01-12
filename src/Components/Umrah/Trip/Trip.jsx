@@ -17,7 +17,7 @@ const Trip = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8000/trips") // Replace with actual API endpoint
+    fetch("http://localhost:5000/api/auth/gettrip") // Replace with actual API endpoint
       .then((res) => res.json())
       .then((data) => {
         setTrips(data);
@@ -32,19 +32,19 @@ const Trip = () => {
     navigate("/umrah/trip/create");
   };
 
-  const ViewDetails = (id) => {
+  const ViewDetails = (_id) => {
     navigate(`/umrah/trip/view`);
     // navigate(`/umrah/trip/view/${id}`);
   };
 
-  const EditDetails = (id) => {
+  const EditDetails = (_id) => {
     // navigate(`/umrah/trip/update/${id}`);
     navigate(`/umrah/trip/update`);
   };
 
-  const RemoveDetails = (id) => {
+  const RemoveDetails = (_id) => {
     if (window.confirm("Are you sure you want to delete this trip?")) {
-      fetch(`http://localhost:8000/trips/${id}`, {
+      fetch(`http://localhost:5000/api/auth/deletetrip/${_id}`, {
         method: "DELETE",
       })
         .then(() => {
