@@ -14,6 +14,7 @@ import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import { useEffect, useState } from "react";
 
 import EmployeeTab from "../../Tabs/EmployeeTab";
+import { toast } from "react-toastify";
 
 const Employees = () => {
   const theme = useTheme();
@@ -24,7 +25,7 @@ const Employees = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://192.168.0.100:5000/api/employees")
+    fetch("http://localhost:5000/api/auth/getallemployee")
       .then((res) => res.json())
       .then((data) => {
         const updatedEmployees = data.map((employee) => ({
@@ -42,27 +43,28 @@ const Employees = () => {
   }, []);
 
   const createEmployee = () => {
-    navigate("/employees/create");
+    navigate("/employee/create");
   };
 
-  const viewDetails = (id) => {
-    navigate(`/employee/view/${id}`);
+  const viewDetails = (_id) => {
+    navigate(`/employee/view/${_id}`);
   };
 
-  const editDetails = (id) => {
-    navigate(`/employee/update/${id}`);
+  const editDetails = (_id) => {
+    navigate(`/employee/update/${_id}`);
   };
 
-  const removeDetails = (id) => {
+  const removeDetails = (_id) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
-      fetch(`http://192.168.0.100:5000/api/employees/${id}`, {
+      fetch(`http://localhost:5000/api/auth/deleteemplyee/${_id}`, {
         method: "DELETE",
       })
         .then(() => {
-          alert("Employee removed successfully");
+          toast("Employee removed successfully");
           setEmployees((prevEmployees) =>
-            prevEmployees.filter((e) => e.id !== id)
+            prevEmployees.filter((e) => e.id !== _id)
           );
+          window.location.reload(); // Reload the page
         })
         .catch((err) => {
           console.error(err.message);
@@ -71,24 +73,21 @@ const Employees = () => {
   };
 
   const columns = [
-    {
-      field: "photo",
-      headerName: "Photo",
-      width: 150,
-      renderCell: (params) => (
-        <img
-          src={params.row.photo || "default-image.jpg"} // Fallback image if photo is missing
-          alt="Employee"
-          style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-        />
-      ),
-    },
     { field: "name", headerName: "Name", width: 150 },
-    { field: "designation", headerName: "Designation", width: 200 },
-    { field: "department", headerName: "Department", width: 200 },
+    { field: "fatherName", headerName: "Father's Name", width: 150 },
+    { field: "motherName", headerName: "Mother's Name", width: 150 },
+    { field: "gender", headerName: "Gender", width: 100 },
+    { 
+      field: "birthOfDate", 
+      headerName: "Date of Birth", 
+      width: 150, 
+      renderCell: (params) => 
+        new Date(params.row.birthOfDate).toLocaleDateString(), // Format Date
+    },
+    { field: "nid", headerName: "NID", width: 150 },
+    { field: "passportNo", headerName: "Passport No", width: 150 },
     { field: "email", headerName: "Email", width: 200 },
     { field: "phone", headerName: "Phone", width: 150 },
-    { field: "dateOfJoining", headerName: "Date of Joining", width: 200 },
     {
       field: "actions",
       headerName: "Actions",
@@ -108,6 +107,7 @@ const Employees = () => {
       ),
     },
   ];
+  
 
   return (
     <div style={{ width: "100%" }}>

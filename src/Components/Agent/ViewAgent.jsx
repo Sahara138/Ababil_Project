@@ -1,35 +1,48 @@
 import { Box, Button, Typography, Divider } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import AgentTab from "../../Tabs/AgentTab";
+import { useEffect, useState } from "react";
 
 const ViewAgent = () => {
+  const {_id} = useParams()
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
   const navigate = useNavigate();
+  const [agentData,setAgentDate] = useState({})
 
+  useEffect(()=>{
+        fetch(`http://localhost:5000/api/auth/agents/${_id}`)
+        .then((res)=> res.json())
+        .then((data)=>{
+          setAgentDate(data)
+          console.log(data)
+        }).catch((err)=>{
+            console.log(err.message)
+        })
+    },[])
   // Static mock data
-  const mockAgentData = {
-    agentName: "Jane Doe",
-    agentType: "Travel Agent",
-    fatherName: "John Doe",
-    motherName: "Mary Doe",
-    dob: "1990-05-20",
-    nid: "123456789",
-    passportNumber: "AB1234567",
-    passportExpiryDate: "2030-12-31",
-    mobileNumber: "555-123-4567",
-    ksaPhoneNumber: "+966-50-123-4567",
-    email: "janedoe@example.com",
-    agentPresentAddress: "123 Main St, City, Country",
-    emergencyInformation: "Contact: 555-987-6543",
-    agentPhoto: "https://via.placeholder.com/100",
-    passportImage: "https://via.placeholder.com/100",
-    nidImageFront: "https://via.placeholder.com/100",
-    nidImageBack: "https://via.placeholder.com/100",
-    payment: 1000,
-    pilgrim: "50 Pilgrims",
-  };
+  // const agentData = {
+  //   agentName: "Jane Doe",
+  //   agentType: "Travel Agent",
+  //   fatherName: "John Doe",
+  //   motherName: "Mary Doe",
+  //   dob: "1990-05-20",
+  //   nid: "123456789",
+  //   passportNumber: "AB1234567",
+  //   passportExpiryDate: "2030-12-31",
+  //   mobileNumber: "555-123-4567",
+  //   ksaPhoneNumber: "+966-50-123-4567",
+  //   email: "janedoe@example.com",
+  //   agentPresentAddress: "123 Main St, City, Country",
+  //   emergencyInformation: "Contact: 555-987-6543",
+  //   agentPhoto: "https://via.placeholder.com/100",
+  //   passportImage: "https://via.placeholder.com/100",
+  //   nidImageFront: "https://via.placeholder.com/100",
+  //   nidImageBack: "https://via.placeholder.com/100",
+  //   payment: 1000,
+  //   pilgrim: "50 Pilgrims",
+  // };
 
   // Navigate back to the agent list
   const handleBack = () => {
@@ -76,10 +89,10 @@ const ViewAgent = () => {
             mb: 4,
           }}
         >
-          {mockAgentData.agentPhoto ? (
+          {agentData.agentPhoto ? (
             <img
-              src={mockAgentData.agentPhoto}
-              alt={`${mockAgentData.agentName}'s photo`}
+              src={agentData.agentPhoto}
+              alt={`${agentData.agentName}'s photo`}
               style={{
                 width: 120,
                 height: 120,
@@ -116,21 +129,21 @@ const ViewAgent = () => {
           }}
         >
           {[ 
-            { label: "Agent Name", value: mockAgentData.agentName },
-            { label: "Agent Type", value: mockAgentData.agentType },
-            { label: "Father's Name", value: mockAgentData.fatherName },
-            { label: "Mother's Name", value: mockAgentData.motherName },
-            { label: "Date of Birth", value: mockAgentData.dob },
-            { label: "NID", value: mockAgentData.nid },
-            { label: "Passport Number", value: mockAgentData.passportNumber },
-            { label: "Passport Expiry Date", value: mockAgentData.passportExpiryDate },
-            { label: "Mobile Number", value: mockAgentData.mobileNumber },
-            { label: "KSA Phone Number", value: mockAgentData.ksaPhoneNumber },
-            { label: "Email", value: mockAgentData.email },
-            { label: "Present Address", value: mockAgentData.agentPresentAddress },
-            { label: "Emergency Information", value: mockAgentData.emergencyInformation },
-            { label: "Payment", value: `$${mockAgentData.payment}` },
-            { label: "Pilgrim", value: mockAgentData.pilgrim },
+            { label: "Agent Name", value: agentData.agentName },
+            { label: "Agent Type", value: agentData.agentType },
+            { label: "Father's Name", value: agentData.fatherName },
+            { label: "Mother's Name", value: agentData.motherName },
+            { label: "Date of Birth", value: agentData.dob },
+            { label: "NID", value: agentData.nid },
+            { label: "Passport Number", value: agentData.passportNumber },
+            { label: "Passport Expiry Date", value: agentData.passportExpiryDate },
+            { label: "Mobile Number", value: agentData.mobileNumber },
+            { label: "KSA Phone Number", value: agentData.ksaPhoneNumber },
+            { label: "Email", value: agentData.email },
+            { label: "Present Address", value: agentData.agentPresentAddress },
+            { label: "Emergency Information", value: agentData.emergencyInformation },
+            { label: "Payment", value: `$${agentData.payment}` },
+            { label: "Pilgrim", value: agentData.pilgrim },
           ].map((item, index) => (
             <Box
               key={index}

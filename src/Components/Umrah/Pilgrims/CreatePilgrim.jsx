@@ -559,7 +559,7 @@
 
 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -576,22 +576,23 @@ import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
 import UmrahTabs from "../../../Tabs/UmrahTabs";
 import { useTheme } from "@emotion/react";
 import Select from "react-select";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
-const CreatePilgrim = (id) => {
+const CreatePilgrim = () => {
+  const {_id} = useParams()
   const navigate = useNavigate()
   const theme = useTheme(); // Access the current theme
   const isDarkMode = theme.palette.mode === "dark"; // Check if the current theme is dark
 
   
   // State variables
-  const [reference, setReference] = useState("");
-  const [trip, setTrip] = useState("");
+  const [reference, setReference] = useState(null);
+  const [trip, setTrip] = useState(null);
   const [payment, setPayment] = useState(0); // Store as number
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState(null);
   const [birthday, setBirthday] = useState("");
   const [nationality, setNationality] = useState("");
   const [passportNo, setPassportNo] = useState("");
@@ -604,6 +605,9 @@ const CreatePilgrim = (id) => {
     { value: "option3", label: "Option 3" },
     { value: "option4", label: "Option 4" },
   ];
+  useEffect(()=>{
+
+  },[_id])
   const genderOption = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
@@ -663,7 +667,7 @@ const CreatePilgrim = (id) => {
     }
 
     const formData = {
-      reference: reference == id ? reference.value : "",
+      reference: reference == _id ? reference.value : "",
       trip: trip ? trip.value : "",
       payment: paymentAmount,
       firstName,

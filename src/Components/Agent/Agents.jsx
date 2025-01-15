@@ -210,12 +210,9 @@ import DataTable from "../DataTable/DataTable";
 import {
   Button,
   Typography,
-  // CircularProgress,
   Box,
   Divider,
   useTheme,
-  // Snackbar,
-  // Alert
 } from "@mui/material";
 import { useNavigate } from "react-router";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
@@ -236,7 +233,7 @@ const Agents = () => {
   
 
   useEffect(() => {
-    fetch("http://192.168.0.100:5000/api/auth/allagents")
+    fetch("http://localhost:5000/api/auth/allagents")
       .then((res) => res.json())
       .then((data) => {
         const updatedAgents = data.map((agent) => ({
@@ -260,22 +257,22 @@ const Agents = () => {
     navigate("/agents/create");
   };
 
-  const ViewDetails = (id) => {
-    navigate(`/agent/view/${id}`);
+  const ViewDetails = (_id) => {
+    navigate(`/agents/view/${_id}`);
   };
 
-  const EditDetails = (id) => {
-    navigate(`/agent/update/${id}`);
+  const EditDetails = (_id) => {
+    navigate(`/agents/update/${_id}`);
   };
 
-  const RemoveDetails = (id) => {
+  const RemoveDetails = (_id) => {
     if (window.confirm("Are you sure you want to delete this agent?")) {
-      fetch(`http://192.168.0.100:5000/api/auth/createagent/${id}`, {
+      fetch(`http://localhost:5000/api/auth/createagent/${_id}`, {
         method: "DELETE",
       })
         .then(() => {
           alert("Agent removed successfully");
-          setAgents((prevAgents) => prevAgents.filter((a) => a.id !== id));
+          setAgents((prevAgents) => prevAgents.filter((a) => a.id !== _id));
         })
         .catch((err) => {
           console.log(err.message);

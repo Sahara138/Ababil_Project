@@ -4,7 +4,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate} from "react-router";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
@@ -12,8 +12,8 @@ import { useEffect, useState } from "react";
 import { Box, Divider, useTheme } from '@mui/material';
 import UmrahTabs from '../../../Tabs/UmrahTabs';
 // import Users from '../../Users/Users';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 
 const Pilgrim = () => {
@@ -60,6 +60,7 @@ const Pilgrim = () => {
       })
         .then(() => {
           alert("Pilgrim removed successfully");
+          setPilgrims(pilgrims.filter(pilgrim => pilgrim.id !== _id)); // Update state
           window.location.reload(); // Reload the page
         })
         .catch((err) => {
@@ -96,9 +97,9 @@ const Pilgrim = () => {
       width: 200,
       renderCell: (params) => (
         <div className="action">
-          <div className="addPilgrim" onClick={() => AddPilgrim(params.row.id)}>
+          {/* <div className="addPilgrim" onClick={() => AddPilgrim(params.row.id)}>
                     <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: "8px", color: "#fff" }} />
-                    </div>
+                    </div> */}
           <div className="view" onClick={() => ViewDetails(params.row.id)}>
             <ViewQuiltIcon />
           </div>

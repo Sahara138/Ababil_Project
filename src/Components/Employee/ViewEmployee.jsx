@@ -1,27 +1,36 @@
 import { Box, Button, Typography, Divider } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import EmployeeTab from "../../Tabs/EmployeeTab";
+import { useEffect, useState } from "react";
 
 const ViewEmployee = () => {
+  const {_id} = useParams()
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
   const navigate = useNavigate();
+  const [employeeData,setEmployeeData] = useState({})
 
-  // Static mock data
-  const mockEmployeeData = {
-    employeePhoto: "https://via.placeholder.com/100",
-    name: "Jane Smith",
-    designation: "Senior Developer",
-    department: "IT",
-    email: "janesmith@example.com",
-    phone: "987-654-3210",
-    dateOfJoining: "2023-01-15",
-  };
+
+  useEffect(()=>{
+        fetch(`http://localhost:5000/api/auth/getemployee/${_id}`)
+        .then((res)=> res.json())
+        .then((data)=>{
+          setEmployeeData(data)
+          console.log(data)
+        }).catch((err)=>{
+            console.log(err.message)
+        })
+    },[_id])
+
 
   // Navigate back to the employee list
   const handleBack = () => {
-    navigate("/employees/list");
+    navigate("/employee/list");
+  }; 
+  
+  const handleEdit = () => {
+    navigate(`/employee/update/${_id}`);
   };
 
   return (
@@ -56,7 +65,7 @@ const ViewEmployee = () => {
         <Divider sx={{ backgroundColor: isDarkMode ? "grey.800" : "#cfd8dc", mb: 3 }} />
 
         {/* Employee Photo */}
-        <Box
+        {/* <Box
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -64,10 +73,10 @@ const ViewEmployee = () => {
             mb: 4,
           }}
         >
-          {mockEmployeeData.employeePhoto ? (
+          {employeeData.employeePhoto ? (
             <img
-              src={mockEmployeeData.employeePhoto}
-              alt={`${mockEmployeeData.name}'s photo`}
+              src={employeeData.employeePhoto}
+              alt={`${employeeData.name}'s photo`}
               style={{
                 width: 120,
                 height: 120,
@@ -93,7 +102,7 @@ const ViewEmployee = () => {
               N/A
             </Box>
           )}
-        </Box>
+        </Box> */}
 
         {/* Employee Details Grid */}
         <Box
@@ -104,12 +113,15 @@ const ViewEmployee = () => {
           }}
         >
           {[
-            { label: "Name", value: mockEmployeeData.name },
-            { label: "Designation", value: mockEmployeeData.designation },
-            { label: "Department", value: mockEmployeeData.department },
-            { label: "Email", value: mockEmployeeData.email },
-            { label: "Phone", value: mockEmployeeData.phone },
-            { label: "Date of Joining", value: mockEmployeeData.dateOfJoining },
+            { label: "Name", value: employeeData.name },
+            { label: "Father's Name", value: employeeData.fatherName },
+            { label: "Mother's Name", value: employeeData.motherName },
+            { label: "Gender", value: employeeData.gender },
+            { label: "Birth Date", value: employeeData.birthOfDate },
+            { label: "NID", value: employeeData.nid },
+            { label: "Passport Number", value: employeeData.passportNo },
+            { label: "Email", value: employeeData.email },
+            { label: "Phone", value: employeeData.phone },
           ].map((item, index) => (
             <Box
               key={index}
@@ -162,7 +174,7 @@ const ViewEmployee = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => navigate("/employees/update")}
+            onClick={handleEdit}
             sx={{
               textTransform: "none",
               fontWeight: "bold",

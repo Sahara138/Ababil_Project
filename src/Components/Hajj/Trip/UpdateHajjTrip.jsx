@@ -1,75 +1,73 @@
-import { useState, useEffect } from "react";
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router";
-import HajjTabs from "../../../Tabs/HajjTabs";
 import { useTheme } from "@emotion/react";
-import ContactsRoundedIcon from '@mui/icons-material/ContactsRounded';
-import Select from 'react-select';
+import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
+import { useState, useEffect } from "react";
+import HajjTabs from "../../../Tabs/HajjTabs";
+import { toast } from "react-toastify";
+
 
 const UpdateHajjTrip = () => {
   const theme = useTheme();
-  const isDarkMode = theme.palette.mode === 'dark';
+  const isDarkMode = theme.palette.mode === "dark";
   const navigate = useNavigate();
-  const { tripId } = useParams(); // Assume tripId is passed in the route
+  const { _id } = useParams(); // Trip ID from URL
 
-  // State to store form values
-  const [tripName, setTripName] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
-  const [tripType, setTripType] = useState("");
-  const [destination, setDestination] = useState("");
-  const [remarks, setRemarks] = useState("");
+  // State for form fields
+  const [tripNumber, setTripNumber] = useState("");
+  const [expectedFlightDate, setExpectedFlightDate] = useState("");
+  const [returnFlightDate, setReturnFlightDate] = useState("");
+  const [durationOfStay, setDurationOfStay] = useState("");
+  const [stayFirst, setStayFirst] = useState("");
+  const [bookedMeccaHotel, setBookedMeccaHotel] = useState(false);
+  const [meccaHotel, setMeccaHotel] = useState("");
+  const [durationOfMeccaStay, setDurationOfMeccaStay] = useState("");
+  const [bookedMadinaHotel, setBookedMadinaHotel] = useState(false);
+  const [madinaHotel, setMadinaHotel] = useState("");
+  const [durationOfMadinaStay, setDurationOfMadinaStay] = useState("");
+  const [carrier, setCarrier] = useState("");
+  const [note, setNote] = useState("");
 
-  // State to handle errors
-  const [errors, setErrors] = useState({
-    tripName: "",
-    departureDate: "",
-    returnDate: "",
-    tripType: "",
-    destination: "",
-  });
+  // State for errors
+  const [errors, setErrors] = useState({});
 
-  const options = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
-    { value: 'option4', label: 'Option 4' },
-  ];
-
-  // Fetch existing trip details
+  // Fetch trip data on component load
   useEffect(() => {
-    fetch(`http://localhost:8000/trips/${tripId}`)
+    fetch(`http://localhost:5000/api/auth/getbyidtrip/${_id}`)
       .then((res) => res.json())
       .then((data) => {
-        setTripName(data.tripName || "");
-        setDepartureDate(data.departureDate || "");
-        setReturnDate(data.returnDate || "");
-        setTripType(data.tripType || "");
-        setDestination(data.destination || "");
-        setRemarks(data.remarks || "");
+        setTripNumber(data.tripNumber || "");
+        setExpectedFlightDate(data.expectedFlightDate || "");
+        setReturnFlightDate(data.returnFlightDate || "");
+        setDurationOfStay(data.durationOfStay || "");
+        setStayFirst(data.stayFirst || "");
+        setBookedMeccaHotel(data.bookedMeccaHotel || false);
+        setMeccaHotel(data.meccaHotel || "");
+        setDurationOfMeccaStay(data.durationOfMeccaStay || "");
+        setBookedMadinaHotel(data.bookedMadinaHotel || false);
+        setMadinaHotel(data.madinaHotel || "");
+        setDurationOfMadinaStay(data.durationOfMadinaStay || "");
+        setCarrier(data.carrier || "");
+        setNote(data.note || "");
       })
-      .catch((err) => console.log(err.message));
-  }, [tripId]);
+      .catch((err) => console.error("Error fetching trip data:", err));
+  }, [_id]);
 
   // Validation logic
   const validate = () => {
     const newErrors = {};
-
-    if (!tripName.trim()) {
-      newErrors.tripName = "* Trip Name is required.";
-    }
-    if (!departureDate.trim()) {
-      newErrors.departureDate = "* Departure Date is required.";
-    }
-    if (!returnDate.trim()) {
-      newErrors.returnDate = "* Return Date is required.";
-    }
-    if (!tripType.trim()) {
-      newErrors.tripType = "* Trip Type is required.";
-    }
-    if (!destination.trim()) {
-      newErrors.destination = "* Destination is required.";
-    }
+    if (!tripNumber.trim()) newErrors.tripNumber = "* Trip Number is required.";
+    if (!expectedFlightDate.trim()) newErrors.expectedFlightDate = "* Expected Flight Date is required.";
+    if (!returnFlightDate.trim()) newErrors.returnFlightDate = "* Return Flight Date is required.";
+    if (!durationOfStay || durationOfStay <= 0) newErrors.durationOfStay = "* Duration of Stay must be positive.";
+    if (!stayFirst.trim()) newErrors.stayFirst = "* Stay First is required.";
+    if (bookedMeccaHotel && !meccaHotel.trim()) newErrors.meccaHotel = "* Mecca Hotel is required.";
+    if (bookedMeccaHotel && (!durationOfMeccaStay || durationOfMeccaStay <= 0))
+      newErrors.durationOfMeccaStay = "* Duration of Mecca Stay must be positive.";
+    if (bookedMadinaHotel && !madinaHotel.trim()) newErrors.madinaHotel = "* Madina Hotel is required.";
+    if (bookedMadinaHotel && (!durationOfMadinaStay || durationOfMadinaStay <= 0))
+      newErrors.durationOfMadinaStay = "* Duration of Madina Stay must be positive.";
+    if (!carrier.trim()) newErrors.carrier = "* Carrier is required.";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -79,16 +77,23 @@ const UpdateHajjTrip = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
-      tripName,
-      departureDate,
-      returnDate,
-      tripType,
-      destination,
-      remarks,
+      tripNumber,
+      expectedFlightDate,
+      returnFlightDate,
+      durationOfStay,
+      stayFirst,
+      bookedMeccaHotel,
+      meccaHotel,
+      durationOfMeccaStay,
+      bookedMadinaHotel,
+      madinaHotel,
+      durationOfMadinaStay,
+      carrier,
+      note,
     };
+
     if (validate()) {
-      console.log("Form Submitted:", formData);
-      fetch(`http://localhost:8000/trips/${tripId}`, {
+      fetch(`http://localhost:5000/api/auth/updatebyidtrip/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -96,155 +101,185 @@ const UpdateHajjTrip = () => {
         body: JSON.stringify(formData),
       })
         .then((res) => {
-          alert("Trip Updated Successfully");
-          navigate("/hajj/trips"); // Redirect after successful update
+          toast("Hajj Trip Updated Successfully");
+          navigate("/hajj/trip");
         })
-        .catch((err) => console.log(err.message));
-    } else {
-      console.log("Validation Failed");
+        .catch((err) => console.error("Error updating trip:", err));
     }
   };
 
-  // Handle cancel action (navigate back)
-  const handleCancel = () => {
-    navigate("/hajj/trips");
-  };
+  // Handle cancel action
+  const handleCancel = () => navigate("/hajj/trip");
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: "100%" }}>
       <HajjTabs />
       <Box
         sx={{
           marginTop: 5,
           border: 1,
           borderRadius: 1,
-          padding: '30px',
-          borderColor: 'transparent',
-          backgroundColor: isDarkMode ? 'grey.900' : 'white',
+          padding: "30px",
+          borderColor: "transparent",
+          backgroundColor: isDarkMode ? "grey.900" : "white",
           boxShadow: 3,
-          marginBottom: '50px',
-          color: isDarkMode ? 'grey.300' : 'grey.900',
+          marginBottom: "50px",
+          color: isDarkMode ? "#99a1b7" : "grey.900",
         }}
       >
-        <Typography
-          component="h4"
-          variant="h6"
-          sx={{
-            mt: 2,
-            mb: 3,
-            fontSize: 25,
-            color: isDarkMode ? 'grey.300' : 'inherit',
-          }}
-        >
-          Trip Management
+        <Typography component="h4" variant="h6" sx={{ mt: 2, mb: 3, fontSize: 25 }}>
+          Update Hajj Trip
         </Typography>
-        <Divider
-          sx={{
-            backgroundColor: isDarkMode ? 'grey.700' : 'grey.300',
-          }}
-        />
-        
-        <div className="trip-update" style={{ width: "100%" }}>
-          <div style={{ height: "auto", width: "100%" }}>
-            <div className="info">
-              <ContactsRoundedIcon className="title-icon"/>
-              <Typography component="h2" variant="h5" sx={{ mb: 3, mt: 3 }}>
-                Update Trip
-              </Typography>
+        <Divider sx={{ backgroundColor: isDarkMode ? "grey.700" : "#99a1b7" }} />
+        <div className="info">
+            <ContactsRoundedIcon className="title-icon" />
+            <Typography component="h2" variant="h5" sx={{ mb: 3, mt: 3 }}>
+              Update Trip
+            </Typography>
+          </div>
+        <form onSubmit={handleSubmit}>
+          <div className="infoRow">
+            <div className="inputField">
+              <label htmlFor="tripNumber">Trip Number</label>
+              <input
+                id="tripNumber"
+                type="text"
+                value={tripNumber}
+                onChange={(e) => setTripNumber(e.target.value)}
+              />
+              {errors.tripNumber && <span className="error">{errors.tripNumber}</span>}
+            </div>
+            <div className="inputField">
+              <label htmlFor="expectedFlightDate">Expected Flight Date</label>
+              <input
+                id="expectedFlightDate"
+                type="date"
+                value={expectedFlightDate}
+                onChange={(e) => setExpectedFlightDate(e.target.value)}
+              />
+              {errors.expectedFlightDate && <span className="error">{errors.expectedFlightDate}</span>}
             </div>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="infoRow">
-            
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="tripName">Trip Name</label>
-                <input
-                  id="tripName"
-                  name="tripName"
-                  type="text"
-                  value={tripName}
-                  onChange={(e) => setTripName(e.target.value)}
-                />
-                {errors.tripName && <span className="error">{errors.tripName}</span>}
-              </div>
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="tripType">Trip Type</label>
-                <Select
-                  id="tripType"
-                  name="tripType"
-                  type="text"
-                  options={options}
-                  value={tripType}
-                  onChange={(options) => setTripType(options)}
-                  placeholder="Select Agent Type"
-                  className="custom-select"
-                  style={{
-                    color: isDarkMode ? "black" : "inherit",
-                }}
-                />
-                {errors.tripType && <span className="error">{errors.tripType}</span>}
-              </div>
-            </div>
 
-            <div className="infoRow">
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="destination">Destination</label>
-                <input
-                  id="destination"
-                  name="destination"
-                  type="text"
-                  value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
-                />
-                {errors.destination && <span className="error">{errors.destination}</span>}
-              </div>
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="departureDate">Departure Date</label>
-                <input
-                  id="departureDate"
-                  name="departureDate"
-                  type="date"
-                  value={departureDate}
-                  onChange={(e) => setDepartureDate(e.target.value)}
-                />
-                {errors.departureDate && <span className="error">{errors.departureDate}</span>}
-              </div>
-              <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="returnDate">Return Date</label>
-                <input
-                  id="returnDate"
-                  name="returnDate"
-                  type="date"
-                  value={returnDate}
-                  onChange={(e) => setReturnDate(e.target.value)}
-                />
-                {errors.returnDate && <span className="error">{errors.returnDate}</span>}
-              </div>
+          <div className="infoRow">
+            <div className="inputField">
+              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}  htmlFor="stayFirst">Stay First</label>
+              <input
+                id="stayFirst"
+                type="text"
+                value={stayFirst}
+                onChange={(e) => setStayFirst(e.target.value)}
+              />
+              {errors.stayFirst && <span className="error">{errors.stayFirst}</span>}
             </div>
+            <div className="inputField">
+              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}  htmlFor="carrier">Carrier</label>
+              <input
+                id="carrier"
+                type="text"
+                value={carrier}
+                onChange={(e) => setCarrier(e.target.value)}
+              />
+              {errors.carrier && <span className="error">{errors.carrier}</span>}
+            </div>
+          </div>
 
+          <div className="infoRow">
+            <div className="inputField">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={bookedMeccaHotel}
+                  onChange={(e) => setBookedMeccaHotel(e.target.checked)}
+                />{" "}
+                Booked Mecca Hotel
+              </label>
+            </div>
+            {bookedMeccaHotel && (
+              <>
+                <div className="inputField">
+                  <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}  htmlFor="meccaHotel">Mecca Hotel</label>
+                  <input
+                    id="meccaHotel"
+                    type="text"
+                    value={meccaHotel}
+                    onChange={(e) => setMeccaHotel(e.target.value)}
+                  />
+                  {errors.meccaHotel && <span className="error">{errors.meccaHotel}</span>}
+                </div>
+                <div className="inputField">
+                  <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}  htmlFor="durationOfMeccaStay">Duration of Mecca Stay (days)</label>
+                  <input
+                    id="durationOfMeccaStay"
+                    type="number"
+                    value={durationOfMeccaStay}
+                    onChange={(e) => setDurationOfMeccaStay(e.target.value)}
+                  />
+                  {errors.durationOfMeccaStay && <span className="error">{errors.durationOfMeccaStay}</span>}
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="infoRow">
+            <div className="inputField">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={bookedMadinaHotel}
+                  onChange={(e) => setBookedMadinaHotel(e.target.checked)}
+                />{" "}
+                Booked Madina Hotel
+              </label>
+            </div>
+            {bookedMadinaHotel && (
+              <>
+                <div className="inputField">
+                  <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}  htmlFor="madinaHotel">Madina Hotel</label>
+                  <input
+                    id="madinaHotel"
+                    type="text"
+                    value={madinaHotel}
+                    onChange={(e) => setMadinaHotel(e.target.value)}
+                    />
+                    {errors.madinaHotel && <span className="error">{errors.madinaHotel}</span>}
+                  </div>
+                  <div className="inputField">
+                    <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}  htmlFor="durationOfMadinaStay">Duration of Madina Stay (days)</label>
+                    <input
+                      id="durationOfMadinaStay"
+                      type="number"
+                      value={durationOfMadinaStay}
+                      onChange={(e) => setDurationOfMadinaStay(e.target.value)}
+                    />
+                    {errors.durationOfMadinaStay && <span className="error">{errors.durationOfMadinaStay}</span>}
+                  </div>
+                </>
+              )}
+            </div>
+      
             <div className="infoRow">
               <div className="inputField">
-                <label style={{ color: isDarkMode ? "grey.300" : "inherit" }} htmlFor="remarks">Remarks</label>
+                <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}  htmlFor="note">Note</label>
                 <textarea
-                  id="remarks"
-                  name="remarks"
+                  id="note"
                   rows="4"
-                  value={remarks}
-                  onChange={(e) => setRemarks(e.target.value)}
-                />
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  style={{ width: "100%" }}
+                ></textarea>
               </div>
             </div>
-
+      
             <div className="formActions">
-              <Button type="button" onClick={handleCancel} variant="outlined">
+              <Button type="button" variant="outlined" onClick={handleCancel} sx={{ mt: 2 }}>
                 Cancel
               </Button>
-              <Button type="submit" variant="contained">
-                Update Trip
+              <Button type="submit" variant="contained" onClick={handleSubmit} sx={{ mt: 2 }}>
+                Update
               </Button>
             </div>
-          </form>
-        </div>
+        </form>
       </Box>
     </div>
   );

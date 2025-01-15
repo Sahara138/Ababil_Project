@@ -9,8 +9,10 @@ import Select from "react-select";
 import { useTheme } from "@emotion/react";
 import AgentTab from "../../Tabs/AgentTab";
 import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
+import { useParams } from "react-router";
 
-const UpdateAgent = ({ agentId }) => {
+const UpdateAgent = () => {
+  const {_id} = useParams()
   const theme = useTheme(); // Access the current theme
   const isDarkMode = theme.palette.mode === "dark";
 
@@ -37,7 +39,23 @@ const UpdateAgent = ({ agentId }) => {
     pilgrim: "",
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    agentName: "",
+    agentType: "",
+    dob: "",
+    nid: "",
+    passportNumber: "",
+    passportExpiryDate: "",
+    mobileNumber: "",
+    agentPresentAddress: "",
+    emergencyInformation: "",
+    passportImage: "",
+    nidImageFront: "",
+    nidImageBack: "",
+
+
+  });
+
 
   const agentTypeOptions = [
     { value: "directAgent", label: "Direct Agent" },
@@ -49,7 +67,7 @@ const UpdateAgent = ({ agentId }) => {
     // Fetch existing agent data by ID
     const fetchAgentData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/agents/${agentId}`);
+        const response = await fetch(`http://localhost:5000/api/auth/agents/${_id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch agent data");
         }
@@ -61,77 +79,87 @@ const UpdateAgent = ({ agentId }) => {
     };
 
     fetchAgentData();
-  }, [agentId]);
+  }, [_id]);
 
   const validate = () => {
-    const newErrors = {};
-
-    const requiredFields = [
-      "agentName",
-      "agentType",
-      "fatherName",
-      "motherName",
-      "dob",
-      "nid",
-      "passportNumber",
-      "passportExpiryDate",
-      "mobileNumber",
-      "emergencyInformation",
-      "passportImage",
-      "nidImageFront",
-      "nidImageBack",
-      "pilgrim",
-    ];
-
-    requiredFields.forEach((field) => {
-      if (!formData[field] || formData[field].trim() === "") {
-        newErrors[field] = `* ${field.replace(/([A-Z])/g, " $1")} is required.`;
+      const newErrors = {};
+  
+        // Required fields check
+      if (!formData.agentName.trim()) newErrors.agentName = "* Agent Name is required.";
+      if (!formData.agentType.trim()) newErrors.agentType = "* Agent Type is required.";
+      if (!formData.dob.trim()) newErrors.dob = "* Date of Birth is required.";
+      if (!formData.nid.trim()) newErrors.nid = "* NID is required.";
+      if (!formData.mobileNumber.trim()) newErrors.mobileNumber = "* Mobile Number is required.";
+      if (!formData.agentPresentAddress.trim()) newErrors.agentPresentAddress = "*Present Address  is required."; 
+      if (!formData.emergencyInformation.trim()) newErrors.emergencyInformation = "* Emergency Information is required.";
+      if (!formData.passportImage) newErrors.passportImage = "* Passport Image is required.";
+      if (!formData.nidImageFront) newErrors.nidImageFront = "* NID Image Front is required.";
+      if (!formData.nidImageBack) newErrors.nidImageBack = "* NID Image Back is required.";
+  
+      // Passport expiry date check
+      if (formData.passportExpiryDate && new Date(formData.passportExpiryDate) <= new Date()) {
+        newErrors.passportExpiryDate = "* Passport expiry date must be in the future.";
       }
-    });
-
-    if (formData.passportExpiryDate && new Date(formData.passportExpiryDate) <= new Date()) {
-      newErrors.passportExpiryDate = "* Passport expiry date must be in the future.";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
+    };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = async (e, field) => {
-    const files = e.target.files[0];
-    if (!files) return;
+  const handleImageChange = (e, field) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", files);
-    formData.append("upload_preset", "c_tags");
-
-    try {
-      const res = await fetch("http://localhost:8000/agents", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to upload image: ${res.statusText}`);
-      }
-
-      const result = await res.json();
-      setFormData((prevData) => ({
-        ...prevData,
-        [field]: result.secure_url,
+    const reader = new FileReader();
+    reader.onload = () => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: reader.result, // Store Base64 string
       }));
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
+    };
+
+    reader.readAsDataURL(file);
   };
+
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
+
+  // const handleImageChange = async (e, field) => {
+  //   const files = e.target.files[0];
+  //   if (!files) return;
+
+  //   const formData = new FormData();
+  //   formData.append("file", files);
+  //   formData.append("upload_preset", "c_tags");
+
+  //   try {
+  //     const res = await fetch("http://localhost:8000/agents", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(formData),
+  //     });
+
+  //     if (!res.ok) {
+  //       throw new Error(`Failed to upload image: ${res.statusText}`);
+  //     }
+
+  //     const result = await res.json();
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       [field]: result.secure_url,
+  //     }));
+  //   } catch (error) {
+  //     console.error("Error uploading file:", error);
+  //   }
+  // };
 
   const handleSelectChange = (name, option) => {
     setFormData({ ...formData, [name]: option ? option.value : "" });
@@ -141,7 +169,7 @@ const UpdateAgent = ({ agentId }) => {
     e.preventDefault();
 
     if (validate()) {
-      fetch(`http://localhost:8000/agents/${agentId}`, {
+      fetch(`http://localhost:5000/api/auth/upagents/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -184,6 +212,7 @@ const UpdateAgent = ({ agentId }) => {
       pilgrim: "",
     });
     setErrors({});
+    
   };
 
   return (
