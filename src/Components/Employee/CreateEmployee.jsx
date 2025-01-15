@@ -1,97 +1,63 @@
-import { useState } from "react";
 import { Box, Button, Divider, Typography } from "@mui/material";
-import Select from "react-select";
+import { useNavigate } from "react-router";
 import { useTheme } from "@emotion/react";
-import EmployeeTab from "../../Tabs/EmployeeTab";
+import { useState } from "react";
+import ContactsRoundedIcon from "@mui/icons-material/ContactsRounded";
+import { toast } from "react-toastify";
 
 const CreateEmployee = () => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
+  const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    employeePhoto: "",
-    name: "",
-    designation: "",
-    department: "",
-    email: "",
-    phone: "",
-    dateOfJoining: "",
-   
-  });
+  // State for form values
+  const [name, setName] = useState("");
+  const [fatherName, setFatherName] = useState("");
+  const [motherName, setMotherName] = useState("");
+  const [gender, setGender] = useState("");
+  const [birthOfDate, setBirthOfDate] = useState("");
+  const [nid, setNid] = useState("");
+  const [passportNo, setPassportNo] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
+  // State for validation errors
   const [errors, setErrors] = useState({});
 
-  const departmentOptions = [
-    { value: "hr", label: "Human Resources" },
-    { value: "engineering", label: "Engineering" },
-    { value: "sales", label: "Sales" },
-    { value: "marketing", label: "Marketing" },
-  ];
-
+  // Validation logic
   const validate = () => {
     const newErrors = {};
-    const requiredFields = [
-        "employeePhoto",
-        "name",
-        "designation",
-        "department",
-        "email",
-        "phone",
-        "dateOfJoining",
-      
-    ];
-
-    requiredFields.forEach((field) => {
-      if (!formData[field] || formData[field].trim() === "") {
-        newErrors[field] = `* ${field.replace(/([A-Z])/g, " $1")} is required.`;
-      }
-    });
+    if (!name.trim()) newErrors.name = "* Name is required.";
+    if (!fatherName.trim()) newErrors.fatherName = "* Father's Name is required.";
+    if (!motherName.trim()) newErrors.motherName = "* Mother's Name is required.";
+    if (!gender.trim()) newErrors.gender = "* Gender is required.";
+    if (!birthOfDate.trim()) newErrors.birthOfDate = "* Birth Date is required.";
+    if (!nid.trim()) newErrors.nid = "* NID is required.";
+    if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) newErrors.email = "* Valid Email is required.";
+    if (!phone.trim() || !/^\d+$/.test(phone)) newErrors.phone = "* Valid Phone Number is required.";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleImageChange = async (e, field) => {
-    const files = e.target.files[0];
-    if (!files) return;
-
-    const formData = new FormData();
-    formData.append("file", files);
-    formData.append("upload_preset", "c_tags");
-
-    try {
-      const res = await fetch("http://localhost:8000/employees", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!res.ok) {
-        throw new Error(`Failed to upload image: ${res.statusText}`);
-      }
-
-      const result = await res.json();
-      setFormData((prevData) => ({
-        ...prevData,
-        [field]: result.secure_url,
-      }));
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-  };
-
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = {
+      name,
+      fatherName,
+      motherName,
+      gender,
+      birthOfDate,
+      nid,
+      passportNo,
+      email,
+      phone,
+    };
 
     if (validate()) {
-      fetch("http://localhost:8000/employees", {
+      console.log("Form Submitted:", formData);
+      fetch("http://localhost:5000/api/auth/createemployee", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,44 +65,28 @@ const CreateEmployee = () => {
         body: JSON.stringify(formData),
       })
         .then((res) => {
-          if (res.ok) {
-            alert("Employee Data Saved Successfully");
-            setFormData({
-                employeePhoto: "",
-                name: "",
-                designation: "",
-                department: "",
-                email: "",
-                phone: "",
-                dateOfJoining: "",
-            });
-          } else {
-            console.error("Error:", res.statusText);
-          }
+          toast("Employee Created Successfully");
+          navigate("/employee/list");
         })
-        .catch((err) => console.error(err));
-    } else {
-      console.log("Validation Failed");
+        .catch((err) => console.error(err.message));
     }
   };
 
+  // Handle cancel action
   const handleCancel = () => {
-    setFormData({
-        employeePhoto: "",
-        name: "",
-        designation: "",
-        department: "",
-        email: "",
-        phone: "",
-        dateOfJoining: "",
-     
-    });
-    setErrors({});
+    setName("");
+    setFatherName("");
+    setMotherName("");
+    setGender("");
+    setBirthOfDate("");
+    setNid("");
+    setPassportNo("");
+    setEmail("");
+    setPhone("");
   };
 
   return (
     <div style={{ width: "100%" }}>
-    <EmployeeTab />
       <Box
         sx={{
           marginTop: 5,
@@ -150,161 +100,105 @@ const CreateEmployee = () => {
           color: isDarkMode ? "#99a1b7" : "grey.900",
         }}
       >
-        <Typography
-          component="h4"
-          variant="h6"
-          sx={{
-            mt: 2,
-            mb: 3,
-            fontSize: 25,
-            color: isDarkMode ? "#99a1b7" : "inherit",
-          }}
-        >
-          Employee Management
+        <Typography component="h4" variant="h6" sx={{ mt: 2, mb: 3, fontSize: 25 }}>
+          Create Employee
         </Typography>
-        <Divider
-          sx={{
-            backgroundColor: isDarkMode ? "grey.700" : "#99a1b7",
-          }}
-        />
-
+        <Divider sx={{ backgroundColor: isDarkMode ? "grey.700" : "#99a1b7" }} />
+        <div className="info">
+          <ContactsRoundedIcon className="title-icon" />
+          <Typography component="h2" variant="h5" sx={{ mb: 3, mt: 3 }}>
+            Add New Employee
+          </Typography>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="infoRow">
             <div className="inputField">
-              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="employeePhoto">Employee Photo</label>
-              <input
-                id="employeePhoto"
-                name="employeePhoto"
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageChange(e, "employeePhoto")}
-              />
-              {formData.employeePhoto && (
-                <img
-                  src={formData.employeePhoto}
-                  alt="Employee Preview"
-                  style={{ width: 100, height: 100 }}
-                />
-              )}
-              {errors.employeePhoto && (
-                <span className="error">{errors.employeePhoto}</span>
-              )}
-            </div>
-
-            <div className="inputField">
               <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="name">Name</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleInputChange}
-              />
+              <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
               {errors.name && <span className="error">{errors.name}</span>}
             </div>
-          </div>
-
-          <div className="infoRow">
             <div className="inputField">
-              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="designation">Designation</label>
+              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="fatherName">Father's Name</label>
               <input
-                id="designation"
-                name="designation"
+                id="fatherName"
                 type="text"
-                value={formData.designation}
-                onChange={handleInputChange}
+                value={fatherName}
+                onChange={(e) => setFatherName(e.target.value)}
               />
-              {errors.designation && (
-                <span className="error">{errors.designation}</span>
-              )}
+              {errors.fatherName && <span className="error">{errors.fatherName}</span>}
             </div>
-
             <div className="inputField">
-              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="department">Department</label>
-              <Select
-                id="department"
-                name="department"
-                value={
-                  departmentOptions.find(
-                    (opt) => opt.value === formData.department
-                  ) || null
-                }
-                options={departmentOptions}
-                placeholder="Select Department"
-                onChange={(option) =>
-                  setFormData({ ...formData, department: option.value })
-                }
+              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="motherName">Mother's Name</label>
+              <input
+                id="motherName"
+                type="text"
+                value={motherName}
+                onChange={(e) => setMotherName(e.target.value)}
               />
-              {errors.department && (
-                <span className="error">{errors.department}</span>
-              )}
+              {errors.motherName && <span className="error">{errors.motherName}</span>}
             </div>
           </div>
-
           <div className="infoRow">
+            <div className="inputField">
+              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="gender">Gender</label>
+              <input
+                id="gender"
+                type="text"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              {errors.gender && <span className="error">{errors.gender}</span>}
+            </div>
+            <div className="inputField">
+              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="birthOfDate">Birth Date</label>
+              <input
+                id="birthOfDate"
+                type="date"
+                value={birthOfDate}
+                onChange={(e) => setBirthOfDate(e.target.value)}
+              />
+              {errors.birthOfDate && <span className="error">{errors.birthOfDate}</span>}
+            </div>
+            <div className="inputField">
+              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="nid">NID</label>
+              <input id="nid" type="text" value={nid} onChange={(e) => setNid(e.target.value)} />
+              {errors.nid && <span className="error">{errors.nid}</span>}
+            </div>
+          </div>
+          <div className="infoRow">
+            <div className="inputField">
+              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="passportNo">Passport Number</label>
+              <input
+                id="passportNo"
+                type="text"
+                value={passportNo}
+                onChange={(e) => setPassportNo(e.target.value)}
+              />
+            </div>
             <div className="inputField">
               <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="email">Email</label>
               <input
                 id="email"
-                name="email"
                 type="email"
-                value={formData.email}
-                onChange={handleInputChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               {errors.email && <span className="error">{errors.email}</span>}
             </div>
-
             <div className="inputField">
               <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="phone">Phone</label>
-              <input
-                id="phone"
-                name="phone"
-                type="text"
-                value={formData.phone}
-                onChange={handleInputChange}
-              />
+              <input id="phone" type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
               {errors.phone && <span className="error">{errors.phone}</span>}
             </div>
-
-            <div className="inputField">
-              <label style={{ color: isDarkMode ? "#99a1b7" : "inherit" }} htmlFor="dateOfJoining">Date of Joining</label>
-              <input
-                id="dateOfJoining"
-                name="dateOfJoining"
-                type="date"
-                value={formData.dateOfJoining}
-                onChange={handleInputChange}
-              />
-              {errors.dateOfJoining && (
-                <span className="error">{errors.dateOfJoining}</span>
-              )}
-            </div>
           </div>
-
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Button
-              variant="outlined"
-              onClick={handleCancel}
-              sx={{ borderRadius: 3, textTransform: "none" }}
-            >
+          <div className="formActions">
+            <Button type="button" variant="outlined" onClick={handleCancel} sx={{ mt: 2 }}>
               Cancel
             </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                backgroundColor: isDarkMode ? "grey.700" : "#1976d2",
-                color: "white",
-                textTransform: "none",
-                borderRadius: 3,
-                ":hover": {
-                  backgroundColor: isDarkMode ? "grey.600" : "#1565c0",
-                },
-              }}
-            >
-              Submit
+            <Button type="submit" variant="contained" onClick={handleSubmit} sx={{ mt: 2 }}>
+              Save
             </Button>
-          </Box>
+          </div>
         </form>
       </Box>
     </div>

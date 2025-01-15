@@ -26,6 +26,9 @@ const ViewPilgrim = () => {
   const handleBack = () => {
     navigate("/umrah/pilgrim");
   };
+  const handleEdit = () => {
+    navigate(`/umrah/pilgrim/update/${_id}`);
+  };
 
   return (
     <div style={{ width: "100%" }}>
@@ -134,7 +137,7 @@ const ViewPilgrim = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => navigate("/pilgrims/update")}
+            onClick={handleEdit}
             sx={{
               textTransform: "none",
               fontWeight: "bold",

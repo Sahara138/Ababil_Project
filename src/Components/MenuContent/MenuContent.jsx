@@ -135,6 +135,13 @@ const mainListItems = [
     ]
   },
   {
+    segment: 'message',
+    path: '/messages',
+    text: 'Message',
+    icon: <WorkIcon />,
+    children: []
+  },
+  {
     path: '/calculator',
     segment: 'calculator',
     text: 'Calculator',

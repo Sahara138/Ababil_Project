@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
+import { createBrowserRouter, Outlet, RouterProvider, useNavigate } from "react-router";
 import "./App.css";
 import Login from "./Components/Auth/Login/Login";
 import Dashboard from "./Components/Dashboard/Dashboard";
@@ -97,6 +97,9 @@ import History from "./Components/Settings/History";
 import RequireAuth from "./Components/Auth/RequireAuth";
 import Unauthorized from "./Components/Auth/Unauthorized";
 import NotFound from "./Components/NotFound/NotFound";
+import Message from "./Components/Message/ChatUI";
+import ChatUI from "./Components/Message/ChatUI";
+
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -107,12 +110,17 @@ const xThemeComponents = {
 
 
 function App() {
+ 
+
+
   const Layout = (props) => {
+
+   
     return (
         <AppTheme {...props} themeComponents={xThemeComponents} >
               <CssBaseline enableColorScheme />
               <Box sx={{ display: "flex" }}>
-                <SideMenu style={{ margin: "50px" }} />
+                <SideMenu  style={{ margin: "50px" }} />
                 <AppNavbar />
                 {/* Main content */}
                 <Box
@@ -178,9 +186,10 @@ function App() {
           element: <Dashboard />,
         },
         {
-          path: "/profile",
+          path: "/users/:id",
           element: <Profile />,
         },
+        
         
         // For trip Start
         {
@@ -196,13 +205,11 @@ function App() {
           element: <CreateTrip />,
         },
         {
-          path: "/umrah/trip/view/:id",
-          // path: "/umrah/trip/view",
+          path: "/umrah/trip/view/:_id",
           element: <ViewTrip />,
         },
         {
           path: "/umrah/trip/update/:_id",
-          // path: "/umrah/trip/update",
           element: <UpdateTrip />,
         },
         // For trip end
@@ -222,8 +229,8 @@ function App() {
           element: <ViewPilgrim />
         },
         {
+          // path: "/umrah/pilgrim/update/:_id",
           path: "/umrah/pilgrim/update/:_id",
-          // path: "/umrah/pilgrim/update",
           element: <UpdatePilgrim />,
         },
         // For Pilgrim end
@@ -317,7 +324,7 @@ function App() {
           element: <ViewDeparture />,
         },
         {
-          // path: "/umrah/pilgrim/update/:id",
+
           path: "/umrah/departure/update",
           element: <UpdateDeparture />,
         },
@@ -338,13 +345,11 @@ function App() {
           element: <CreateHajjTrip />,
         },
         {
-          path: "/umrah/trip/view/:_id",
-          // path: "/hajj/trip/view",
+          path: "/hajj/trip/view/:_id",
           element: <ViewHajjTrip />,
         },
         {
-          path: "/umrah/trip/update/:_id",
-          // path: "/hajj/trip/update",
+          path: "/hajj/trip/update/:_id",
           element: <UpdateHajjTrip />,
         },
         // For trip end
@@ -359,13 +364,11 @@ function App() {
           element: <CreateHajjPilgrim />,
         },
         {
-          path: "/umrah/pilgrim/view/:_id",
-          // path: "/hajj/pilgrim/view",
+          path: "/hajj/pilgrim/view/:_id",
           element: <ViewHajjPilgrim />,
         },
         {
-          path: "/umrah/pilgrim/update/:_id",
-          // path: "/hajj/pilgrim/update",
+          path: "/hajj/pilgrim/update/:_id",
           element: <UpdateHajjPilgrim/>,
         },
         // For Pilgrim end
@@ -459,7 +462,7 @@ function App() {
           element: <ViewHajjVoucher/>,
         },
         {
-          // path: "/umrah/pilgrim/update/:id",
+
           path: "/hajj/departure/update",
           element: <UpdateHajjDeparture />,
         },
@@ -538,11 +541,11 @@ function App() {
         },
         {
           // path: "/users/view/:user_id",
-          path: "/agents/view",
+          path: "/agents/view/:_id",
           element: <ViewAgent />,
         },
         {
-          path: "/agents/update",
+          path: "/agents/update/:_id",
           // path: "/users/update/:user_id",
           element: <UpdateAgent />,
         },
@@ -559,15 +562,19 @@ function App() {
         },
         {
           // path: "/users/view/:user_id",
-          path: "/employee/view",
+          path: "/employee/view/:_id",
           element: <ViewEmployee />,
         },
         {
-          path: "/employee/update",
+          path: "/employee/update/:_id",
           // path: "/users/update/:user_id",
           element: <UpdateEmployee />,
         },
         // Employee end
+        {
+          path:"/messages" ,
+          element:<ChatUI />
+        },
         {
           path: "/calculator",
           element: <Calculator />,

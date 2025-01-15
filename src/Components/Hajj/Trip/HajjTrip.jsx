@@ -8,6 +8,7 @@ import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import { useTheme } from "@emotion/react";
 import HajjTabs from "../../../Tabs/HajjTabs";
+import { toast } from "react-toastify";
 
 const HajjTrip = () => {
   const theme = useTheme(); // Access the current theme
@@ -17,10 +18,14 @@ const HajjTrip = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8000/trips") // Replace with actual API endpoint
+    fetch("http://localhost:5000/api/auth/gettrip") // Replace with actual API endpoint
       .then((res) => res.json())
       .then((data) => {
-        setTrips(data);
+        const updatedTrips = data.map((trip) => ({
+          ...trip,
+          id: trip._id, // Assuming _id is the identifier in your API
+        }));
+        setTrips(updatedTrips);
       })
       .catch((err) => {
         console.log(err.message);
@@ -32,23 +37,23 @@ const HajjTrip = () => {
     navigate("/hajj/trip/create");
   };
 
-  const ViewDetails = (id) => {
-    navigate(`/hajj/trip/view`);
-    // navigate(`/hajj/trip/view/${id}`);
+  const ViewDetails = (_id) => {
+    navigate(`/hajj/trip/view/${_id}`);
   };
 
-  const EditDetails = (id) => {
-    // navigate(`/hajj/trip/update/${id}`);
-    navigate(`/hajj/trip/update`);
+  const EditDetails = (_id) => {
+    navigate(`/hajj/trip/update/${_id}`);
   };
 
-  const RemoveDetails = (id) => {
+  const RemoveDetails = (_id) => {
     if (window.confirm("Are you sure you want to delete this trip?")) {
-      fetch(`http://localhost:8000/trips/${id}`, {
+      fetch(`http://localhost:5000/api/auth/deletetrip/${_id}`, {
         method: "DELETE",
       })
         .then(() => {
-          // alert("Trip removed successfully");
+          toast.success("Trip removed successfully");
+          setTrips((prevTrips) => prevTrips.filter((trip) => trip.id !== _id));
+        
           window.location.reload(); // Reload the page
         })
         .catch((err) => {
@@ -58,16 +63,28 @@ const HajjTrip = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "tripName", headerName: "Trip Name", width: 200 },
-    { field: "tripType", headerName: "Trip Type", width: 200 },
-    { field: "startDate", headerName: "Start Date", width: 180 },
-    { field: "endDate", headerName: "End Date", width: 180 },
-    { field: "destination", headerName: "Destination", width: 200 },
+    { field: "tripNumber", headerName: "Trip Number", width: 150 },
+    { field: "expectedFlightDate", headerName: "Expected Flight Date", width: 200 },
+    { field: "returnFlightDate", headerName: "Return Flight Date", width: 200 },
+    { field: "durationOfStay", headerName: "Duration of Stay (Days)", width: 200 },
+    { field: "stayFirst", headerName: "Stay First", width: 150 },
+    { field: "carrier", headerName: "Carrier", width: 150 },
+    {
+      field: "bookedMeccaHotel",
+      headerName: "Booked Mecca Hotel",
+      width: 200,
+      renderCell: (params) => (params.value ? "Yes" : "No"),
+    },
+    {
+      field: "bookedMadinaHotel",
+      headerName: "Booked Madina Hotel",
+      width: 200,
+      renderCell: (params) => (params.value ? "Yes" : "No"),
+    },
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 300,
       renderCell: (params) => (
         <div className="action">
           <div className="view" onClick={() => ViewDetails(params.row.id)}>

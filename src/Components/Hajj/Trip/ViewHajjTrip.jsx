@@ -1,31 +1,40 @@
 import { Box, Button, Typography, Divider } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import { useNavigate } from "react-router";
-import UmrahTabs from "../../../Tabs/hajjTabs";
+import { useNavigate, useParams } from "react-router";
+import { useEffect, useState } from "react";
+import HajjTabs from "../../../Tabs/HajjTabs";
+
 
 const ViewHajjTrip = () => {
+  const {_id} = useParams()
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
   const navigate = useNavigate();
+  const [umrahTripData,setUmrahTripData] = useState({})
 
-  // Static mock data
-  const mockTripData = {
-    tripName: "Desert Safari Adventure",
-    departureDate: "2025-03-15",
-    returnDate: "2025-03-20",
-    tripType: "Leisure",
-    destination: "Dubai, UAE",
-    remarks: "Pack light and bring sunscreen.",
-  };
+   useEffect(()=>{
+        fetch(`http://localhost:5000/api/auth/getbyidtrip/${_id}`)
+        .then((res)=> res.json())
+        .then((data)=>{
+          setUmrahTripData(data)
+          console.log(data)
+        }).catch((err)=>{
+            console.log(err.message)
+        })
+    },[_id])
 
   // Navigate back to the trip list
   const handleBack = () => {
-    navigate("/trips/list");
+    navigate("/hajj/tript");
+  };
+
+  const handleEdit = () => {
+    navigate(`/hajj/trip/update/${_id}`);
   };
 
   return (
     <div style={{ width: "100%" }}>
-      <UmrahTabs />
+      <HajjTabs />
 
       <Box
         sx={{
@@ -62,13 +71,20 @@ const ViewHajjTrip = () => {
             gap: 3,
           }}
         >
-          {[ 
-            { label: "Trip Name", value: mockTripData.tripName },
-            { label: "Departure Date", value: mockTripData.departureDate },
-            { label: "Return Date", value: mockTripData.returnDate },
-            { label: "Trip Type", value: mockTripData.tripType },
-            { label: "Destination", value: mockTripData.destination },
-            { label: "Remarks", value: mockTripData.remarks },
+          {[
+            { label: "Trip Number", value: umrahTripData.tripNumber },
+            { label: "Expected Flight Date", value: umrahTripData.expectedFlightDate },
+            { label: "Return Flight Date", value: umrahTripData.returnFlightDate },
+            { label: "Duration of Stay", value: umrahTripData.durationOfStay },
+            { label: "Stay First", value: umrahTripData.stayFirst },
+            { label: "Booked Mecca Hotel", value: umrahTripData.bookedMeccaHotel ? "Yes" : "No" },
+            { label: "Mecca Hotel", value: umrahTripData.meccaHotel },
+            { label: "Duration of Mecca Stay", value: umrahTripData.durationOfMeccaStay },
+            { label: "Booked Madina Hotel", value: umrahTripData.bookedMadinaHotel ? "Yes" : "No" },
+            { label: "Madina Hotel", value: umrahTripData.madinaHotel },
+            { label: "Duration of Madina Stay", value: umrahTripData.durationOfMadinaStay },
+            { label: "Carrier", value: umrahTripData.carrier },
+            { label: "Note", value: umrahTripData.note },
           ].map((item, index) => (
             <Box
               key={index}
@@ -121,7 +137,7 @@ const ViewHajjTrip = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => navigate("/trips/update")}
+            onClick={handleEdit}
             sx={{
               textTransform: "none",
               fontWeight: "bold",

@@ -1,32 +1,36 @@
 import { Box, Button, Typography, Divider } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import HajjTabs from "../../../Tabs/HajjTabs";
+import { useEffect, useState } from "react";
 
 const ViewHajjPilgrim = () => {
+  const {_id} = useParams()
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
   const navigate = useNavigate();
+  const [umrahPilgrimData,setUmrahPilgrimData] = useState({})
 
-  // Static mock data
-  const mockPilgrimData = {
-    reference: "REF12345",
-    trip: "Hajj 2025",
-    payment: "$5000",
-    firstName: "Ahmed",
-    middleName: "Ibrahim",
-    lastName: "Khan",
-    gender: "Male",
-    birthday: "1985-05-20",
-    nationality: "Saudi Arabian",
-    passportNo: "A12345678",
-    passportExpiredDate: "2030-12-31",
-  };
 
-  // Navigate back to the pilgrim list
-  const handleBack = () => {
-    navigate("/pilgrims/list");
-  };
+    useEffect(()=>{
+      fetch(`http://localhost:5000/api/auth/getpilgrimbyid/${_id}`)
+      .then((res)=> res.json())
+      .then((data)=>{
+        setUmrahPilgrimData(data)
+        console.log(data)
+      }).catch((err)=>{
+          console.log(err.message)
+      })
+  },[])
+  
+    // Navigate back to the pilgrim list
+    const handleBack = () => {
+      navigate("/hajj/pilgrim");
+    };
+    const handleEdit = () => {
+      navigate(`/hajj/pilgrim/update/${_id}`);
+    };
+
 
   return (
     <div style={{ width: "100%" }}>
@@ -68,18 +72,18 @@ const ViewHajjPilgrim = () => {
           }}
         >
           {[
-            { label: "Reference", value: mockPilgrimData.reference },
-            { label: "Trip", value: mockPilgrimData.trip },
-            { label: "Payment", value: mockPilgrimData.payment },
-            { label: "First Name", value: mockPilgrimData.firstName },
-            { label: "Middle Name", value: mockPilgrimData.middleName },
-            { label: "Last Name", value: mockPilgrimData.lastName },
-            { label: "Gender", value: mockPilgrimData.gender },
-            { label: "Birthday", value: mockPilgrimData.birthday },
-            { label: "Nationality", value: mockPilgrimData.nationality },
-            { label: "Passport No.", value: mockPilgrimData.passportNo },
-            { label: "Passport Expiry Date", value: mockPilgrimData.passportExpiredDate },
-          ].map((item, index) => (
+                { label: "Reference", value: umrahPilgrimData.reference },
+                { label: "Trip", value: umrahPilgrimData.trip },
+                { label: "Payment", value: umrahPilgrimData.payment },
+                { label: "First Name", value:umrahPilgrimData.firstName },
+                { label: "Middle Name", value: umrahPilgrimData.middleName },
+                { label: "Last Name", value: umrahPilgrimData.lastName },
+                { label: "Gender", value: umrahPilgrimData.gender },
+                { label: "Birthday", value: umrahPilgrimData.birthday },
+                { label: "Nationality", value: umrahPilgrimData.nationality },
+                { label: "Passport No.", value: umrahPilgrimData.passportNo },
+                { label: "Passport Expiry Date", value: umrahPilgrimData.passportExpiredDate },
+              ].map((item, index) => (
             <Box
               key={index}
               sx={{
@@ -131,7 +135,7 @@ const ViewHajjPilgrim = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => navigate("/pilgrims/update")}
+            onClick={handleEdit}
             sx={{
               textTransform: "none",
               fontWeight: "bold",

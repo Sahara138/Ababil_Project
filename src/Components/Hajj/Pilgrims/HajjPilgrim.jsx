@@ -41,11 +41,11 @@ const HajjPilgrim = () => {
   };
 
   const ViewDetails = (_id) => {
-    navigate(`/pilgrim/view/${_id}`);
+    navigate(`/hajj/pilgrim/view/${_id}`);
   };
 
   const EditDetails = (_id) => {
-    navigate(`/pilgrim/update/${_id}`);
+    navigate(`/hajj/pilgrim/update/${_id}`);
   };
 
   const RemoveDetails = (_id) => {
@@ -55,6 +55,7 @@ const HajjPilgrim = () => {
       })
         .then(() => {
           alert("Pilgrim removed successfully");
+          setPilgrims(pilgrims.filter(pilgrim => pilgrim.id !== _id)); // Update state
           window.location.reload(); // Reload the page
         })
         .catch((err) => {

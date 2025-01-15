@@ -24,10 +24,10 @@ const UpdatePilgrim = () => {
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [birthday, setBirthday] = useState("");
   const [nationality, setNationality] = useState("");
   const [passportNo, setPassportNo] = useState("");
-  const [passportExpireDate, setPassportExpireDate] = useState("");
+  const [passportExpiredDate, setPassportExpiredDate] = useState("");
 
   const [errors, setErrors] = useState({
     reference: "",
@@ -37,10 +37,10 @@ const UpdatePilgrim = () => {
     middleName: "",
     lastName: "",
     gender: "",
-    birthDate: "",
+    birthday: "",
     nationality: "",
     passportNo: "",
-    passportExpireDate: "",
+    passportExpiredDate: "",
   });
   const options = [
     { value: "option1", label: "Option 1" },
@@ -67,14 +67,14 @@ const UpdatePilgrim = () => {
         setMiddleName(data.middleName);
         setLastName(data.lastName);
         setGender(data.gender);
-        setBirthDate(data.birthDate);
+        setBirthday(data.birthday);
         setNationality(data.nationality);
         setPassportNo(data.passportNo);
-        setPassportExpireDate(data.passportExpireDate);
+        setPassportExpiredDate(data.passportExpiredDate);
        
       })
       .catch((err) => console.error("Error fetching user data:", err));
-  }, []);
+  }, [_id]);
 
   const validate = () => {
     const newErrors = {};
@@ -84,20 +84,8 @@ const UpdatePilgrim = () => {
       newErrors.reference = "* Reference is required.";
     }
 
-    if (!trip) {
-      newErrors.trip = "* Trip is required.";
-    }
-
-    if (!passportDetails) {
-      newErrors.passportDetails = "* Passport details are required.";
-    }
-
     if (!firstName) {
       newErrors.firstName = "* First name is required.";
-    }
-
-    if (!middleName) {
-      newErrors.middleName = "* Middle name is required.";
     }
 
     if (!lastName) {
@@ -108,8 +96,8 @@ const UpdatePilgrim = () => {
       newErrors.gender = "* Gender is required.";
     }
 
-    if (!birthDate) {
-      newErrors.birthDate = "* Birth date is required.";
+    if (!birthday) {
+      newErrors.birthday = "* Birth date is required.";
     }
 
     if (!nationality) {
@@ -118,14 +106,15 @@ const UpdatePilgrim = () => {
 
     if (!passportNo) {
       newErrors.passportNo = "* Passport number is required.";
-    } else if (!/^[A-Z0-9]{6,9}$/.test(passportNo)) {
-      newErrors.passportNo = "* Invalid passport number format.";
-    }
+    } 
+    // else if (!/^[A-Z0-9]{6,9}$/.test(passportNo)) {
+    //   newErrors.passportNo = "* Invalid passport number format.";
+    // }
 
-    if (!passportExpireDate) {
-      newErrors.passportExpireDate = "* Passport expiry date is required.";
-    } else if (new Date(passportExpireDate) <= new Date()) {
-      newErrors.passportExpireDate =
+    if (!passportExpiredDate) {
+      newErrors.passportExpiredDate = "* Passport expiry date is required.";
+    } else if (new Date(passportExpiredDate) <= new Date()) {
+      newErrors.passportExpiredDate =
         "* Passport expiry date must be in the future.";
     }
 
@@ -145,10 +134,10 @@ const UpdatePilgrim = () => {
   //     middleName,
   //     lastName,
   //     gender,
-  //     birthDate,
+  //     birthday,
   //     nationality,
   //     passportNo,
-  //     passportExpireDate,
+  //     passportExpiredDate,
   //   };
 
   //     try {
@@ -176,7 +165,7 @@ const UpdatePilgrim = () => {
   //     }
   // };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission here, such as API request or form validation
     const updatedFormData = {
@@ -187,23 +176,15 @@ const UpdatePilgrim = () => {
       middleName,
       lastName,
       gender,
-      birthDate,
+      birthday,
       nationality,
       passportNo,
-      passportExpireDate,
+      passportExpiredDate,
     };
     if (validate()) {
       console.log("Form Submitted:", updatedFormData);
-      const apiUrl = `http://localhost:5000/api/auth/updatepilgrimbyid/${_id}`;
-      console.log("API URL: ", apiUrl);
 
-
-      if(_id == apiUrl){
-        console.log("Same")
-      }
-
-
-      fetch(apiUrl, {
+      fetch(`http://localhost:5000/api/auth/updatepilgrimbyid/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -215,6 +196,7 @@ const UpdatePilgrim = () => {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           return response.json();
+
         })
         .then((data) => {
           console.log("Response: ", data);
@@ -247,18 +229,6 @@ const UpdatePilgrim = () => {
 
   const handleCancel = () => {
     navigate('/umrah/pilgrim')
-    // Reset all fields if user clicks on Cancel
-    // setReference("");
-    // setTrip("");
-    // setPassportDetails("");
-    // setFirstName("");
-    // setMiddleName("");
-    // setLastName("");
-    // setGender("");
-    // setBirthDate("");
-    // setNationality("");
-    // setPassportNo("");
-    // setPassportExpireDate("");
   };
 
   return (
@@ -323,10 +293,11 @@ const UpdatePilgrim = () => {
                 <Select
                   id="reference"
                   name="reference"
-                  value={reference}
+                  value={options.find((opt) => opt.value === reference)}
+
                   options={options}
                   placeholder="Search or Select Reference"
-                  onChange={(option) => setReference(option)}
+                  onChange={(option) => setReference(option.value)}
                   className="custom-select"
                   style={{
                     color: isDarkMode ? "black" : "inherit",
@@ -347,10 +318,10 @@ const UpdatePilgrim = () => {
                 <Select
                   id="trip"
                   name="trip"
-                  value={trip}
+                  value={options.find((opt) => opt.value ===trip)}
                   options={options}
                   placeholder="Search or Select Trip"
-                  onChange={(option) => setTrip(option)}
+                  onChange={(option) => setTrip(option.value)}
                   className="custom-select"
                   style={{
                     color: isDarkMode ? "black" : "inherit",
@@ -447,10 +418,10 @@ const UpdatePilgrim = () => {
                 <Select
                   id="gender"
                   name="gender"
-                  value={gender}
+                  value={genderOption.find((opt) => opt.value === gender)}
                   options={genderOption}
                   placeholder="Select Gender"
-                  onChange={(genderOption) => setGender(genderOption)}
+                  onChange={(genderOption) => setGender(genderOption.value)}
                   className="custom-select"
                   style={{
                     color: isDarkMode ? "black" : "inherit",
@@ -463,20 +434,20 @@ const UpdatePilgrim = () => {
 
               <div className="inputField">
                 <label
-                  htmlFor="birthDate"
+                  htmlFor="birthday"
                   style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Birth Date
                 </label>
                 <input
-                  id="birthDate"
-                  name="birthDate"
+                  id="birthday"
+                  name="birthday"
                   type="date"
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
+                  value={birthday}
+                  onChange={(e) => setBirthday(e.target.value)}
                 />
-                {errors.birthDate && (
-                  <span className="error">{errors.birthDate}</span>
+                {errors.birthday && (
+                  <span className="error">{errors.birthday}</span>
                 )}
               </div>
 
@@ -523,20 +494,20 @@ const UpdatePilgrim = () => {
 
               <div className="inputField">
                 <label
-                  htmlFor="passportExpireDate"
+                  htmlFor="passportExpiredDate"
                   style={{ color: isDarkMode ? "#99a1b7" : "inherit" }}
                 >
                   Passport Expiry Date
                 </label>
                 <input
-                  id="passportExpireDate"
-                  name="passportExpireDate"
+                  id="passportExpiredDate"
+                  name="passportExpiredDate"
                   type="date"
-                  value={passportExpireDate}
-                  onChange={(e) => setPassportExpireDate(e.target.value)}
+                  value={passportExpiredDate}
+                  onChange={(e) => setPassportExpiredDate(e.target.value)}
                 />
-                {errors.passportExpireDate && (
-                  <span className="error">{errors.passportExpireDate}</span>
+                {errors.passportExpiredDate && (
+                  <span className="error">{errors.passportExpiredDate}</span>
                 )}
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect} from "react";
 import MuiCard from '@mui/material/Card';
 import {
   Box,
@@ -23,8 +23,6 @@ import ColorModeSelect from '../../shared-theme/ColorModeSelect';
 import { Link, useNavigate } from "react-router";
 import { useTheme } from "@emotion/react";
 import { GridVisibilityOffIcon } from "@mui/x-data-grid";
-import AuthContext from "../Context/AuthProvider";
-import axios from "axios";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 
@@ -152,9 +150,9 @@ const Login = (props) => {
       // Redirect to dashboard and clear login credentials if "Remember Me" is not checked
       toast.success("Login successfully!");
       // navigate("/dashboard"); // Redirect to dashboard
-      navigate(from, { replace: true });
       setEmail('');
       setPassword('');
+      navigate(from, { replace: true });
      
     } catch (error) {
       if (!error?.response) {

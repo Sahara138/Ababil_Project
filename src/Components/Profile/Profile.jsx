@@ -7,11 +7,13 @@ import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Divider from '@mui/material/Divider';
 import './Profile.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { toast } from 'react-toastify';
 // import { useState } from 'react';
 
 
-const Profile = () => {
+const Profile = (props) => {
   // const { user } = JSON.parse(localStorage.getItem("userData"));
 
   // const register = {
@@ -23,15 +25,19 @@ const Profile = () => {
   // console.log(register)
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === "dark";
-    const user = {
-        name: "Sofia ",
-        email: "sofia@gmail.com",
-        avatar: '/assets/avatar.png',
-        jobTitle: 'Senior Developer',
-        country: 'USA',
-        city: 'Los Angeles',
-        timezone: 'GTM-7',
-      }
+    const {_id} = useParams()
+    const navigate = useNavigate();
+    const [user,setUser] = useState()
+
+    // const user = {
+    //     name: "Sofia ",
+    //     email: "sofia@gmail.com",
+    //     avatar: '/assets/avatar.png',
+    //     jobTitle: 'Senior Developer',
+    //     country: 'USA',
+    //     city: 'Los Angeles',
+    //     timezone: 'GTM-7',
+    //   }
     const [profileData, setProfileData] = useState({
           name: "",
           phone: "",
@@ -47,6 +53,49 @@ const Profile = () => {
         // const [errors, setErrors] = useState({});
         // const [isLoading, setIsLoading] = useState(false);
       
+       
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:5000/api/auth/usersfind/${_id}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+        console.log(data)
+        if (response.ok) {
+          // const loggedInUserId = JSON.parse(atob(token.split(".")[1])).id;
+          // const loggedInUser = data.users.find((u) => u._id === loggedInUserId);
+          // setUser(loggedInUser);
+          setUser(data.users);
+          console.log(user)
+        } else {
+          toast.error(data.message || "Failed to fetch profile data.");
+          navigate("/login");
+          console.log(user)
+        }
+      } catch (error) {
+        toast.error("An error occurred while fetching profile.");
+        navigate("/login");
+      }
+    };
+
+
+   fetchProfile();
+  }, [navigate]);
+
+
+
         const handleChange = (e) => {
           setProfileData({ ...profileData, [e.target.name]: e.target.value });
         };
@@ -252,10 +301,10 @@ const Profile = () => {
                   <Stack spacing={1} sx={{ textAlign: "center" }}>
                     <Typography variant="h5">{user.name}</Typography>
                     <Typography color="text.secondary" variant="body2">
-                      {user.jobTitle}
+                      {user.position}
                     </Typography>
                     <Typography color="text.secondary" variant="body2">
-                      {user.city} {user.country}
+                      {user.email} {user.phone}
                     </Typography>
                   </Stack>
                 </Stack>

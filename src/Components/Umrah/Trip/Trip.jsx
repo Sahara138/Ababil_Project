@@ -8,6 +8,7 @@ import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import { useTheme } from "@emotion/react";
 import UmrahTabs from "../../../Tabs/UmrahTabs";
+import { toast } from "react-toastify";
 
 const Trip = () => {
   const theme = useTheme(); // Access the current theme
@@ -20,7 +21,11 @@ const Trip = () => {
     fetch("http://localhost:5000/api/auth/gettrip") // Replace with actual API endpoint
       .then((res) => res.json())
       .then((data) => {
-        setTrips(data);
+        const updatedTrips = data.map((trip) => ({
+          ...trip,
+          id: trip._id, // Assuming _id is the identifier in your API
+        }));
+        setTrips(updatedTrips);
       })
       .catch((err) => {
         console.log(err.message);
@@ -33,13 +38,12 @@ const Trip = () => {
   };
 
   const ViewDetails = (_id) => {
-    navigate(`/umrah/trip/view`);
-    // navigate(`/umrah/trip/view/${id}`);
+    navigate(`/umrah/trip/view/${_id}`);
   };
 
   const EditDetails = (_id) => {
-    // navigate(`/umrah/trip/update/${id}`);
-    navigate(`/umrah/trip/update`);
+    navigate(`/umrah/trip/update/${_id}`);
+
   };
 
   const RemoveDetails = (_id) => {
@@ -48,7 +52,9 @@ const Trip = () => {
         method: "DELETE",
       })
         .then(() => {
-          // alert("Trip removed successfully");
+          toast.success("Trip removed successfully");
+          setTrips((prevTrips) => prevTrips.filter((trip) => trip.id !== _id));
+        
           window.location.reload(); // Reload the page
         })
         .catch((err) => {
@@ -58,16 +64,28 @@ const Trip = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "tripName", headerName: "Trip Name", width: 200 },
-    { field: "tripType", headerName: "Trip Type", width: 200 },
-    { field: "startDate", headerName: "Start Date", width: 180 },
-    { field: "endDate", headerName: "End Date", width: 180 },
-    { field: "destination", headerName: "Destination", width: 200 },
+    { field: "tripNumber", headerName: "Trip Number", width: 150 },
+    { field: "expectedFlightDate", headerName: "Expected Flight Date", width: 200 },
+    { field: "returnFlightDate", headerName: "Return Flight Date", width: 200 },
+    { field: "durationOfStay", headerName: "Duration of Stay (Days)", width: 200 },
+    { field: "stayFirst", headerName: "Stay First", width: 150 },
+    { field: "carrier", headerName: "Carrier", width: 150 },
+    {
+      field: "bookedMeccaHotel",
+      headerName: "Booked Mecca Hotel",
+      width: 200,
+      renderCell: (params) => (params.value ? "Yes" : "No"),
+    },
+    {
+      field: "bookedMadinaHotel",
+      headerName: "Booked Madina Hotel",
+      width: 200,
+      renderCell: (params) => (params.value ? "Yes" : "No"),
+    },
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 300,
       renderCell: (params) => (
         <div className="action">
           <div className="view" onClick={() => ViewDetails(params.row.id)}>
@@ -83,6 +101,7 @@ const Trip = () => {
       ),
     },
   ];
+  
 
   return (
     <div style={{ width: '100%' }}>
